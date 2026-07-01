@@ -306,7 +306,7 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 #rm-arrival-text.visible{opacity:1;transform:translate(50%,-100%) scale(1)}
 
 /* GOLDEN SHIMMER */
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-100% 0}}
+@keyframes shimmer{0%{background-position:0% 0}100%{background-position:100% 0}}
 .glow{
   background-size:200% 100%;
   -webkit-background-clip:text;
@@ -323,13 +323,13 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 }
 .glow.animate{
   animation:shimmer 2.5s cubic-bezier(.4,0,.2,1) 1;
-  background-image:linear-gradient(90deg,#203727 0%,#203727 25%,rgba(184,145,74,.85) 50%,#203727 75%,#203727 100%);
-  background-position:-100% 0
+  background-size:300% 100%;
+  background-image:linear-gradient(90deg,#203727 0%,#203727 25%,rgba(184,145,74,.85) 50%,#203727 75%,#203727 100%)
 }
 .glow-d.animate{
   animation:shimmer 2.5s cubic-bezier(.4,0,.2,1) 1;
-  background-image:linear-gradient(90deg,#fbfff4 0%,#fbfff4 25%,rgba(184,145,74,.85) 50%,#fbfff4 75%,#fbfff4 100%);
-  background-position:-100% 0
+  background-size:300% 100%;
+  background-image:linear-gradient(90deg,#fbfff4 0%,#fbfff4 25%,rgba(184,145,74,.85) 50%,#fbfff4 75%,#fbfff4 100%)
 }
 </style>
 </head>
