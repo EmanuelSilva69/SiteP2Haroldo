@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LogiHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;
+  background:#fbfff4;color:#203727;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  line-height:1.5;overflow-x:hidden
+}
+::selection{background:#203727;color:#fbfff4}
+h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:700;letter-spacing:-.02em}
+.subtitle{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.4rem, 2.5vw, 2.2rem);font-style:italic;margin-top:1rem;display:block;font-weight:500}
+.hero .subtitle,.sim-hdr .subtitle{font-size:clamp(1.5rem, 3vw, 2.6rem);margin-top:1rem}
+h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
+.c{max-width:1400px;margin:0 auto;padding:0 3rem}
+@media(max-width:768px){.c{padding:0 1.5rem}}
+.s{padding:10rem 0;position:relative}
+@media(max-width:768px){.s{padding:5rem 0}}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:2rem 0;transition:all .7s cubic-bezier(.19,1,.22,1);mix-blend-mode:difference;color:#fbfff4;pointer-events:none}
+.hdr *{pointer-events:auto}
+.hdr.s{padding:.8rem 0}
+.hdr-i{display:flex;align-items:center;justify-content:space-between}
+.hdr-l{display:flex;align-items:center;gap:.8rem;text-decoration:none;color:inherit}
+.hdr-m{width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center}
+.hdr-m span{display:block;width:1.25rem;height:1.25rem;border:2px solid currentColor;border-radius:4px;position:relative;transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+.hdr-m span::before{content:'';position:absolute;top:50%;left:50%;width:4px;height:4px;background:currentColor;border-radius:50%;transform:translate(-50%,-50%);transition:all .4s}
+.hdr-l:hover .hdr-m span{transform:rotate(45deg) scale(1.1)}
+.hdr-t{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.hdr-t span{font-style:italic;opacity:.5;font-weight:500}
+.hdr-n{display:flex;align-items:center;gap:3rem}
+@media(max-width:768px){.hdr-n{display:none}}
+.hdr-n a{font-size:.8rem;font-weight:500;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;color:inherit;position:relative;padding-bottom:2px}
+.hdr-n a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:currentColor;transition:width .6s cubic-bezier(.19,1,.22,1)}
+.hdr-n a:hover::after{width:100%}
+.hdr-mb{display:none}
+@media(max-width:768px){.hdr-mb{display:flex}.hdr-mb button{background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:.25rem}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#203727;color:#fbfff4}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-bg .shp{position:absolute;border-radius:50%;background:rgba(251,255,244,0.015)}
+.hero-bg .shp:nth-child(1){width:60vmax;height:60vmax;top:-20%;right:-15%;animation:drift 40s ease-in-out infinite}
+.hero-bg .shp:nth-child(2){width:40vmax;height:40vmax;bottom:-10%;left:-10%;animation:drift 35s ease-in-out infinite reverse}
+.hero-bg .shp:nth-child(3){width:25vmax;height:25vmax;top:30%;left:50%;animation:drift 30s ease-in-out infinite 5s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(5%,-5%) scale(1.05)}50%{transform:translate(-3%,3%) scale(.95)}75%{transform:translate(3%,-2%) scale(1.02)}}
+.hero-g{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center;min-height:80vh}
+@media(max-width:1000px){.hero-g{grid-template-columns:1fr;gap:3rem;min-height:auto}}
+.hero-tag{display:inline-block;font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(251,255,244,0.4);margin-bottom:2rem;border:1px solid rgba(251,255,244,0.08);padding:.4rem 1rem;border-radius:9999px}
+.hero h1{font-size:clamp(2.5rem,7vw,5.5rem);line-height:1.02;margin-bottom:1.5rem;color:#fbfff4}
+.hero h1 strong{font-style:italic;font-weight:500;opacity:.5;display:block;margin-top:.15rem}
+.hero p{font-size:clamp(.9rem,1.3vw,1.1rem);line-height:1.8;color:rgba(251,255,244,0.55);max-width:30rem;margin-bottom:3rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-btns button{font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:600;padding:.85rem 2rem;border-radius:9999px;border:none;cursor:pointer;transition:all .6s cubic-bezier(.19,1,.22,1);text-transform:uppercase;letter-spacing:.08em}
+.hero-btns .btn-p{background:#fbfff4;color:#203727}
+.hero-btns .btn-p:hover{transform:scale(1.04);box-shadow:0 20px 60px rgba(251,255,244,0.1)}
+.hero-btns .btn-o{background:transparent;color:#fbfff4;box-shadow:inset 0 0 0 1.5px rgba(251,255,244,0.2)}
+.hero-btns .btn-o:hover{box-shadow:inset 0 0 0 1.5px rgba(251,255,244,0.6);transform:scale(1.04)}
+.hero-visual{position:relative;height:70vh;min-height:400px}
+@media(max-width:1000px){.hero-visual{height:50vh;min-height:300px}}
+.hero-visual canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-stats{display:flex;gap:4rem;margin-top:3rem}
+@media(max-width:640px){.hero-stats{gap:2rem}}
+.hero-stats>div+div::before{content:'';position:absolute;left:-2rem;top:0;bottom:0;width:1px;background:rgba(251,255,244,0.06)}
+.hero-sv{font-family:'Playfair Display',Georgia,serif;font-size:3rem;font-weight:700;letter-spacing:-.03em;line-height:1;color:#fbfff4;font-style:italic}
+.hero-sl{font-size:.7rem;color:rgba(251,255,244,0.35);font-weight:500;margin-top:6px;text-transform:uppercase;letter-spacing:.12em}
+
+/* ENTERPRISE */
+.ent{background:#fbfff4;position:relative}
+.ent::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(32,55,39,0.06)}
+.ent-hdr{margin-bottom:8rem}
+.ent-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(32,55,39,0.45);margin-bottom:1.5rem}
+.ent-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#203727;max-width:50rem;line-height:1.08}
+.ent-sub{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.2rem,2.5vw,2rem);font-style:italic;font-weight:500;opacity:.45;margin-top:.4rem;color:#203727}
+.ent-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(32,55,39,0.06)}
+@media(max-width:900px){.ent-g{grid-template-columns:1fr}}
+.ent-c{background:#fbfff4;padding:4rem 3rem;transition:all .6s cubic-bezier(.19,1,.22,1)}
+@media(max-width:900px){.ent-c{padding:3rem 2rem}}
+.ent-c:hover{background:rgba(32,55,39,0.02)}
+.ent-n{font-family:'Playfair Display',Georgia,serif;font-size:.85rem;font-weight:800;color:rgba(32,55,39,0.18);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;font-style:italic;letter-spacing:-.02em;line-height:1;pointer-events:none}
+.ent-ic{width:3rem;height:3rem;margin-bottom:2rem;position:relative}
+.ent-ic .dot{width:8px;height:8px;border-radius:50%;background:#203727;position:absolute;transition:all .6s cubic-bezier(.34,1.56,.64,1)}
+.ent-ic .dot:nth-child(1){top:0;left:0}
+.ent-ic .dot:nth-child(2){top:0;right:0;transition-delay:.1s}
+.ent-ic .dot:nth-child(3){bottom:0;left:0;transition-delay:.2s}
+.ent-ic .dot:nth-child(4){bottom:0;right:0;transition-delay:.3s}
+.ent-c:hover .ent-ic .dot:nth-child(1){transform:translate(-4px,-4px)}
+.ent-c:hover .ent-ic .dot:nth-child(2){transform:translate(4px,-4px)}
+.ent-c:hover .ent-ic .dot:nth-child(3){transform:translate(-4px,4px)}
+.ent-c:hover .ent-ic .dot:nth-child(4){transform:translate(4px,4px)}
+.ent-c h3{font-size:1.3rem;color:#203727;margin-bottom:.8rem}
+.ent-c p{font-size:.85rem;color:rgba(32,55,39,0.65);line-height:1.7;max-width:24rem}
+
+/* DIFFUSION */
+.dif{background:#203727;color:#fbfff4;position:relative}
+.dif::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 30% 50%,rgba(251,255,244,0.02) 0%,transparent 60%)}
+.dif-in{position:relative;z-index:2}
+.dif-hdr{margin-bottom:6rem}
+.dif-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(251,255,244,0.25);margin-bottom:1.5rem}
+.dif-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#fbfff4;max-width:50rem;line-height:1.08}
+.dif-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(251,255,244,0.04)}
+@media(max-width:768px){.dif-g{grid-template-columns:1fr}}
+.dif-c{background:#203727;padding:4rem 3rem;transition:background .6s}
+@media(max-width:768px){.dif-c{padding:3rem 2rem}}
+.dif-c:hover{background:rgba(251,255,244,0.02)}
+.dif-c .idx{font-family:'Playfair Display',Georgia,serif;font-size:.75rem;font-style:italic;color:rgba(251,255,244,0.15);margin-bottom:1.5rem}
+.dif-c h3{font-size:1.4rem;color:#fbfff4;margin-bottom:.8rem}
+.dif-c p{font-size:.85rem;color:rgba(251,255,244,0.45);line-height:1.7;max-width:24rem}
+.dif-c .bar{width:2rem;height:1px;background:rgba(251,255,244,0.15);margin-top:2rem;transition:width .6s cubic-bezier(.19,1,.22,1)}
+.dif-c:hover .bar{width:5rem;background:rgba(251,255,244,0.3)}
+
+/* FLOW */
+.flow{position:relative;padding:12rem 0;background:#fbfff4}
+.flow::before{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;background:rgba(32,55,39,0.04);transform:translateX(-50%)}
+@media(max-width:768px){.flow::before{left:2rem}}
+.flow-hdr{margin-bottom:8rem;text-align:center}
+.flow-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(32,55,39,0.45);margin-bottom:1.5rem}
+.flow-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#203727;line-height:1.08}
+.flow-g{position:relative}
+.flow-c{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:4rem 0}
+@media(max-width:768px){.flow-c{grid-template-columns:1fr;gap:1.5rem;padding:3rem 0}}
+.flow-c+.flow-c{border-top:1px solid rgba(32,55,39,0.04)}
+.flow-i{position:relative;padding-left:7rem}
+.flow-n{font-family:'Playfair Display',Georgia,serif;font-size:6rem;font-weight:800;color:rgba(32,55,39,0.07);line-height:1;position:absolute;left:0;top:-.5rem;font-style:italic;letter-spacing:-.06em}
+@media(max-width:768px){.flow-i{padding-left:5rem}.flow-n{font-size:4rem}}
+.flow-i h3{font-size:1.5rem;color:#203727;margin-bottom:.6rem}
+.flow-i p{font-size:.85rem;color:rgba(32,55,39,0.6);line-height:1.7;max-width:26rem}
+.flow-v{height:280px;border-radius:1.5rem;background:rgba(32,55,39,0.02);position:relative;overflow:hidden;border:1px solid rgba(32,55,39,0.04)}
+.flow-v .geo{position:absolute;inset:0}
+.flow-v .geo .ln{position:absolute;background:rgba(32,55,39,0.04);border-radius:1px}
+.flow-v .geo .pt{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(32,55,39,0.12);transition:all .8s cubic-bezier(.34,1.56,.64,1)}
+.flow-v .geo .pt.b{background:#203727;width:10px;height:10px;box-shadow:0 0 0 4px rgba(32,55,39,0.06)}
+
+/* TRANSPORT */
+.transp{background:#fbfff4;position:relative;padding:10rem 0}
+.transp::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(32,55,39,0.06)}
+.transp-hdr{margin-bottom:6rem;text-align:center}
+.transp-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(32,55,39,0.45);margin-bottom:1.5rem}
+.transp-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#203727;max-width:50rem;line-height:1.08;margin:0 auto}
+.transp-hdr p{font-size:.9rem;color:rgba(32,55,39,0.55);max-width:28rem;margin:1rem auto 0;line-height:1.7}
+.transp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(32,55,39,0.06);border-radius:1.5rem;overflow:hidden}
+@media(max-width:900px){.transp-g{grid-template-columns:1fr}}
+.transp-c{background:#fbfff4;padding:3.5rem 2.5rem;transition:all .6s cubic-bezier(.19,1,.22,1);text-align:center}
+.transp-c:hover{background:rgba(32,55,39,0.02)}
+.transp-c .transp-ic{width:3.5rem;height:3.5rem;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center}
+.transp-c .transp-ic svg{width:100%;height:100%}
+.transp-c h3{font-size:1.2rem;color:#203727;margin-bottom:.6rem}
+.transp-c p{font-size:.85rem;color:rgba(32,55,39,0.6);line-height:1.7;max-width:22rem;margin:0 auto}
+
+/* SIMULATOR */
+.sim{background:#fbfff4}
+.sim-hdr{margin-bottom:5rem;text-align:center}
+.sim-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(32,55,39,0.45);margin-bottom:1.5rem}
+.sim-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#203727;line-height:1.08}
+.sim-hdr h2 em{font-style:italic;opacity:.4;font-weight:500}
+.sim-hdr p{font-size:.9rem;color:rgba(32,55,39,0.55);max-width:28rem;margin:1rem auto 0;line-height:1.7}
+.sim-g{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:start}
+@media(max-width:1000px){.sim-g{grid-template-columns:1fr}}
+.sim-f{background:rgba(32,55,39,0.02);border-radius:2rem;padding:3rem;border:1px solid rgba(32,55,39,0.04)}
+@media(max-width:640px){.sim-f{padding:2rem 1.5rem;border-radius:1.5rem}}
+.sim-f-hdr{font-size:1.1rem;color:#203727;margin-bottom:2rem;font-weight:600;font-family:'Space Grotesk',sans-serif;display:flex;align-items:center;gap:.6rem}
+.sim-f-hdr::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#203727;flex-shrink:0}
+.sim-gr{margin-bottom:1.5rem}
+.sim-lb{display:block;font-size:.7rem;font-weight:600;color:rgba(32,55,39,0.6);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em}
+.sim-in{width:100%;padding:.85rem 0;font-family:'Space Grotesk',sans-serif;font-size:.9rem;color:#203727;background:transparent;border:none;border-bottom:1px solid rgba(32,55,39,0.08);outline:none;transition:all .4s cubic-bezier(.19,1,.22,1)}
+.sim-in:focus{border-bottom-color:#203727}
+.sim-in::placeholder{color:rgba(32,55,39,0.2)}
+.sim-div{display:flex;align-items:center;gap:1rem;margin:2rem 0}
+.sim-div-l{flex:1;height:1px;background:rgba(32,55,39,0.04)}
+.sim-div-t{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:rgba(32,55,39,0.2)}
+.sim-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2rem}
+.sim-btns button{font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;padding:.75rem 1.5rem;border-radius:9999px;border:none;cursor:pointer;transition:all .6s cubic-bezier(.19,1,.22,1);text-transform:uppercase;letter-spacing:.08em;flex:1;min-width:0}
+@media(max-width:640px){.sim-btns button{font-size:.7rem;padding:.6rem 1rem}}
+.sim-btns .btn-p{background:#203727;color:#fbfff4}
+.sim-btns .btn-p:hover:not(:disabled){transform:scale(1.04);box-shadow:0 12px 40px rgba(32,55,39,0.12)}
+.sim-btns .btn-p:disabled{opacity:.2;cursor:not-allowed}
+.sim-btns .btn-o{background:transparent;color:#203727;box-shadow:inset 0 0 0 1px rgba(32,55,39,0.1)}
+.sim-btns .btn-o:hover:not(:disabled){box-shadow:inset 0 0 0 1px #203727;transform:scale(1.03)}
+.sim-btns .btn-o:disabled{opacity:.2;cursor:not-allowed}
+.sim-err{font-size:.75rem;color:#c0392b;font-weight:500;display:flex;align-items:center;gap:.4rem;padding:.5rem .75rem;background:rgba(192,57,43,0.04);border-radius:.5rem;margin-bottom:.75rem}
+
+.sim-map{background:rgba(32,55,39,0.02);border-radius:2rem;overflow:hidden;border:1px solid rgba(32,55,39,0.04);position:sticky;top:6rem}
+.sim-map-in{position:relative;height:350px;overflow:hidden}
+.sim-map-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(32,55,39,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(32,55,39,0.03) 1px,transparent 1px);background-size:40px 40px}
+.sim-map-m{position:absolute;transform:translate(-50%,-50%);z-index:5}
+.sim-map-pt{width:12px;height:12px;border-radius:50%;background:#203727;position:relative}
+.sim-map-hub{width:48px;height:48px;border-radius:1rem;background:#203727;display:flex;align-items:center;justify-content:center;color:#fbfff4;font-size:.7rem;font-weight:700;box-shadow:0 8px 24px rgba(32,55,39,0.08)}
+.sim-map-ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(251,255,244,0.8);backdrop-filter:blur(4px)}
+.sim-map-ld-r{width:2rem;height:2rem;border-radius:50%;border:1.5px solid rgba(32,55,39,0.06);border-top-color:#203727;animation:spin .8s linear infinite}
+.sim-map-bl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sim-map-bl .geo-dots{display:flex;gap:3px;margin-bottom:.8rem}
+.sim-map-bl .geo-dots span{width:4px;height:4px;border-radius:50%;background:rgba(32,55,39,0.08)}
+.sim-map-bl p{font-size:.75rem;font-weight:500;color:rgba(32,55,39,0.3)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sim-res{padding:1.5rem;border-top:1px solid rgba(32,55,39,0.04)}
+.sim-res-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sim-res-h span{font-size:.7rem;font-weight:600;color:rgba(32,55,39,0.3);text-transform:uppercase;letter-spacing:.1em}
+.sim-res-h .tag{font-size:.6rem;padding:.2rem .6rem;border-radius:9999px;background:rgba(32,55,39,0.04);color:rgba(32,55,39,0.4)}
+.sim-res-g{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.sim-res-s{text-align:center;padding:.8rem;border-radius:1rem;background:rgba(32,55,39,0.015)}
+.sim-res-v{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;font-weight:700;color:#203727;font-style:italic}
+.sim-res-l{font-size:.6rem;color:rgba(32,55,39,0.45);font-weight:500;margin-top:3px;text-transform:uppercase;letter-spacing:.08em}
+
+.sim-steps{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(32,55,39,0.04)}
+.sim-steps-hdr{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;font-size:.7rem;font-weight:600;color:#203727;text-transform:uppercase;letter-spacing:.08em}
+.sim-steps-hdr .pulse{width:5px;height:5px;border-radius:50%;background:#203727;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.st{display:flex;align-items:center;gap:.7rem;padding:.3rem 0;opacity:0;transform:translateY(6px);transition:all .6s cubic-bezier(.19,1,.22,1)}
+.st.v{opacity:1;transform:translateY(0)}
+.st-c{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:700;transition:all .5s cubic-bezier(.34,1.56,.64,1)}
+.st-c.d{background:#203727;color:#fbfff4}
+.st-c.a{background:#203727;color:#fbfff4;animation:pulse 1.2s infinite}
+.st-t{font-size:.75rem;color:rgba(32,55,39,0.55);transition:color .4s}
+.st.d .st-t{color:#203727;font-weight:500}
+
+.sim-hist{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(32,55,39,0.04)}
+.sim-hist-hdr{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(32,55,39,0.3);margin-bottom:.75rem}
+.hi{display:flex;align-items:flex-start;gap:.6rem;padding:.6rem .75rem;border-radius:.75rem;background:rgba(32,55,39,0.015);border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;transition:all .4s cubic-bezier(.19,1,.22,1);font-size:.75rem;width:100%;margin-bottom:.3rem;color:#203727}
+.hi:hover{background:rgba(32,55,39,0.04);transform:translateX(4px)}
+.hi-dot{width:6px;height:6px;border-radius:50%;background:rgba(32,55,39,0.1);flex-shrink:0;margin-top:6px}
+.hi-l1{font-weight:500;font-size:.75rem;color:#203727}
+.hi-l2{font-size:.65rem;color:rgba(32,55,39,0.45);display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+
+/* PARCERIAS */
+.parc{background:#fbfff4;position:relative}
+.parc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(32,55,39,0.06)}
+.parc-hdr{margin-bottom:5rem;text-align:center}
+.parc-hdr .label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:rgba(32,55,39,0.45);margin-bottom:1.5rem}
+.parc-hdr h2{font-size:clamp(2rem,5vw,4rem);color:#203727;max-width:50rem;line-height:1.08;margin:0 auto}
+.parc-hdr .parc-sub{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1rem,1.8vw,1.35rem);font-style:italic;color:rgba(32,55,39,0.5);margin-top:.6rem}
+.parc-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(32,55,39,0.06);border-radius:1.5rem;overflow:hidden}
+@media(max-width:900px){.parc-g{grid-template-columns:1fr}}
+.parc-c{background:#fbfff4;padding:3.5rem 2.5rem;transition:all .6s cubic-bezier(.19,1,.22,1);text-align:center}
+@media(max-width:900px){.parc-c{padding:2.5rem 2rem}}
+.parc-c:hover{background:rgba(32,55,39,0.02)}
+.parc-c .parc-ic{width:3.5rem;height:3.5rem;margin:0 auto 1.5rem;border-radius:1rem;background:rgba(32,55,39,0.03);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#b8914a;font-family:'Playfair Display',Georgia,serif;font-style:italic;transition:all .6s cubic-bezier(.19,1,.22,1);border:1px solid rgba(32,55,39,0.04)}
+.parc-c:hover .parc-ic{background:#b8914a;color:#fbfff4;border-color:#b8914a;transform:scale(1.06)}
+.parc-c h3{font-size:1.2rem;color:#203727;margin-bottom:.6rem}
+.parc-c p{font-size:.85rem;color:rgba(32,55,39,0.6);line-height:1.7;max-width:22rem;margin:0 auto}
+
+/* FOOTER */
+.ft{background:#203727;color:rgba(251,255,244,0.3);padding:5rem 0}
+.ft a{color:rgba(251,255,244,0.3);text-decoration:none;transition:color .3s;font-size:.75rem}
+.ft a:hover{color:#fbfff4}
+.ft-in{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+@media(max-width:640px){.ft-in{grid-template-columns:1fr;gap:2rem}}
+.ft-brand{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:700;color:rgba(251,255,244,0.6);margin-bottom:.5rem}
+.ft-brand span{font-style:italic;opacity:.4;font-weight:500}
+.ft p{font-size:.75rem;line-height:1.7;max-width:20rem}
+.ft-nav{display:flex;gap:3rem;justify-content:flex-end}
+@media(max-width:640px){.ft-nav{justify-content:flex-start;gap:2rem}}
+.ft-nav-c{display:flex;flex-direction:column;gap:.6rem}
+.ft-nav-c h4{font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(251,255,244,0.15);margin-bottom:.4rem}
+.ft-btm{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(251,255,244,0.04);display:flex;justify-content:space-between;align-items:center;font-size:.65rem}
+@media(max-width:640px){.ft-btm{flex-direction:column;gap:.8rem;text-align:center}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(2rem);transition:all 1s cubic-bezier(.19,1,.22,1)}
+.rv.v{opacity:1;transform:translateY(0)}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}.rv-d4{transition-delay:.4s}.rv-d5{transition-delay:.5s}
+
+/* TOAST */
+#tst{position:fixed;bottom:2rem;right:2rem;z-index:999;display:grid;gap:.5rem;pointer-events:none}
+.toast{background:#203727;color:#fbfff4;padding:.85rem 1.2rem;border-radius:1rem;font-size:.75rem;font-weight:500;pointer-events:auto;box-shadow:0 12px 40px rgba(32,55,39,0.1);animation:tIn .5s cubic-bezier(.19,1,.22,1) forwards;max-width:320px}
+.toast.er{background:#c0392b;color:#fff}
+.toast.out{animation:tOut .4s cubic-bezier(.19,1,.22,1) forwards}
+@keyframes tIn{from{opacity:0;transform:translateY(1rem) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes tOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(1rem) scale(.96)}}
+
+.sim-cancel{display:block;margin-top:.8rem;width:100%;text-align:center;font-size:.7rem;color:rgba(32,55,39,0.3);font-weight:500;background:none;border:none;cursor:pointer;font-family:inherit;padding:.3rem}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(32,55,39,0.08);border-radius:2px}
+
+/* ENT IMAGES */
+.ent-img{width:100%;height:140px;border-radius:1rem;overflow:hidden;margin-bottom:1.2rem;position:relative;background:rgba(32,55,39,0.03)}
+.ent-img svg{width:100%;height:100%;display:block}
+.ent-img .tag{position:absolute;bottom:.4rem;left:.5rem;font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(32,55,39,0.3);background:rgba(251,255,244,0.85);padding:.15rem .5rem;border-radius:4px}
+
+/* ROAD MAP OVERLAY */
+#road-map{position:fixed;top:0;right:0;z-index:200;width:60px;height:100vh;pointer-events:none;--clr:#fbfff4;transition:opacity .6s ease,visibility .6s ease}
+@media(max-width:900px){#road-map{display:none}}
+.rm-road{position:absolute;right:28px;top:8%;bottom:17%;width:1.5px;background:var(--clr);opacity:.2}
+.rm-road-inner{position:absolute;right:28px;top:0;bottom:0;width:18px;margin-left:-9px;background:rgba(32,55,39,0.02);border-radius:9px}
+.rm-marker{position:absolute;right:28px;width:12px;height:12px;border-radius:50%;background:#fbfff4;border:2px solid var(--clr);transform:translate(50%,-50%);transition:all .4s ease}
+.rm-marker.active{background:#b8914a;border-color:#b8914a;transform:translate(50%,-50%) scale(1.2);box-shadow:0 0 10px rgba(184,145,74,.5)}
+.rm-pin{position:absolute;right:28px;width:14px;height:14px;border-radius:50%;border:2px solid var(--clr);opacity:.2;transform:translate(50%,-50%);transition:opacity .6s}
+.rm-pin-dot{position:absolute;right:28px;width:20px;height:20px;background:#b8914a;border-radius:50%;opacity:0;transition:opacity .6s;transform:translate(50%,-50%)}
+.rm-pin-dot.visible{opacity:1}
+.rm-pin-stem{position:absolute;right:28px;width:1.5px;height:24px;background:var(--clr);opacity:.08;transform:translateX(50%)}
+.rm-truck{position:absolute;width:34px;height:24px;transform:translate(-50%,-50%);transition:top .2s linear,right .2s linear;z-index:5}
+.rm-truck-inner{animation:wobble 3s ease-in-out infinite;transform-origin:center center;width:100%;height:100%}
+@keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+.rm-truck svg{width:100%;height:100%;display:block}
+.rm-truck .b{fill:var(--clr);stroke:none}
+.rm-truck .s{stroke:var(--clr);fill:none}
+.rm-truck .y{fill:#b8914a}
+#rm-arrival-text{position:absolute;right:28px;top:74%;font-size:.55rem;font-weight:600;color:#b8914a;text-transform:uppercase;letter-spacing:.12em;opacity:0;transform:translate(50%,-100%) scale(.85);transition:all .6s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;z-index:6}
+#rm-arrival-text.visible{opacity:1;transform:translate(50%,-100%) scale(1)}
+
+/* GOLDEN SHIMMER */
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:0% 0}}
+.glow{
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-image:linear-gradient(90deg,#203727 0%,#203727 100%)
+}
+.glow-d{
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-image:linear-gradient(90deg,#fbfff4 0%,#fbfff4 100%)
+}
+.glow.animate{
+  animation:shimmer 2.5s cubic-bezier(.4,0,.2,1) forwards;
+  background-image:linear-gradient(90deg,#203727 0%,#203727 25%,rgba(184,145,74,.85) 50%,#b8914a 100%)
+}
+.glow-d.animate{
+  animation:shimmer 2.5s cubic-bezier(.4,0,.2,1) forwards;
+  background-image:linear-gradient(90deg,#fbfff4 0%,#fbfff4 25%,rgba(184,145,74,.85) 50%,#b8914a 100%)
+}
+</style>
+</head>
+<body>
+<div id="tst"></div>
+<div id="root"></div>
+<div id="road-map">
+  <div class="rm-road-inner"></div>
+  <div class="rm-road"></div>
+  <div class="rm-marker" style="top:8%"></div>
+  <div class="rm-marker" style="top:32%"></div>
+  <div class="rm-marker" style="top:55%"></div>
+  <div class="rm-pin" id="rm-pin" style="top:83%"></div>
+  <div class="rm-pin-stem" style="top:83%"></div>
+  <div class="rm-pin-dot" id="rm-pin-dot" style="top:83%"></div>
+  <div class="rm-truck" id="rm-truck"><div class="rm-truck-inner"><svg viewBox="0 0 68 48"><rect class="s" x="1" y="8" width="32" height="28" rx="4" stroke-width="3"/><rect class="y" x="5" y="12" width="14" height="10" rx="2" opacity=".55"/><path class="s" d="M33 12 L47 12 C50 12 52 14 52 17 L52 36 L33 36 Z" stroke-width="3"/><path class="s" d="M36 16 L44 16 C45 16 46 17 46 18 L46 22 L36 22 Z" stroke-width="1.5" opacity=".3"/><circle class="b" cx="14" cy="40" r="6"/><circle fill="#fbfff4" cx="14" cy="40" r="2.5"/><circle class="b" cx="40" cy="40" r="6"/><circle fill="#fbfff4" cx="40" cy="40" r="2.5"/></svg></div></div>
+  <div id="rm-arrival-text">Cheguei!</div>
+</div>
+<script>(function(){
+let HUBS=[{id:1,nome:'Hub Paulista',regiao:'Centro/Paulista'},{id:2,nome:'Hub Faria Lima',regiao:'Faria Lima/Itaim'},{id:3,nome:'Hub Jardins',regiao:'Jardins/Oscar Freire'}];
+let COB=['0','1','2','3','4','5','6','7'];
+let DEMO={pickup:'Av. Paulista, 1000',pickupCep:'01310-100',delivery:'Rua Augusta, 1500',deliveryCep:'01311-000'};
+let STEPS=['Geocodificando enderecos...','Consultando hubs disponiveis...','Otimizando a rota...','Calculando estimativas...'];
+
+let S={pickup:'',delivery:'',pickupCep:'',deliveryCep:'',loading:false,step:0,res:null,err:'',scrolled:false,cf:null,
+  hist:[
+    {id:1,pickup:'Av. Paulista, 1000',pickupCep:'01310-100',delivery:'Rua Augusta, 1500',deliveryCep:'01311-000',hub:'Hub Paulista',tempo:'38 min',custo:'R$ 14,90'},
+    {id:2,pickup:'Rua Oscar Freire, 900',pickupCep:'01426-001',delivery:'Rua Haddock Lobo, 595',deliveryCep:'01414-001',hub:'Hub Jardins',tempo:'24 min',custo:'R$ 9,90'},
+    {id:3,pickup:'Av. Faria Lima, 2000',pickupCep:'04538-132',delivery:'Rua Funchal, 100',deliveryCep:'04551-060',hub:'Hub Faria Lima',tempo:'32 min',custo:'R$ 11,50'}
+  ]
+};
+
+function $(id){return document.getElementById(id)}
+function es(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fC(v){let d=v.replace(/\D/g,'').slice(0,8);return d.length<=5?d:d.slice(0,5)+'-'+d.slice(5)}
+function vC(c){return /^\d{5}-\d{3}$/.test(c)}
+function cC(c){return COB.indexOf(c.charAt(0))!==-1}
+function cOk(){return S.pickup.trim().length>=5&&S.delivery.trim().length>=5&&vC(S.pickupCep)&&vC(S.deliveryCep)}
+
+function toast(msg,type){
+  let c=$('tst');if(!c)return;
+  let t=document.createElement('div');
+  t.className='toast'+(type==='er'?' er':'');
+  t.innerHTML='<span style="opacity:.4;font-size:.6rem">o</span>'+msg;
+  c.appendChild(t);
+  setTimeout(function(){t.classList.add('out');setTimeout(function(){t.remove()},450)},3000);
+}
+
+function initCanvas(id){
+  let c=document.getElementById(id);if(!c)return;
+  let ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;pts=[];for(let i=0;i<18;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*2+1})}
+  function anim(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      let p=pts[i];p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r*2,0,Math.PI*2);
+      ctx.fillStyle='rgba(251,255,244,0.08)';ctx.fill();
+    }
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      let dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+      let dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<Math.min(W,H)*0.25){
+        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle='rgba(251,255,244,'+(0.02*(1-dist/(Math.min(W,H)*0.25)))+')';
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+    requestAnimationFrame(anim);
+  }
+  resize();anim();
+  let resizeTimer;window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(resize,150)});
+}
+
+function initGeo(id){
+  let c=document.getElementById(id);if(!c)return;
+  for(let i=0;i<4;i++){
+    let ln=document.createElement('div');
+    ln.style.cssText='position:absolute;width:60%;height:1px;top:'+(15+i*24)+'%;left:'+(10+Math.random()*10)+'%;background:rgba(32,55,39,0.04);border-radius:1px;transform:rotate('+(Math.random()*6-3)+'deg)';
+    c.appendChild(ln);
+  }
+  for(let i=0;i<6;i++){
+    let pt=document.createElement('div');
+    pt.style.cssText='position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(32,55,39,0.12);top:'+(10+Math.random()*80)+'%;left:'+(10+Math.random()*80)+'%;transition:all .8s cubic-bezier(.34,1.56,.64,1)';
+    if(i===0){pt.style.width='10px';pt.style.height='10px';pt.style.background='#203727';pt.style.boxShadow='0 0 0 4px rgba(32,55,39,0.06)'}
+    c.appendChild(pt);
+  }
+}
+
+function initReveal(){
+  let els=document.querySelectorAll('.rv');
+  let obs=new IntersectionObserver(function(entries){for(let i=0;i<entries.length;i++){let e=entries[i];if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}}},{threshold:.1});
+  for(let i=0;i<els.length;i++)obs.observe(els[i]);
+}
+
+function h(){
+  return '<header class="hdr'+(S.scrolled?' s':'')+'"><div class="c"><div class="hdr-i"><a href="#hero" class="hdr-l" data-n="hero"><div class="hdr-m"><span></span></div><span class="hdr-t">LogiHub<span>.</span></span></a><nav class="hdr-n"><a href="#" data-n="hero">Inicio</a><a href="#" data-n="ent">Servicos</a><a href="#" data-n="dif">Operação</a><a href="#" data-n="flow">Fluxo</a><a href="#" data-n="transp">Transporte</a><a href="#" data-n="sim">Simulador</a><a href="#" data-n="parc">Parcerias</a></nav><div class="hdr-mb"><button data-n="sim" aria-label="Menu"><span style="display:block;width:16px;height:10px;position:relative"><span style="display:block;position:absolute;top:0;left:0;width:100%;height:1.5px;background:currentColor"></span><span style="display:block;position:absolute;top:50%;left:0;width:100%;height:1.5px;background:currentColor;transform:translateY(-50%)"></span><span style="display:block;position:absolute;bottom:0;left:0;width:100%;height:1.5px;background:currentColor"></span></span></button></div></div></div></header>';
+}
+
+function hero(){
+  return '<section id="hero" class="hero"><div class="hero-bg"><div class="shp"></div><div class="shp"></div><div class="shp"></div></div><div class="c" style="width:100%"><div class="hero-g"><div><div class="hero-tag rv rv-d1">Logistica Urbana</div><h1 class="rv rv-d2">Ultima milha, reimaginada.</h1><p class="subtitle glow-d rv rv-d2">Entrega que conecta.</p><p class="rv rv-d3">Micro-hubs urbanos e roteirizacao inteligente para reduzir custos e tornar a entrega mais rapida do centro ao bairro.</p><div class="hero-btns rv rv-d4"><button class="btn-p" data-n="sim"><span>o</span> Simular rota</button><button class="btn-o" data-n="ent">Conhecer</button></div><div class="hero-stats rv rv-d5"><div><div class="hero-sv">+450</div><div class="hero-sl">entregas / dia</div></div><div><div class="hero-sv">12</div><div class="hero-sl">micro-hubs</div></div><div><div class="hero-sv">98%</div><div class="hero-sl">no prazo</div></div></div></div><div class="hero-visual rv rv-d3"><canvas id="net"></canvas></div></div></div></section>';
+}
+
+function ent(){
+  return '<section id="ent" class="ent s"><div class="c"><div class="ent-hdr"><div class="label rv">Nossa Abordagem</div><h2 class="rv rv-d1">Distribuicao urbana pensada em rede.</h2><p class="subtitle glow rv rv-d1">Cada ponto importa.</p></div><div class="ent-g"><div class="ent-c rv rv-d2"><div class="ent-ic"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ent-n">01</span></div><div class="ent-img"><svg viewBox="0 0 260 140" fill="none"><circle cx="80" cy="70" r="35" stroke="#203727" stroke-width="1.5" opacity=".08"/><circle cx="140" cy="50" r="25" stroke="#203727" stroke-width="1.5" opacity=".06"/><circle cx="180" cy="80" r="20" stroke="#203727" stroke-width="1.5" opacity=".05"/><rect x="150" y="38" width="4" height="28" rx="2" fill="#203727" opacity=".12"/><circle cx="152" cy="34" r="6" fill="#203727" opacity=".15"/><rect x="72" y="55" width="4" height="28" rx="2" fill="#203727" opacity=".12"/><circle cx="74" cy="51" r="6" fill="#203727" opacity=".15"/><rect x="175" y="68" width="3" height="22" rx="1.5" fill="#203727" opacity=".12"/><circle cx="176.5" cy="65" r="5" fill="#203727" opacity=".15"/><path d="M60 60l12-20h20l12 20" stroke="#203727" stroke-width="1.2" opacity=".1" fill="none"/><path d="M130 80l10-15h16l10 15" stroke="#203727" stroke-width="1.2" opacity=".1" fill="none"/></svg><span class="tag">rede</span></div><h3>Micro-hubs Estrategicos</h3><p>Centros de distribuicao compactos espalhados pela cidade. A mercadoria chega perto do destino antes da ultima milha.</p></div><div class="ent-c rv rv-d3"><div class="ent-ic"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ent-n">02</span></div><div class="ent-img"><svg viewBox="0 0 260 140" fill="none"><circle cx="50" cy="90" r="6" fill="#203727" opacity=".18"/><circle cx="130" cy="40" r="6" fill="#203727" opacity=".18"/><circle cx="210" cy="80" r="6" fill="#203727" opacity=".18"/><circle cx="130" cy="40" r="2" fill="#203727" opacity=".25"/><circle cx="50" cy="90" r="2" fill="#203727" opacity=".25"/><circle cx="210" cy="80" r="2" fill="#203727" opacity=".25"/><path d="M50 90l30-30" stroke="#203727" stroke-width="1.2" opacity=".1" stroke-dasharray="4,4"/><path d="M80 60l15-15" stroke="#203727" stroke-width="1.5" opacity=".15"/><path d="M95 45l35-5" stroke="#203727" stroke-width="1.5" opacity=".15"/><path d="M130 40l40 20" stroke="#203727" stroke-width="1.2" opacity=".1" stroke-dasharray="4,4"/><path d="M170 60l12 12" stroke="#203727" stroke-width="1.5" opacity=".15"/><path d="M182 72l28 8" stroke="#203727" stroke-width="1.5" opacity=".15"/><path d="M50 90l20 10" stroke="#203727" stroke-width="1" opacity=".08" stroke-dasharray="2,3"/><path d="M130 40l-10 15" stroke="#203727" stroke-width="1" opacity=".08" stroke-dasharray="2,3"/><path d="M210 80l-15-10" stroke="#203727" stroke-width="1" opacity=".08" stroke-dasharray="2,3"/></svg><span class="tag">rota</span></div><h3>Rotas Otimizadas</h3><p>A plataforma analisa transito, volume e janelas de entrega para definir a sequencia mais eficiente.</p></div><div class="ent-c rv rv-d4"><div class="ent-ic"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ent-n">03</span></div><div class="ent-img"><svg viewBox="0 0 260 140" fill="none"><rect x="30" y="40" width="120" height="45" rx="5" stroke="#203727" stroke-width="1.5" opacity=".12" fill="none"/><rect x="40" y="50" width="50" height="22" rx="3" stroke="#203727" stroke-width="1" opacity=".08" fill="none"/><path d="M148 40l18-30h70l-15 30H148z" stroke="#203727" stroke-width="1.5" opacity=".12" fill="none"/><circle cx="55" cy="98" r="10" stroke="#203727" stroke-width="1.5" opacity=".12" fill="none"/><circle cx="125" cy="98" r="10" stroke="#203727" stroke-width="1.5" opacity=".12" fill="none"/><circle cx="55" cy="98" r="3" fill="#203727" opacity=".15"/><circle cx="125" cy="98" r="3" fill="#203727" opacity=".15"/><rect x="160" y="72" width="8" height="12" rx="1" fill="#203727" opacity=".12"/><rect x="178" y="68" width="8" height="16" rx="1" fill="#203727" opacity=".12"/><rect x="196" y="72" width="8" height="12" rx="1" fill="#203727" opacity=".12"/><circle cx="60" cy="30" r="8" stroke="#203727" stroke-width="1.2" opacity=".08" fill="none"/><path d="M60 38v12" stroke="#203727" stroke-width="1.2" opacity=".08"/><path d="M54 42h12" stroke="#203727" stroke-width="1.2" opacity=".08"/></svg><span class="tag">custo</span></div><h3>Frete Justo</h3><p>Reducao significativa no custo do frete. Entregas mais rapidas sem pesar no bolso do lojista.</p></div></div></div></section>';
+}
+
+function dif(){
+  return '<section id="dif" class="dif s"><div class="c dif-in"><div class="dif-hdr"><div class="label rv">Diferenciais</div><h2 class="rv rv-d1">Operacao desenhada para a cidade.</h2><p class="subtitle glow-d rv rv-d1">Sem desperdicio.</p></div><div class="dif-g"><div class="dif-c rv rv-d2"><div class="idx">01</div><h3>Rede de Micro-hubs</h3><p>Pequenos centros posicionados estrategicamente. A carga chega perto do destino antes da ultima milha.</p><div class="bar"></div></div><div class="dif-c rv rv-d3"><div class="idx">02</div><h3>Roteirizacao Inteligente</h3><p>Sequencia de entregas calculada em tempo real considerando transito e prioridades.</p><div class="bar"></div></div><div class="dif-c rv rv-d4"><div class="idx">03</div><h3>Entregas no Mesmo Dia</h3><p>Micro-hubs proximos aos bairros viabilizam entregas expressas na regiao metropolitana.</p><div class="bar"></div></div><div class="dif-c rv rv-d5"><div class="idx">04</div><h3>Escalabilidade</h3><p>Modelo que cresce com a demanda. Novos hubs sao ativados conforme a necessidade.</p><div class="bar"></div></div></div></div></section>';
+}
+
+function flow(){
+  return '<section id="flow" class="flow"><div class="c"><div class="flow-hdr"><div class="label rv">Como Funciona</div><h2 class="rv rv-d1">Da coleta a entrega.</h2><p class="subtitle glow rv rv-d1">Tres movimentos.</p></div><div class="flow-g"><div class="flow-c rv rv-d2"><div class="flow-i"><div class="flow-n">01</div><h3>Mercadoria chega ao hub</h3><p>O lojista envia os produtos para o hub mais proximo do bairro de entrega.</p></div><div class="flow-v"><div class="geo" id="geo1"></div></div></div><div class="flow-c rv rv-d3"><div class="flow-i"><div class="flow-n">02</div><h3>Rota e calculada</h3><p>A plataforma define a melhor sequencia de entregas.</p></div><div class="flow-v"><div class="geo" id="geo2"></div></div></div><div class="flow-c rv rv-d4"><div class="flow-i"><div class="flow-n">03</div><h3>Entregador despacha</h3><p>Rotas curtas e otimizadas significam mais entregas por hora.</p></div><div class="flow-v"><div class="geo" id="geo3"></div></div></div></div></div></section>';
+}
+
+function sim(){
+  let s=S;
+  return '<section id="sim" class="sim s"><div class="c"><div class="sim-hdr"><div class="label rv">Simulador</div><h2 class="rv rv-d1">Teste a rota.</h2><p class="subtitle glow rv rv-d1">Veja o resultado.</p><p class="rv rv-d2">Insira os enderecos de coleta e entrega para simular a rota.</p></div><div class="sim-g"><div class="sim-f rv rv-d3"><div class="sim-f-hdr">Dados da Entrega</div><div class="sim-gr"><label class="sim-lb" for="iP">Endereco de Coleta</label><input class="sim-in" id="iP" value="'+es(s.pickup)+'" placeholder="Ex: Av. Paulista, 1000" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iPC">CEP da Coleta</label><input class="sim-in" id="iPC" value="'+s.pickupCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div class="sim-div"><span class="sim-div-l"></span><span class="sim-div-t">Destino</span><span class="sim-div-l"></span></div><div class="sim-gr"><label class="sim-lb" for="iD">Endereco de Entrega</label><input class="sim-in" id="iD" value="'+es(s.delivery)+'" placeholder="Ex: Rua Augusta, 1500" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iDC">CEP da Entrega</label><input class="sim-in" id="iDC" value="'+s.deliveryCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div id="sim-err"></div><div class="sim-btns"><button class="btn-p" id="sim-calc" aria-label="Calcular rota">o Calcular</button><button class="btn-o" id="sim-demo" aria-label="Preencher dados de demonstracao">o Demo</button><button class="btn-o" id="sim-clr" aria-label="Limpar campos">o Limpar</button></div><div id="sim-cancel-area"></div><div id="sim-steps"></div><div id="sim-hist"></div></div><div class="sim-map"><div class="sim-map-in"><div class="sim-map-bg"></div><div id="sim-map-c"><div class="sim-map-bl"><div class="geo-dots"><span></span><span></span><span></span><span></span></div><p>Preencha os dados e simule</p></div></div></div><div id="sim-res"></div></div></div></div></section>';
+}
+
+function updateSim(){
+  let loading=S.loading,step=S.step,res=S.res,err=S.err;
+  let ok=S.pickup.trim().length>=5&&S.delivery.trim().length>=5&&vC(S.pickupCep)&&vC(S.deliveryCep);
+  let calc=$('sim-calc');
+  if(calc){calc.innerHTML=loading?'o Calcular':'o Calcular';calc.disabled=!ok||loading}
+  let demo=$('sim-demo');if(demo)demo.disabled=loading;
+  let clr=$('sim-clr');if(clr)clr.disabled=loading;
+  let ca=$('sim-cancel-area');if(ca)ca.innerHTML=loading?'<button class="sim-cancel" id="sim-cancel">Cancelar</button>':'';
+  let ee=$('sim-err');if(ee)ee.innerHTML=err?'<div class="sim-err"><span>o</span> '+err+'</div>':'';
+  let se=$('sim-steps');
+  if(se){
+    if(loading){
+      let h='<div class="sim-steps"><div class="sim-steps-hdr"><div class="pulse"></div> Calculando rota</div>';
+      for(let i=0;i<STEPS.length;i++){
+        let cls='st'+(step>i?' v d':'')+(step===i?' v a':'');
+        let ic='';if(step>i)ic='-';else if(step===i)ic='o';
+        let sc='st-c'+(step>i?' d':'')+(step===i?' a':'');
+        h+='<div class="'+cls+'"><div class="'+sc+'">'+ic+'</div><span class="st-t">'+STEPS[i]+'</span></div>';
+      }
+      h+='</div>';se.innerHTML=h;
+    }else{se.innerHTML=''}
+  }
+  let he=$('sim-hist');
+  if(he){
+    if(!loading&&S.hist.length){
+      let h='<div class="sim-hist"><div class="sim-hist-hdr">Ultimas rotas</div>';
+      for(let i=0;i<Math.min(3,S.hist.length);i++){
+        let r=S.hist[i];
+        h+='<button class="hi" data-h="'+r.id+'"><div class="hi-dot"></div><div><div class="hi-l1">'+es(r.pickup)+'</div><div class="hi-l2"><span>-&gt;</span> <span>'+es(r.delivery)+'</span> <span>|</span> <span>'+r.tempo+'</span> <span>'+r.custo+'</span> <span>'+r.hub+'</span></div></div></button>';
+      }
+      h+='</div>';he.innerHTML=h;
+    }else{he.innerHTML=''}
+  }
+  let mc=$('sim-map-c');
+  if(mc){
+    if(res){
+      mc.innerHTML='<div style="position:absolute;inset:0"><div class="sim-map-m" style="top:26%;left:22%"><div class="sim-map-pt"></div><div style="position:absolute;top:calc(100%+6px);left:50%;transform:translateX(-50%);font-size:.6rem;color:rgba(32,55,39,0.3);white-space:nowrap">COLETA</div></div><div class="sim-map-m" style="top:48%;left:50%"><div class="sim-map-hub">H</div><div style="position:absolute;top:calc(100%+6px);left:50%;transform:translateX(-50%);font-size:.6rem;color:rgba(32,55,39,0.3);white-space:nowrap">'+res.hub+'</div></div><div class="sim-map-m" style="top:66%;left:78%"><div class="sim-map-pt"></div><div style="position:absolute;top:calc(100%+6px);left:50%;transform:translateX(-50%);font-size:.6rem;color:rgba(32,55,39,0.3);white-space:nowrap">ENTREGA</div></div><svg style="position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible" width="100%" height="100%"><line x1="22%" y1="26%" x2="50%" y2="48%" stroke="rgba(32,55,39,0.08)" stroke-width="1.5" stroke-dasharray="4,5"/><line x1="50%" y1="48%" x2="78%" y2="66%" stroke="rgba(32,55,39,0.08)" stroke-width="1.5" stroke-dasharray="4,5"/></svg></div>';
+    }else if(loading){
+      mc.innerHTML='<div class="sim-map-ld"><div class="sim-map-ld-r"></div></div>';
+    }else{
+      mc.innerHTML='<div class="sim-map-bl"><div class="geo-dots"><span></span><span></span><span></span><span></span></div><p>Preencha os dados e simule</p></div>';
+    }
+  }
+  let re=$('sim-res');
+  if(re)re.innerHTML=res?'<div class="sim-res"><div class="sim-res-h"><span>Rota calculada</span><span class="tag">otimizada</span></div><div class="sim-res-g"><div class="sim-res-s"><div class="sim-res-v">'+res.tempo+'</div><div class="sim-res-l">Tempo</div></div><div class="sim-res-s"><div class="sim-res-v">'+res.custo+'</div><div class="sim-res-l">Custo</div></div><div class="sim-res-s"><div class="sim-res-v">'+res.hub+'</div><div class="sim-res-l">Micro-hub</div></div></div></div>':'';
+}
+
+function runCalc(){
+  if(!vC(S.pickupCep)||!vC(S.deliveryCep)){S.err='Formato de CEP invalido. Use 00000-000.';updateSim();toast('CEP invalido','er');return}
+  if(!cC(S.pickupCep)||!cC(S.deliveryCep)){S.err='Area fora de cobertura. Tente um CEP da regiao central (0-7).';updateSim();toast('Area fora de cobertura','er');return}
+  S.loading=true;S.step=0;S.err='';S.res=null;updateSim();
+  let c=0;
+  let iv=setInterval(function(){c++;S.step=c;updateSim();if(c>=STEPS.length){clearInterval(iv);setTimeout(function(){
+    let h=HUBS[Math.floor(Math.random()*HUBS.length)];let tm=18+Math.floor(Math.random()*45);let cs=(8.5+Math.random()*12).toFixed(2);
+    S.res={pickup:S.pickup,delivery:S.delivery,pickupCep:S.pickupCep,deliveryCep:S.deliveryCep,hub:h.nome,regiao:h.regiao,tempo:tm+' min',custo:'R$ '+cs.replace('.',',')};
+    S.loading=false;S.hist.unshift({...S.res,id:Date.now()});if(S.hist.length>6)S.hist.pop();updateSim();toast('Rota calculada');
+  },400)}},700);
+  S.cf=function(){clearInterval(iv);S.loading=false;S.step=0;S.err='';S.cf=null;updateSim()};
+}
+function cancel(){if(S.cf)S.cf()}
+
+function hOnly(){
+  let e=document.querySelector('header');if(!e)return;
+  let w=document.createElement('div');w.innerHTML=h();e.replaceWith(w.firstElementChild);
+}
+
+function bind(){
+  window.addEventListener('scroll',function(){let s=window.scrollY>50;if(s!==S.scrolled){S.scrolled=s;hOnly()}},{passive:true});
+  document.addEventListener('click',function(e){
+    let n=e.target.closest('[data-n]');if(n){e.preventDefault();let el=document.getElementById(n.dataset.n);if(el)el.scrollIntoView({behavior:'smooth'});hOnly()}
+    if(e.target.id==='sim-calc'&&!S.loading&&cOk())runCalc();
+    if(e.target.id==='sim-demo'&&!S.loading){
+      S.pickup=DEMO.pickup;S.delivery=DEMO.delivery;S.pickupCep=DEMO.pickupCep;S.deliveryCep=DEMO.deliveryCep;S.res=null;S.err='';
+      let ip=$('iP');if(ip)ip.value=DEMO.pickup;
+      let ipc=$('iPC');if(ipc)ipc.value=DEMO.pickupCep;
+      let id=$('iD');if(id)id.value=DEMO.delivery;
+      let idc=$('iDC');if(idc)idc.value=DEMO.deliveryCep;
+      updateSim();
+    }
+    if(e.target.id==='sim-clr'){
+      if(S.loading)cancel();
+      S.pickup='';S.delivery='';S.pickupCep='';S.deliveryCep='';S.res=null;S.err='';
+      let ip=$('iP');if(ip)ip.value='';
+      let ipc=$('iPC');if(ipc)ipc.value='';
+      let id=$('iD');if(id)id.value='';
+      let idc=$('iDC');if(idc)idc.value='';
+      updateSim();
+    }
+    if(e.target.id==='sim-cancel')cancel();
+    let h=e.target.closest('[data-h]');if(h&&!S.loading){
+      let r=null;for(let i=0;i<S.hist.length;i++)if(S.hist[i].id===Number(h.dataset.h)){r=S.hist[i];break}
+      if(r){S.pickup=r.pickup;S.delivery=r.delivery;S.pickupCep=r.pickupCep||'';S.deliveryCep=r.deliveryCep||'';S.res=null;S.err='';
+        let ip=$('iP');if(ip)ip.value=r.pickup;
+        let ipc=$('iPC');if(ipc)ipc.value=r.pickupCep||'';
+        let id=$('iD');if(id)id.value=r.delivery;
+        let idc=$('iDC');if(idc)idc.value=r.deliveryCep||'';
+        updateSim()}
+    }
+  });
+  let inputs=['iP','iPC','iD','iDC'];
+  for(let i=0;i<inputs.length;i++){
+    (function(id){
+      let el=$(id);
+      if(el)el.addEventListener('input',function(e){
+        let v=e.target.value;
+        if(id==='iPC'){e.target.value=fC(v);S.pickupCep=e.target.value;}
+        else if(id==='iDC'){e.target.value=fC(v);S.deliveryCep=e.target.value;}
+        else if(id==='iP')S.pickup=v;
+        else S.delivery=v;
+        let calc=$('sim-calc');
+        if(calc)calc.disabled=!(S.pickup.trim().length>=5&&S.delivery.trim().length>=5&&vC(S.pickupCep)&&vC(S.deliveryCep))||S.loading;
+      });
+    })(inputs[i]);
+  }
+}
+
+function parc(){
+  return '<section id="parc" class="parc s"><div class="c"><div class="parc-hdr"><div class="label rv">Parcerias</div><h2 class="rv rv-d1">Vamos transformar a logistica juntos.</h2><p class="subtitle glow rv rv-d2">Seja um parceiro.</p><p class="parc-sub rv rv-d3">Sua empresa pode oferecer entregas mais rapidas e eficientes com nossa plataforma.</p></div><div class="parc-g"><div class="parc-c rv rv-d2"><div class="parc-ic">L</div><h3>Para Lojistas</h3><p>Integre sua loja a nossa rede de micro-hubs e ofereca entregas mais rapidas com custo reduzido.</p></div><div class="parc-c rv rv-d3"><div class="parc-ic">M</div><h3>Para Marketplaces</h3><p>Utilize nossa API para calcular fretes e prazos com precisao diretamente na sua plataforma.</p></div><div class="parc-c rv rv-d4"><div class="parc-ic">H</div><h3>Seja um Hub</h3><p>Transforme seu espaco em um micro-hub parceiro e gere receita com a operacao logistica.</p></div></div></div></section>';
+}
+
+function transp(){
+  return '<section id="transp" class="transp"><div class="c"><div class="transp-hdr"><div class="label rv">Transporte e Logistica</div><h2 class="rv rv-d1">Modais inteligentes<br>para cada entrega.</h2><p class="rv rv-d2">Veiculos eletricos, bicicletas e frota pesada integrados na mesma plataforma.</p></div><div class="transp-g"><div class="transp-c rv rv-d2"><div class="transp-ic"><svg viewBox="0 0 64 48" fill="none" stroke="#203727" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="28" height="26" rx="4"/><rect x="8" y="14" width="10" height="8" rx="2" stroke-width="1.2" opacity=".5"/><path d="M32 14 L44 14 C48 14 52 18 52 22 L52 36 L32 36 Z"/><circle cx="14" cy="38" r="5"/><circle cx="40" cy="38" r="5"/><line x1="48" y1="28" x2="56" y2="28"/><line x1="50" y1="24" x2="54" y2="24"/><line x1="52" y1="20" x2="54" y2="20"/></svg></div><h3>Frota Eletrica</h3><p>Veiculos 100% eletricos com autonomia para ate 200 km/dia. Zero emissoes e manutencao reduzida.</p></div><div class="transp-c rv rv-d3"><div class="transp-ic"><svg viewBox="0 0 64 48" fill="none" stroke="#203727" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="28" r="18"/><circle cx="20" cy="28" r="10"/><line x1="20" y1="10" x2="20" y2="4"/><line x1="14" y1="4" x2="26" y2="4"/><line x1="32" y1="20" x2="48" y2="12"/><line x1="48" y1="12" x2="52" y2="18"/><line x1="38" y1="28" x2="52" y2="24"/><circle cx="52" cy="24" r="2"/><circle cx="48" cy="12" r="2"/></svg></div><h3>Logistica Cicloviaria</h3><p>Entregas de curta distancia por bicicleta e cargo bike. Ideal para centros urbanos densos.</p></div><div class="transp-c rv rv-d4"><div class="transp-ic"><svg viewBox="0 0 64 48" fill="none" stroke="#203727" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="18" width="38" height="20" rx="3"/><rect x="8" y="22" width="16" height="10" rx="2" stroke-width="1.2" opacity=".5"/><circle cx="14" cy="42" r="5"/><circle cx="34" cy="42" r="5"/><line x1="40" y1="24" x2="54" y2="24"/><line x1="54" y1="24" x2="54" y2="36"/><rect x="40" y="30" width="16" height="8" rx="2"/></svg></div><h3>Transporte de Longa Distancia</h3><p>Frota pesada para transferencias entre hubs regionais. Capacidade de ate 12 toneladas.</p></div></div></div></section>';
+}
+
+function r(){
+  let root=$('root');
+  root.innerHTML=h()+hero()+ent()+dif()+flow()+transp()+sim()+parc()+ft();
+  bind();
+  updateSim();
+  setTimeout(function(){initCanvas('net');initGeo('geo1');initGeo('geo2');initGeo('geo3');initReveal()},100);
+}
+
+function ft(){
+  return '<footer class="ft"><div class="c"><div class="ft-in"><div><div class="ft-brand">LogiHub<span>.</span></div><p>Logistica urbana inteligente conectando lojistas, hubs e entregadores na ultima milha.</p></div><div class="ft-nav"><div class="ft-nav-c"><h4>Navegacao</h4><a href="#" data-n="hero">Inicio</a><a href="#" data-n="ent">Servicos</a><a href="#" data-n="dif">Operacao</a><a href="#" data-n="sim">Simulador</a><a href="#" data-n="parc">Parcerias</a></div><div class="ft-nav-c"><h4>Contato</h4><a href="#">contato@logihub.com</a><a href="#">(11) 99999-0000</a></div></div></div><div class="ft-btm"><span>&copy; 2026 LogiHub</span><span>MVP Academico P2 2026</span></div></div></footer>';
+}
+
+function initRoadMap(){
+  var rm=document.getElementById('road-map');
+  var truck=document.getElementById('rm-truck');
+  var pinDot=document.getElementById('rm-pin-dot');
+  var markers=document.querySelectorAll('.rm-marker');
+  if(!rm||!truck)return;
+  var hero=document.getElementById('hero'),sim=document.getElementById('sim');
+  if(!hero||!sim)return;
+  var dark='#fbfff4',light='#203727';
+  var sections=['hero','ent','dif','flow','transp','sim'];
+  var isDark={'hero':1,'dif':1};
+  function getActiveSection(){
+    var vh=window.innerHeight,mid=vh/2;
+    for(var i=0;i<sections.length;i++){
+      var el=document.getElementById(sections[i]);
+      if(!el)continue;
+      var r=el.getBoundingClientRect();
+      if(r.top<mid&&r.bottom>mid)return sections[i];
+    }
+    for(var i=0;i<sections.length;i++){
+      var el=document.getElementById(sections[i]);
+      if(!el)continue;
+      var r=el.getBoundingClientRect();
+      var vis=Math.min(r.bottom,vh)-Math.max(r.top,0);
+      if(vis>0)return sections[i];
+    }
+    return 'ent';
+  }
+  function update(){
+    var active=getActiveSection();
+    rm.style.setProperty('--clr',isDark[active]?dark:light);
+    var sST=window.scrollY,wh=window.innerHeight;
+    var sTop=hero.offsetTop-60,sBot=sim.offsetTop+sim.offsetHeight-wh;
+    if(sBot<=sTop)sBot=sTop+1;
+    var p=Math.max(0,Math.min(1,(sST-sTop)/(sBot-sTop)));
+    truck.style.top=(8+p*75)+'%';
+    truck.style.right='28px';
+    truck.style.transform='translate(50%,-50%) rotate(0deg)';
+    if(markers.length)markers.forEach(function(m,i){
+      var threshold=[0.08,0.32,0.55][i];
+      if(p>=threshold-0.02)m.classList.add('active');
+      else m.classList.remove('active');
+    });
+    if(pinDot)pinDot.classList.toggle('visible',p>=0.95);
+    var at=document.getElementById('rm-arrival-text'),now=Date.now();
+    if(at){
+      if(p>=0.95&&!at.classList.contains('visible')&&(!at._cd||now-at._cd>20000)){at.classList.add('visible');at._cd=Date.now();setTimeout(function(){at.classList.remove('visible')},1000)}
+      else if(p<0.95&&at.classList.contains('visible')){at.classList.remove('visible');at._cd=Date.now()}
+    }
+    if(p>=1){
+      rm.style.opacity='0';
+      rm.style.visibility='hidden';
+    }else{
+      rm.style.opacity='';
+      rm.style.visibility='';
+    }
+  }
+  update();
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(!ticking){requestAnimationFrame(function(){update();ticking=false});ticking=true}
+  },{passive:true});
+  window.addEventListener('resize',function(){update()},{passive:true});
+}
+r();
+initRoadMap();
+var glowObs=new IntersectionObserver(function(entries){
+  for(var i=0;i<entries.length;i++){
+    var entry=entries[i];
+    if(entry.isIntersecting&&!entry.target.classList.contains('animate')){
+      entry.target.classList.add('animate');
+    }
+  }
+},{threshold:0.5});
+var glowEls=document.querySelectorAll('.glow,.glow-d');
+for(var i=0;i<glowEls.length;i++)glowObs.observe(glowEls[i]);
+})();
+</script>
+</body>
+</html>
