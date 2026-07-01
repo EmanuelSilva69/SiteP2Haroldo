@@ -1,0 +1,6 @@
+.agents/
+.claude/
+.playwright-cli/
+__pycache__/
+*.pyc
+skills-lock.json
