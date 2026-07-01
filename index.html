@@ -295,13 +295,14 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 .rm-pin-dot{position:absolute;right:28px;width:20px;height:20px;background:#b8914a;border-radius:50%;opacity:0;transition:opacity .6s;transform:translate(50%,-50%)}
 .rm-pin-dot.visible{opacity:1}
 .rm-pin-stem{position:absolute;right:28px;width:1.5px;height:24px;background:var(--clr);opacity:.08;transform:translateX(50%)}
-.rm-truck{position:absolute;width:34px;height:24px;transform:translate(-50%,-50%);transition:top .2s linear,right .2s linear;z-index:5}
+.rm-truck{position:absolute;width:34px;height:24px;transform:translate(-50%,-50%);transition:top .2s linear,right .2s linear;z-index:10;filter:drop-shadow(0 0 4px var(--truck-shadow))}
 .rm-truck-inner{animation:wobble 3s ease-in-out infinite;transform-origin:center center;width:100%;height:100%}
 @keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
 .rm-truck svg{width:100%;height:100%;display:block}
-.rm-truck .b{fill:var(--clr);stroke:none}
-.rm-truck .s{stroke:var(--clr);fill:none}
+.rm-truck .b{fill:var(--clr);stroke:var(--clr-inv);stroke-width:.5px;stroke-linejoin:round;stroke-linecap:round}
+.rm-truck .s{stroke:var(--clr);fill:none;stroke-linejoin:round;stroke-linecap:round}
 .rm-truck .y{fill:#b8914a}
+.rm-truck .h{fill:var(--clr-inv);stroke:var(--clr);stroke-width:.5px}
 #rm-arrival-text{position:absolute;right:28px;top:74%;font-size:.55rem;font-weight:600;color:#b8914a;text-transform:uppercase;letter-spacing:.12em;opacity:0;transform:translate(50%,-100%) scale(.85);transition:all .6s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;z-index:6}
 #rm-arrival-text.visible{opacity:1;transform:translate(50%,-100%) scale(1)}
 
@@ -345,7 +346,7 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
   <div class="rm-pin" id="rm-pin" style="top:83%"></div>
   <div class="rm-pin-stem" style="top:83%"></div>
   <div class="rm-pin-dot" id="rm-pin-dot" style="top:83%"></div>
-  <div class="rm-truck" id="rm-truck"><div class="rm-truck-inner"><svg viewBox="0 0 68 48"><rect class="s" x="1" y="8" width="32" height="28" rx="4" stroke-width="3"/><rect class="y" x="5" y="12" width="14" height="10" rx="2" opacity=".55"/><path class="s" d="M33 12 L47 12 C50 12 52 14 52 17 L52 36 L33 36 Z" stroke-width="3"/><path class="s" d="M36 16 L44 16 C45 16 46 17 46 18 L46 22 L36 22 Z" stroke-width="1.5" opacity=".3"/><circle class="b" cx="14" cy="40" r="6"/><circle fill="#fbfff4" cx="14" cy="40" r="2.5"/><circle class="b" cx="40" cy="40" r="6"/><circle fill="#fbfff4" cx="40" cy="40" r="2.5"/></svg></div></div>
+  <div class="rm-truck" id="rm-truck"><div class="rm-truck-inner"><svg viewBox="0 0 68 48"><rect class="s" x="1" y="8" width="32" height="28" rx="4" stroke-width="3"/><rect class="y" x="5" y="12" width="14" height="10" rx="2" opacity=".55"/><path class="s" d="M33 12 L47 12 C50 12 52 14 52 17 L52 36 L33 36 Z" stroke-width="3"/><path class="s" d="M36 16 L44 16 C45 16 46 17 46 18 L46 22 L36 22 Z" stroke-width="1.5" opacity=".3"/><circle class="b" cx="14" cy="40" r="6"/><circle class="h" cx="14" cy="40" r="2.5"/><circle class="b" cx="40" cy="40" r="6"/><circle class="h" cx="40" cy="40" r="2.5"/></svg></div></div>
   <div id="rm-arrival-text">Cheguei!</div>
 </div>
 <script>(function(){
@@ -604,6 +605,8 @@ function initRoadMap(){
   function update(){
     var active=getActiveSection();
     rm.style.setProperty('--clr',isDark[active]?dark:light);
+    rm.style.setProperty('--clr-inv',isDark[active]?light:dark);
+    rm.style.setProperty('--truck-shadow',isDark[active]?'rgba(0,0,0,0.3)':'rgba(255,255,255,0.2)');
     var sST=window.scrollY,wh=window.innerHeight;
     var sTop=hero.offsetTop-60,sBot=sim.offsetTop+sim.offsetHeight-wh;
     if(sBot<=sTop)sBot=sTop+1;
