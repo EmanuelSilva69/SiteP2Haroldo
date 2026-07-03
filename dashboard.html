@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="eco">
+<head>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('logihub_theme')||'eco')</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LogiHub — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg-primary: #fbfff4;
+  --text-primary: #203727;
+  --accent: #b8914a;
+  --text-primary-rgb: 32, 55, 39;
+  --accent-rgb: 184, 145, 74;
+  --bg-primary-rgb: 251, 255, 244;
+  --border: 1px solid rgba(var(--text-primary-rgb), 0.1);
+  --border-light: 1px solid rgba(var(--text-primary-rgb), 0.06);
+  --surface-border: 1px solid rgba(var(--bg-primary-rgb), 0.06);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-ui: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --bg: var(--bg-primary);
+  --text: var(--text-primary);
+  --text-rgb: var(--text-primary-rgb);
+  --bg-rgb: var(--bg-primary-rgb);
+  --surface: var(--text-primary);
+  --on-surface: var(--bg-primary);
+  --on-surface-rgb: var(--bg-primary-rgb);
+}
+[data-theme="deep-ocean"]{
+  --bg-primary: #0a192f;
+  --text-primary: #f4f7f0;
+  --accent: #00ffff;
+  --text-primary-rgb: 244, 247, 240;
+  --accent-rgb: 0, 255, 255;
+  --bg-primary-rgb: 10, 25, 47;
+  --border: 1px solid rgba(244,247,240,0.1);
+  --border-light: 1px solid rgba(244,247,240,0.06);
+  --surface-border: 1px solid rgba(10,25,47,0.06);
+  --bg: var(--bg-primary);
+  --text: var(--text-primary);
+  --text-rgb: var(--text-primary-rgb);
+  --bg-rgb: var(--bg-primary-rgb);
+  --surface: var(--text-primary);
+  --on-surface: var(--bg-primary);
+  --on-surface-rgb: var(--bg-primary-rgb);
+}
+[data-theme="desert-trust"]{
+  --bg-primary: #f4e1c1;
+  --text-primary: #2b2d42;
+  --accent: #e67e22;
+  --text-primary-rgb: 43, 45, 66;
+  --accent-rgb: 230, 126, 34;
+  --bg-primary-rgb: 244, 225, 193;
+  --border: 1px solid rgba(43,45,66,0.1);
+  --border-light: 1px solid rgba(43,45,66,0.06);
+  --surface-border: 1px solid rgba(244,225,193,0.06);
+  --bg: var(--bg-primary);
+  --text: var(--text-primary);
+  --text-rgb: var(--text-primary-rgb);
+  --bg-rgb: var(--bg-primary-rgb);
+  --surface: var(--text-primary);
+  --on-surface: var(--bg-primary);
+  --on-surface-rgb: var(--bg-primary-rgb);
+}
+[data-theme="sunset"]{
+  --bg-primary:#fff5eb;--text-primary:#4a1c00;--accent:#ff5722;--text-primary-rgb:74,28,0;--accent-rgb:255,87,34;--bg-primary-rgb:255,245,235;--border:1px solid rgba(74,28,0,0.1);--border-light:1px solid rgba(74,28,0,0.06);--surface-border:1px solid rgba(255,245,235,0.06);--bg:var(--bg-primary);--text:var(--text-primary);--text-rgb:var(--text-primary-rgb);--bg-rgb:var(--bg-primary-rgb);--surface:var(--text-primary);--on-surface:var(--bg-primary);--on-surface-rgb:var(--bg-primary-rgb);
+}
+[data-theme="neon"]{
+  --bg-primary:#0d1117;--text-primary:#c9d1d9;--accent:#39d353;--text-primary-rgb:201,209,217;--accent-rgb:57,211,83;--bg-primary-rgb:13,17,23;--border:1px solid rgba(201,209,217,0.1);--border-light:1px solid rgba(201,209,217,0.06);--surface-border:1px solid rgba(13,17,23,0.06);--bg:var(--bg-primary);--text:var(--text-primary);--text-rgb:var(--text-primary-rgb);--bg-rgb:var(--bg-primary-rgb);--surface:var(--text-primary);--on-surface:var(--bg-primary);--on-surface-rgb:var(--bg-primary-rgb);
+}
+[data-theme="ruby"]{
+  --bg-primary:#fdf8f8;--text-primary:#2d0a0e;--accent:#e63946;--text-primary-rgb:45,10,14;--accent-rgb:230,57,70;--bg-primary-rgb:253,248,248;--border:1px solid rgba(45,10,14,0.1);--border-light:1px solid rgba(45,10,14,0.06);--surface-border:1px solid rgba(253,248,248,0.06);--bg:var(--bg-primary);--text:var(--text-primary);--text-rgb:var(--text-primary-rgb);--bg-rgb:var(--bg-primary-rgb);--surface:var(--text-primary);--on-surface:var(--bg-primary);--on-surface-rgb:var(--bg-primary-rgb);
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;height:100%}
+body{
+  font-family:var(--font-ui);
+  background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  line-height:1.5;height:100%;overflow:hidden;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .5s ease,transform .5s ease
+}
+body.loaded{opacity:1;transform:translateY(0)}
+body.page-exit{opacity:0;transform:translateY(-10px);transition-duration:.4s}
+::selection{background:var(--text);color:var(--bg)}
+a{color:inherit;text-decoration:none}
+
+/* Auth Screen */
+#screen-auth{
+  display:flex;height:100vh;width:100vw;position:fixed;inset:0;z-index:100;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+#screen-auth.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.auth-left{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:5rem;position:relative;overflow:hidden;
+  background:var(--surface)
+}
+.auth-left::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,25,47,0.8),rgba(10,25,47,0.4));z-index:1}
+.auth-tagline{
+  font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-style:italic;font-weight:500;color:#fff;
+  max-width:22rem;line-height:1.2;position:relative;z-index:2;
+  margin-top:3rem;
+}
+.auth-tagline span{opacity:0.4;display:block;margin-top:0.5rem}
+.auth-right{
+  width:480px;display:flex;flex-direction:column;
+  justify-content:center;padding:5rem 4rem;
+  border-left:var(--border-light);
+}
+.auth-logo{display:flex;justify-content:center;margin-bottom:2rem}
+.auth-logo svg{height:40px;width:auto;display:block}
+.auth-form{max-width:360px;margin:0 auto;width:100%}
+.auth-title{font-family:var(--font-display);font-size:2.2rem;font-weight:700;letter-spacing:-.02em}
+.auth-subtitle{font-size:.85rem;color:rgba(var(--text-rgb),0.45);margin-top:.25rem;margin-bottom:3rem}
+.field{margin-bottom:1.75rem;position:relative}
+.field label{display:block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(var(--text-rgb),0.5);margin-bottom:.4rem}
+.field input{
+  display:block;width:100%;font-family:var(--font-ui);
+  font-size:.9rem;color:var(--text);background:transparent;
+  border:none;padding:.6rem 0;outline:none;
+  border-bottom:1px solid rgba(var(--text-rgb),0.1);
+  transition:border-color .3s ease;
+}
+.field input:focus{border-bottom-color:var(--text)}
+.field input::placeholder{color:rgba(var(--text-rgb),0.15)}
+.field .field-hint{font-size:.65rem;color:rgba(var(--text-rgb),0.3);margin-top:.3rem;display:block}
+.field .field-err{font-size:.65rem;color:#c0392b;margin-top:.3rem;display:none}
+.field.er .field-err{display:block}
+.field.er input{border-bottom-color:#c0392b}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--font-ui);font-size:.78rem;font-weight:600;
+  padding:.8rem 1.8rem;border:none;cursor:pointer;
+  transition:all .4s cubic-bezier(.19,1,.22,1);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.btn-primary{background:#fff;color:var(--text);width:100%;margin-top:.5rem;box-shadow:0 1px 3px rgba(var(--text-rgb),0.06),0 4px 12px rgba(var(--text-rgb),0.04)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(var(--text-rgb),0.08),0 8px 24px rgba(var(--text-rgb),0.06)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(var(--text-rgb),0.15)}
+.btn-outline:hover{border-color:var(--text);transform:translateY(-1px)}
+.auth-toggle{margin-top:2rem;text-align:center;font-size:.8rem;color:rgba(var(--text-rgb),0.4)}
+.auth-toggle a{color:var(--text);font-weight:600;border-bottom:1px solid transparent;transition:border-color .3s}
+.auth-toggle a:hover{border-bottom-color:var(--text)}
+.form-divider{text-align:center;font-size:.65rem;color:rgba(var(--text-rgb),0.2);margin:2rem 0;position:relative}
+.form-divider::before,.form-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:rgba(var(--text-rgb),0.06)}
+.form-divider::before{left:0}.form-divider::after{right:0}
+#form-login{display:flex;flex-direction:column;gap:1.25rem}
+#form-register{display:none}
+.auth-error{
+  font-size:.75rem;color:#c0392b;display:none;
+  align-items:center;gap:.4rem;padding:.5rem .75rem;
+  background:rgba(192,57,43,0.04);border-radius:.5rem;margin-bottom:1rem;
+}
+.auth-error.show{display:flex}
+
+/* Main App Layout */
+#screen-app{display:flex;height:100vh;width:100vw;position:fixed;inset:0;z-index:50}
+#screen-app.hidden{display:none!important}
+#screen-auth.hidden{display:none!important}
+#sidebar{
+  width:240px;flex-shrink:0;background:var(--surface);
+  display:flex;flex-direction:column;justify-content:space-between;padding:2rem 0;
+  position:relative;overflow:hidden;
+}
+.sidebar-inner{display:flex;flex-direction:column;height:100%;width:100%}
+.sidebar-logo{
+  padding:1rem 1.75rem 1.5rem;margin-bottom:.5rem;
+  border-bottom:var(--surface-border);
+}
+.sidebar-logo .logo-mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:6px;font-family:var(--font-display);
+  font-size:.7rem;font-weight:700;font-style:italic;
+  color:rgba(var(--on-surface-rgb),0.6);margin-right:.65rem;
+}
+
+
+.sidebar-logo .logo-mark svg{height:45px;width:auto;display:block}
+.sidebar-nav{list-style:none;flex:1;padding:.75rem 0}
+.sidebar-nav li,.sidebar-footer li{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.65rem 1.75rem;cursor:pointer;
+  font-size:.82rem;font-weight:500;
+  color:rgba(var(--on-surface-rgb),0.4);
+  transition:all .3s ease;border-left:2px solid transparent;
+  user-select:none;list-style:none;
+}
+.sidebar-nav li:hover{color:rgba(var(--on-surface-rgb),0.7)}
+.sidebar-nav li.active,.sidebar-footer li.active{
+  color:rgba(var(--on-surface-rgb),0.95);
+  border-left-color:var(--accent);
+  background:rgba(var(--on-surface-rgb),0.03);
+}
+.sidebar-nav li svg,.sidebar-footer li svg{flex-shrink:0;opacity:.6}
+.sidebar-nav li.active svg,.sidebar-footer li.active svg{opacity:1}
+.sidebar-footer{
+  list-style:none;border-top:var(--surface-border);
+  padding-top:.75rem;margin-top:auto;
+}
+.sidebar-footer li{font-size:.78rem}
+.sidebar-footer li:hover{color:rgba(var(--on-surface-rgb),0.6)}
+.sidebar-footer li#btn-logout{color:rgba(var(--on-surface-rgb),0.25)}
+.sidebar-footer li#btn-logout:hover{color:rgba(var(--on-surface-rgb),0.5)}
+
+/* Content Area */
+#content{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
+.content-inner{padding:2.5rem 3rem 4rem;max-width:1200px}
+.content-header{margin-bottom:2.5rem}
+.content-header h1{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:700;
+  letter-spacing:-.02em;line-height:1.15;
+}
+.content-header h1 .accent{font-style:italic;font-weight:500;opacity:.4}
+.content-header p{font-size:.85rem;color:rgba(var(--text-rgb),0.45);margin-top:.2rem}
+.view{display:none;opacity:0;pointer-events:none}
+.view.active{display:block;opacity:1;pointer-events:auto}
+
+/* KPI Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:3rem}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.kpi-grid{grid-template-columns:1fr}}
+.kpi-card{padding:1.5rem 0;border-bottom:var(--border-light)}
+.kpi-card .kpi-label{
+  font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(var(--text-rgb),0.35);margin-bottom:.3rem;
+}
+.kpi-card .kpi-value{
+  font-family:var(--font-display);font-size:2.4rem;
+  font-weight:700;letter-spacing:-.03em;line-height:1;
+  font-style:italic;color:var(--text);
+}
+.kpi-card .kpi-sub{
+  font-size:.75rem;color:rgba(var(--text-rgb),0.3);
+  margin-top:.35rem;font-weight:500;
+}
+.kpi-card .kpi-delta{
+  display:inline-flex;align-items:center;gap:.25rem;
+  font-size:.65rem;font-weight:600;padding:.15rem .45rem;
+  border-radius:4px;margin-top:.4rem;
+}
+.kpi-card .kpi-delta.up{background:rgba(var(--text-rgb),0.04);color:var(--text)}
+.kpi-card .kpi-delta.down{background:rgba(192,57,43,0.04);color:#c0392b}
+
+/* Section headers */
+.section-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.25rem;padding-bottom:.75rem;
+  border-bottom:var(--border-light);
+}
+.section-hdr h2{
+  font-family:var(--font-display);font-size:1.15rem;
+  font-weight:700;letter-spacing:-.01em;
+}
+.section-hdr .section-link{
+  font-size:.72rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(var(--text-rgb),0.3);
+  cursor:pointer;transition:color .3s;
+}
+.section-hdr .section-link:hover{color:var(--text)}
+
+/* Table */
+.table-wrap{overflow-x:auto;margin-bottom:3rem}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+thead th{
+  text-align:left;font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:rgba(var(--text-rgb),0.3);padding:.75rem 1rem .75rem 0;
+  border-bottom:var(--border-light);white-space:nowrap;
+}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(var(--text-rgb),0.015)}
+tbody td{
+  padding:.85rem 1rem .85rem 0;border-bottom:var(--border-light);
+  white-space:nowrap;color:rgba(var(--text-rgb),0.7);
+}
+tbody td:first-child{font-weight:600;color:var(--text)}
+tbody td .status-dot{
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+tbody td .status-dot::before{
+  content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0;
+}
+.status-pendente::before{background:var(--accent)}
+.status-em_rota::before{background:var(--text)}
+.status-entregue::before{background:rgba(var(--text-rgb),0.15)}
+
+tbody td .status-tag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.72rem;font-weight:500;
+}
+tbody td .status-tag::before{
+  content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.t-status-pendente::before{background:var(--accent)}
+.t-status-em_rota::before{background:var(--text)}
+.t-status-entregue::before{background:rgba(var(--text-rgb),0.15)}
+
+/* Map View */
+.map-layout{display:flex;gap:2rem;align-items:stretch;height:calc(100vh - 10rem)}
+.map-drivers{width:280px;flex-shrink:0;overflow-y:auto;padding-right:.5rem}
+.map-drivers::-webkit-scrollbar{width:3px}
+.map-drivers::-webkit-scrollbar-thumb{background:rgba(var(--text-rgb),0.06);border-radius:2px}
+.map-driver-card{
+  padding:1rem 0;border-bottom:var(--border-light);
+  transition:background .2s;cursor:default;
+}
+.map-driver-card:last-child{border-bottom:none}
+.map-driver-card .driver-hdr{
+  display:flex;align-items:center;gap:.7rem;margin-bottom:.3rem;
+}
+.map-driver-card .driver-avatar{
+  width:2rem;height:2rem;border-radius:50%;
+  background:rgba(var(--text-rgb),0.03);display:flex;
+  align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:600;color:var(--text);
+  border:var(--border-light);flex-shrink:0;
+}
+.map-driver-card .driver-name{font-size:.82rem;font-weight:600;color:var(--text)}
+.map-driver-card .driver-status{
+  font-size:.68rem;color:rgba(var(--text-rgb),0.3);font-weight:500;
+  display:flex;align-items:center;gap:.35rem;
+}
+.map-driver-card .driver-status .pulse-dot{
+  width:5px;height:5px;border-radius:50%;flex-shrink:0;
+}
+.map-driver-card .driver-status .pulse-dot.online{background:#27ae60}
+.map-driver-card .driver-status .pulse-dot.busy{background:var(--accent)}
+.map-driver-card .driver-status .pulse-dot.offline{background:rgba(var(--text-rgb),0.1)}
+.map-driver-card .driver-meta{
+  display:flex;gap:.75rem;margin-top:.35rem;
+  font-size:.68rem;color:rgba(var(--text-rgb),0.25);
+}
+.map-driver-card .driver-meta span{display:flex;align-items:center;gap:.25rem}
+
+.map-visual{flex:1;border-radius:1rem;border:var(--border-light);overflow:hidden;position:relative}
+#real-map .leaflet-control-zoom a{background:var(--bg);color:var(--text);border-color:rgba(var(--text-primary-rgb),0.15)}
+#real-map .leaflet-control-zoom a:hover{background:rgba(var(--text-primary-rgb),0.04)}
+.lh-hub-marker{display:block;width:18px;height:18px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--accent);transition:transform .3s}
+.lh-hub-label{position:absolute;top:22px;left:50%;transform:translateX(-50%);font:600 10px/1 'Space Grotesk',sans-serif;white-space:nowrap;color:rgba(var(--text-primary-rgb),0.6);pointer-events:none}
+.lh-driver-marker{display:block;width:14px;height:14px;border-radius:50%;background:var(--text-primary);border:2px solid var(--bg);box-shadow:0 0 0 1.5px rgba(var(--text-primary-rgb),0.3)}
+.lh-driver-marker.lh-busy{animation:lh-pulse 1.8s ease-in-out infinite}
+.lh-driver-marker.lh-idle{opacity:0.5}
+@keyframes lh-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:0.5}}
+.leaflet-popup-content-wrapper{font-family:'Space Grotesk',sans-serif;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.leaflet-popup-content{margin:.6rem .8rem;font-size:.8rem}
+.leaflet-popup-content b{font-weight:600}
+[data-theme="deep-ocean"] .leaflet-layer,[data-theme="neon"] .leaflet-layer,[data-theme="ruby"] .leaflet-layer{filter:invert(1) hue-rotate(180deg) brightness(0.95) contrast(1.1)}
+
+/* Hubs View */
+.hubs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:1000px){.hubs-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.hubs-grid{grid-template-columns:1fr}}
+.hub-card{
+  padding:2rem;border:var(--border-light);border-radius:0;
+  transition:all .3s ease;background:var(--bg);
+}
+.hub-card:hover{border-color:rgba(var(--text-rgb),0.15);background:rgba(var(--text-rgb),0.008)}
+.hub-card .hub-marker-icon{
+  width:2.5rem;height:2.5rem;border-radius:50%;
+  border:var(--border);display:flex;align-items:center;
+  justify-content:center;margin-bottom:1.25rem;
+  font-family:var(--font-display);font-size:.7rem;
+  font-style:italic;font-weight:700;color:var(--accent);
+}
+.hub-card h3{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.hub-card .hub-addr{font-size:.78rem;color:rgba(var(--text-rgb),0.4);margin-bottom:1rem}
+.hub-card .hub-stats{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.hub-card .hub-stat{padding:.6rem 0;border-top:var(--border-light)}
+.hub-card .hub-stat .hs-val{font-family:var(--font-display);font-size:1.3rem;font-weight:700;font-style:italic;line-height:1}
+.hub-card .hub-stat .hs-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:rgba(var(--text-rgb),0.3);margin-top:.15rem}
+
+/* Settings View */
+.settings-form{max-width:480px}
+.settings-form .field{margin-bottom:2rem}
+.settings-divider{height:1px;background:rgba(var(--text-rgb),0.06);margin:2.5rem 0}
+.settings-form h3{
+  font-family:var(--font-display);font-size:1rem;
+  font-weight:700;margin-bottom:1.5rem;
+}
+.settings-form .btn{width:auto;min-width:140px}
+
+/* Theme Selector */
+.theme-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.25rem}
+.theme-btn{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  padding:1.25rem 1.5rem;border:var(--border-light);background:transparent;
+  cursor:pointer;transition:all .3s ease;font-family:var(--font-ui);min-width:88px;
+}
+.theme-btn:hover{border-color:rgba(var(--text-rgb),0.2)}
+.theme-btn.active{border-color:var(--accent)}
+.theme-btn .theme-swatch{width:2.2rem;height:2.2rem;border-radius:50%;display:block;flex-shrink:0}
+.theme-btn .theme-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:rgba(var(--text-rgb),0.4)}
+.theme-btn .theme-name{font-size:.82rem;font-weight:500;color:var(--text)}
+
+/* Driver headers in map driver list */
+.driver-section-title{
+  font-size:.65rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(var(--text-rgb),0.2);
+  padding:1rem 0 .5rem;border-bottom:var(--border-light);margin-top:.5rem;
+}
+
+/* Scrollbar */
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-track{background:transparent}
+#content::-webkit-scrollbar-thumb{background:rgba(var(--text-rgb),0.06);border-radius:2px}
+
+/* Responsive */
+@media(max-width:900px){
+  #sidebar{width:200px}
+  .content-inner{padding:2rem 1.5rem 3rem}
+  .auth-left{display:none}
+  .auth-right{width:100%;border-left:none;padding:3rem 2rem}
+  .map-layout{flex-direction:column;height:auto}
+  .map-drivers{width:100%;display:flex;gap:1rem;overflow-x:auto;padding-right:0;flex-wrap:wrap}
+  .map-driver-card{flex-shrink:0;width:200px;border-bottom:none;border-right:var(--border-light);padding-right:1rem}
+}
+@media(max-width:600px){
+  #sidebar{width:60px}
+  .sidebar-logo{padding:0 .75rem 1.5rem;text-align:center}
+  .sidebar-logo .logo-mark{margin-right:0}
+
+  .sidebar-nav li,.sidebar-footer li{padding:.65rem .75rem;justify-content:center}
+  .sidebar-nav li span,.sidebar-footer li span{display:none}
+  .content-inner{padding:1.5rem 1rem 2rem}
+}
+@media(prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ AUTH SCREEN ============ -->
+<div id="screen-auth">
+  <div class="auth-left">
+    <div class="auth-tagline">
+      A última milha começa aqui.
+      <span>LogiHub</span>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form">
+      <div class="auth-logo">
+        <svg viewBox="0 0 1000 400" style="height:40px;width:auto" xmlns="http://www.w3.org/2000/svg"><path d="M410 200 C 350 200, 250 100, 150 200 C 50 300, 150 400, 250 300 L 400 150" fill="none" stroke="var(--accent)" stroke-width="20" stroke-linecap="round"/><path d="M400 280 H 550 V 180 H 450 L 400 280 Z" fill="var(--text)"/><circle cx="430" cy="280" r="25" fill="var(--text)"/><circle cx="530" cy="280" r="25" fill="var(--text)"/><text x="300" y="380" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="100" fill="var(--text)">LogiHub</text></svg>
+      </div>
+      <h1 class="auth-title">Acessar</h1>
+      <p class="auth-subtitle">Entre com suas credenciais</p>
+
+      <div id="auth-error" class="auth-error"></div>
+
+      <!-- Login -->
+      <form id="form-login">
+        <div class="field" id="field-login-email">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email" />
+          <span class="field-err">Email inválido</span>
+        </div>
+        <div class="field" id="field-login-password">
+          <label for="login-password">Senha</label>
+          <input type="password" id="login-password" placeholder="mínimo 6 caracteres" required autocomplete="current-password" />
+          <span class="field-err">Senha inválida</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+
+      <div class="form-divider">ou</div>
+
+      <!-- Register -->
+      <form id="form-register">
+        <div class="field" id="field-register-name">
+          <label for="register-name">Nome</label>
+          <input type="text" id="register-name" placeholder="Seu nome" required />
+          <span class="field-err">Campo obrigatório</span>
+        </div>
+        <div class="field" id="field-register-email">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" placeholder="seu@email.com" required autocomplete="email" />
+          <span class="field-err">Email inválido</span>
+        </div>
+        <div class="field" id="field-register-password">
+          <label for="register-password">Senha</label>
+          <input type="password" id="register-password" placeholder="mínimo 6 caracteres" required autocomplete="new-password" />
+          <span class="field-err">Mínimo 6 caracteres</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Criar conta</button>
+      </form>
+
+      <p class="auth-toggle" id="auth-toggle-text">
+        Não tem conta? <a href="#" id="show-register">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="screen-app" class="hidden">
+  <nav id="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 1000 400" style="height:45px;width:auto" xmlns="http://www.w3.org/2000/svg"><path d="M410 200 C 350 200, 250 100, 150 200 C 50 300, 150 400, 250 300 L 400 150" fill="none" stroke="var(--accent)" stroke-width="20" stroke-linecap="round"/><path d="M400 280 H 550 V 180 H 450 L 400 280 Z" fill="var(--on-surface)"/><circle cx="430" cy="280" r="25" fill="var(--on-surface)"/><circle cx="530" cy="280" r="25" fill="var(--on-surface)"/><text x="300" y="380" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="100" fill="var(--on-surface)">LogiHub</text></svg>
+        </span>
+      </div>
+      <ul class="sidebar-nav">
+        <li data-view="dashboard" class="active">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Dashboard</span>
+        </li>
+        <li data-view="map">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Entregas em Tempo Real</span>
+        </li>
+        <li data-view="hubs">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="1.5"/><path d="M2 10L12 2l10 8"/></svg>
+          <span>Micro-Hubs</span>
+        </li>
+      </ul>
+      <ul class="sidebar-footer">
+        <li data-view="settings">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+          <span>Configurações</span>
+        </li>
+        <li id="btn-logout">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v18h-6M10 17l-5-5 5-5M5 12h16"/></svg>
+          <span>Sair</span>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id="content">
+    <div class="content-inner">
+
+      <!-- ============ DASHBOARD ============ -->
+      <div id="view-dashboard" class="view active">
+        <div class="content-header">
+          <h1>Visão Geral <span class="accent">· Última Milha</span></h1>
+          <p>Acompanhe o desempenho das operações em tempo real.</p>
+        </div>
+        <div class="kpi-grid" id="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Taxa de Sucesso</div><div class="kpi-value" id="kpi-success">98.5%</div><div class="kpi-sub">últimas 24h</div></div>
+          <div class="kpi-card"><div class="kpi-label">Tempo Médio de Entrega</div><div class="kpi-value" id="kpi-avg-time">24 <span style="font-size:1rem;font-weight:500;opacity:.4">min</span></div><div class="kpi-sub">média do dia</div></div>
+          <div class="kpi-card"><div class="kpi-label">Pacotes em Trânsito</div><div class="kpi-value" id="kpi-transit">147</div><div class="kpi-sub">neste momento</div></div>
+          <div class="kpi-card"><div class="kpi-label">Entregas Hoje</div><div class="kpi-value" id="kpi-today">312</div><div class="kpi-sub">+18% vs. ontem</div></div>
+        </div>
+        <div class="section-hdr">
+          <h2>Entregas Recentes</h2>
+        </div>
+        <div class="table-wrap">
+          <table id="deliveries-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Destino</th>
+                <th>Motorista</th>
+                <th>Hub</th>
+                <th>Status</th>
+                <th>Tempo</th>
+              </tr>
+            </thead>
+            <tbody id="deliveries-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ REAL-TIME MAP ============ -->
+      <div id="view-map" class="view">
+        <div class="content-header">
+          <h1>Entregas em Tempo Real <span class="accent">· Despacho</span></h1>
+          <p>Monitore a frota ativa e acompanhe as entregas em andamento.</p>
+        </div>
+        <div class="map-layout">
+          <div class="map-drivers" id="map-drivers"></div>
+          <div class="map-visual">
+            <div id="real-map" style="width:100%;height:100%;z-index:1;border-radius:inherit;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MICRO-HUBS ============ -->
+      <div id="view-hubs" class="view">
+        <div class="content-header">
+          <h1>Micro-Hubs <span class="accent">· Rede</span></h1>
+          <p>Gerencie os centros de distribuição urbana.</p>
+        </div>
+        <div class="hubs-grid" id="hubs-grid"></div>
+      </div>
+
+      <!-- ============ SETTINGS ============ -->
+      <div id="view-settings" class="view">
+        <div class="content-header">
+          <h1>Configurações <span class="accent">· Conta</span></h1>
+          <p>Gerencie suas informações de perfil.</p>
+        </div>
+        <div class="settings-form">
+          <h3>Perfil</h3>
+          <div class="field">
+            <label for="settings-name">Nome</label>
+            <input type="text" id="settings-name" />
+          </div>
+          <div class="field">
+            <label for="settings-email">Email</label>
+            <input type="email" id="settings-email" disabled style="opacity:.4" />
+          </div>
+          <button class="btn btn-primary" id="settings-save">Salvar</button>
+
+          <div class="settings-divider"></div>
+          <h3>Alterar Senha</h3>
+          <div class="field">
+            <label for="settings-password-current">Senha atual</label>
+            <input type="password" id="settings-password-current" />
+          </div>
+          <div class="field">
+            <label for="settings-password-new">Nova senha</label>
+            <input type="password" id="settings-password-new" placeholder="mínimo 6 caracteres" />
+          </div>
+          <button class="btn btn-outline" id="settings-password-save">Atualizar senha</button>
+
+          <div class="settings-divider"></div>
+          <h3>Aparência da Plataforma</h3>
+          <div class="theme-selector">
+            <button class="theme-btn" data-theme-val="eco">
+              <span class="theme-swatch" style="background:#203727"></span>
+              <span class="theme-name">Eco</span>
+              <span class="theme-label">Verde Escuro</span>
+            </button>
+            <button class="theme-btn" data-theme-val="deep-ocean">
+              <span class="theme-swatch" style="background:#0a192f"></span>
+              <span class="theme-name">Deep Ocean</span>
+              <span class="theme-label">Azul Profundo</span>
+            </button>
+            <button class="theme-btn" data-theme-val="desert-trust">
+              <span class="theme-swatch" style="background:#e67e22"></span>
+              <span class="theme-name">Desert Trust</span>
+              <span class="theme-label">Laranja Terroso</span>
+            </button>
+            <button class="theme-btn" data-theme-val="sunset">
+              <span class="theme-swatch" style="background:#ff5722"></span>
+              <span class="theme-name">Sunset</span>
+              <span class="theme-label">Laranja Vibrante</span>
+            </button>
+            <button class="theme-btn" data-theme-val="neon">
+              <span class="theme-swatch" style="background:#39d353"></span>
+              <span class="theme-name">Neon</span>
+              <span class="theme-label">Verde Elétrico</span>
+            </button>
+            <button class="theme-btn" data-theme-val="ruby">
+              <span class="theme-swatch" style="background:#e63946"></span>
+              <span class="theme-name">Ruby</span>
+              <span class="theme-label">Vermelho Rubi</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+;(function(){
+'use strict';
+
+/* ==================== HELPERS ==================== */
+function $(id){return document.getElementById(id)}
+function qs(s){return document.querySelector(s)}
+function qsa(s){return document.querySelectorAll(s)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+
+/* ==================== DATABASE ==================== */
+const DB = {
+  KEY: 'logihub_db',
+
+  get(){
+    try{
+      const raw = localStorage.getItem(this.KEY);
+      if(!raw) return null;
+      return JSON.parse(raw);
+    }catch(e){return null}
+  },
+
+  save(data){
+    localStorage.setItem(this.KEY, JSON.stringify(data));
+  },
+
+  init(){
+    let db = this.get();
+    if(!db){
+      db = {
+        users: [
+          { email: 'admin@logihub.com', password: 'admin123', name: 'Admin LogiHub' }
+        ],
+        deliveries: this._seedDeliveries(),
+        hubs: this._seedHubs()
+      };
+      this.save(db);
+    }
+    return db;
+  },
+
+  _seedDeliveries(){
+    const addresses = [
+      'Rua Augusta, 1500', 'Av. Paulista, 2000', 'Rua Oscar Freire, 900',
+      'Rua Haddock Lobo, 595', 'Alameda Santos, 1800', 'Rua Bela Cintra, 800',
+      'Av. Faria Lima, 3000', 'Rua Funchal, 100', 'Rua Tabapuã, 500',
+      'Rua João Cachoeira, 700', 'Av. Brigadeiro Faria Lima, 4500',
+      'Rua Clodomiro Amazonas, 150', 'Rua dos Pinheiros, 800',
+      'Rua Teodoro Sampaio, 2000', 'Praça Benedito Calixto, 100'
+    ];
+    const drivers = ['Carlos Silva','Amanda Oliveira','Rafael Santos','Juliana Costa'];
+    const hubs = ['Hub Centro','Hub Zona Sul','Hub Zona Norte'];
+    const statuses = ['pendente','em_rota','entregue'];
+    const delivery = [];
+    for(let i=0;i<15;i++){
+      const id = 'LHG-' + (2026000+i);
+      const status = statuses[rand(0,2)];
+      delivery.push({
+        id,
+        status,
+        address: addresses[i % addresses.length],
+        driver: drivers[rand(0,3)],
+        estimatedTime: rand(8,55) + ' min',
+        hubOrigin: hubs[rand(0,2)]
+      });
+    }
+    return delivery;
+  },
+
+  _seedHubs(){
+    return [
+      {
+        id: 1, name: 'Hub Centro', address: 'Rua Augusta, 450',
+        drivers: 4, packagesToday: 156, lat: -23.550, lng: -46.633
+      },
+      {
+        id: 2, name: 'Hub Zona Sul', address: 'Av. Santo Amaro, 2000',
+        drivers: 3, packagesToday: 98, lat: -23.600, lng: -46.650
+      },
+      {
+        id: 3, name: 'Hub Zona Norte', address: 'Av. Cruzeiro do Sul, 800',
+        drivers: 5, packagesToday: 124, lat: -23.500, lng: -46.620
+      }
+    ];
+  },
+
+  addUser(user){
+    const db = this.get();
+    db.users.push(user);
+    this.save(db);
+  },
+
+  getUser(email){
+    const db = this.get();
+    return db.users.find(u => u.email === email) || null;
+  },
+
+  getDeliveries(){
+    const db = this.get();
+    return db.deliveries;
+  },
+
+  getHubs(){
+    const db = this.get();
+    return db.hubs;
+  },
+
+  updateUser(email, data){
+    const db = this.get();
+    const idx = db.users.findIndex(u => u.email === email);
+    if(idx !== -1){
+      db.users[idx] = {...db.users[idx], ...data};
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+};
+
+/* ==================== AUTH ==================== */
+const Auth = {
+  currentUser: null,
+
+  init(){
+    const stored = sessionStorage.getItem('logihub_user');
+    if(stored){
+      try{
+        this.currentUser = JSON.parse(stored);
+        return true;
+      }catch(e){}
+    }
+    return false;
+  },
+
+  login(email, password){
+    const user = DB.getUser(email);
+    if(!user || user.password !== password) return false;
+    this.currentUser = user;
+    sessionStorage.setItem('logihub_user', JSON.stringify(user));
+    return true;
+  },
+
+  register(email, password, name){
+    const exists = DB.getUser(email);
+    if(exists) return false;
+    const user = { email, password, name };
+    DB.addUser(user);
+    this.currentUser = user;
+    sessionStorage.setItem('logihub_user', JSON.stringify(user));
+    return true;
+  },
+
+  logout(){
+    this.currentUser = null;
+    sessionStorage.removeItem('logihub_user');
+  }
+};
+
+/* ==================== UI ==================== */
+const UI = {
+  currentView: 'dashboard',
+
+  init(){
+    DB.init();
+    this.bindAuth();
+    this.bindSidebar();
+    this.bindSettings();
+
+    if(localStorage.getItem('logihub_sim_recent')){
+      var tag=document.querySelector('.auth-tagline');
+      if(tag)tag.innerHTML='Vimos que simulou uma rota com sucesso. Crie a sua conta para começar a otimizar.<span>LogiHub</span>';
+      localStorage.removeItem('logihub_sim_recent');
+    }
+
+    if(Auth.init()){
+      this.showApp();
+    }
+
+    document.body.classList.add('loaded');
+  },
+
+  /* ----- Auth ----- */
+  bindAuth(){
+    $('show-register').addEventListener('click', e => {
+      e.preventDefault();
+      this.toggleAuthForms();
+    });
+    $('auth-toggle-text').addEventListener('click', e => {
+      if(e.target.id === 'show-register'){
+        e.preventDefault();
+        this.toggleAuthForms();
+      }
+    });
+
+    $('form-login').addEventListener('submit', e => {
+      e.preventDefault();
+      this.handleLogin();
+    });
+    $('form-register').addEventListener('submit', e => {
+      e.preventDefault();
+      this.handleRegister();
+    });
+  },
+
+  toggleAuthForms(){
+    const login = $('form-login');
+    const register = $('form-register');
+    const toggle = $('auth-toggle-text');
+    const title = qs('.auth-title');
+    const subtitle = qs('.auth-subtitle');
+    const err = $('auth-error');
+    err.classList.remove('show');
+
+    if(login.style.display === 'none'){
+      login.style.display = 'block';
+      register.style.display = 'none';
+      title.textContent = 'Acessar';
+      subtitle.textContent = 'Entre com suas credenciais';
+      toggle.innerHTML = 'Não tem conta? <a href="#" id="show-register">Cadastre-se</a>';
+    }else{
+      login.style.display = 'none';
+      register.style.display = 'block';
+      title.textContent = 'Criar Conta';
+      subtitle.textContent = 'Cadastre-se para começar';
+      toggle.innerHTML = 'Já tem conta? <a href="#" id="show-register">Entrar</a>';
+    }
+  },
+
+  showAuthError(msg){
+    const err = $('auth-error');
+    err.textContent = msg;
+    err.classList.add('show');
+  },
+
+  clearAuthErrors(){
+    qsa('.field.er').forEach(el => el.classList.remove('er'));
+    $('auth-error').classList.remove('show');
+  },
+
+  handleLogin(){
+    this.clearAuthErrors();
+    const email = $('login-email').value.trim();
+    const password = $('login-password').value;
+
+    if(!email){ $('field-login-email').classList.add('er'); return }
+    if(!password || password.length < 6){ $('field-login-password').classList.add('er'); return }
+
+    if(!Auth.login(email, password)){
+      this.showAuthError('Email ou senha incorretos.');
+      return;
+    }
+    this.showApp();
+  },
+
+  handleRegister(){
+    this.clearAuthErrors();
+    const name = $('register-name').value.trim();
+    const email = $('register-email').value.trim();
+    const password = $('register-password').value;
+
+    if(!name){ $('field-register-name').classList.add('er'); return }
+    if(!email){ $('field-register-email').classList.add('er'); return }
+    if(!password || password.length < 6){ $('field-register-password').classList.add('er'); return }
+
+    if(!Auth.register(email, password, name)){
+      this.showAuthError('Este email já está cadastrado.');
+      return;
+    }
+    this.showApp();
+  },
+
+  /* ----- App ----- */
+  showApp(){
+    $('screen-auth').classList.add('hidden');
+    $('screen-app').classList.remove('hidden');
+    this.renderDashboard();
+    this.renderMap();
+    this.renderHubs();
+    this.renderSettings();
+    this.navigate('dashboard');
+  },
+
+  navigate(view){
+    if(this.currentView === view) return;
+    const oldView = $('view-' + this.currentView);
+    const newView = $('view-' + view);
+    if(!newView) return;
+    this.currentView = view;
+
+    if(oldView && oldView !== newView){
+      oldView.classList.remove('active');
+    }
+    newView.classList.add('active');
+
+    qsa('.sidebar-nav li, .sidebar-footer li').forEach(li => li.classList.remove('active'));
+    const navItem = qs(`[data-view="${view}"]`);
+    if(navItem) navItem.classList.add('active');
+
+    if(view === 'map'){
+      if(!this.realMap){
+        this.initRealMap();
+      }
+      setTimeout(() => {
+        if(this.realMap) this.realMap.invalidateSize();
+      }, 120);
+    }
+  },
+
+  bindSidebar(){
+    qsa('[data-view]').forEach(el => {
+      el.addEventListener('click', () => {
+        const view = el.dataset.view;
+        this.navigate(view);
+      });
+    });
+    $('btn-logout').addEventListener('click', () => {
+      Auth.logout();
+      $('screen-app').classList.add('hidden');
+      $('screen-auth').classList.remove('hidden');
+      // Reset auth forms
+      $('form-login').style.display = 'block';
+      $('form-register').style.display = 'none';
+      $('login-email').value = '';
+      $('login-password').value = '';
+      $('register-name').value = '';
+      $('register-email').value = '';
+      $('register-password').value = '';
+      qs('.auth-title').textContent = 'Acessar';
+      qs('.auth-subtitle').textContent = 'Entre com suas credenciais';
+      qs('#auth-toggle-text').innerHTML = 'Não tem conta? <a href="#" id="show-register">Cadastre-se</a>';
+    });
+  },
+
+  /* ----- Dashboard ----- */
+  renderDashboard(){
+    this.renderKPIs();
+    this.renderDeliveryTable();
+  },
+
+  renderKPIs(){
+    const deliveries = DB.getDeliveries();
+    const total = deliveries.length;
+    const delivered = deliveries.filter(d => d.status === 'entregue').length;
+    const inTransit = deliveries.filter(d => d.status === 'em_rota').length;
+    const successRate = total ? ((delivered / total) * 100).toFixed(1) : '0.0';
+
+    // Calculate average time from delivered ones
+    const deliveredTimes = deliveries.filter(d => d.status === 'entregue').map(d => {
+      const num = parseInt(d.estimatedTime);
+      return isNaN(num) ? 0 : num;
+    });
+    const avgTime = deliveredTimes.length
+      ? Math.round(deliveredTimes.reduce((a,b) => a+b, 0) / deliveredTimes.length)
+      : 0;
+
+    $('kpi-success').textContent = successRate + '%';
+    $('kpi-avg-time').innerHTML = avgTime + ' <span style="font-size:1rem;font-weight:500;opacity:.4">min</span>';
+    $('kpi-transit').textContent = inTransit;
+    $('kpi-today').textContent = delivered;
+  },
+
+  renderDeliveryTable(){
+    const deliveries = DB.getDeliveries();
+    const tbody = $('deliveries-tbody');
+    // Show most recent first (reverse order)
+    const sorted = [...deliveries].reverse();
+    let html = '';
+    sorted.forEach(d => {
+      const statusLabel = { pendente: 'Pendente', em_rota: 'Em Rota', entregue: 'Entregue' }[d.status] || d.status;
+      html += '<tr>' +
+        '<td>' + esc(d.id) + '</td>' +
+        '<td>' + esc(d.address) + '</td>' +
+        '<td>' + esc(d.driver) + '</td>' +
+        '<td>' + esc(d.hubOrigin) + '</td>' +
+        '<td><span class="status-tag t-status-' + d.status + '">' + statusLabel + '</span></td>' +
+        '<td>' + d.estimatedTime + '</td>' +
+        '</tr>';
+    });
+    tbody.innerHTML = html;
+  },
+
+  /* ----- Map ----- */
+  renderMap(){
+    this.renderDrivers();
+  },
+
+  cssVar(name){
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  },
+
+  initRealMap(){
+    if(this.realMap) return;
+    const container = $('real-map');
+    if(!container) return;
+
+    this.realMap = L.map('real-map', {
+      center: [-23.5505, -46.6333],
+      zoom: 12,
+      zoomControl: true,
+      attributionControl: false
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com">CARTO</a>'
+    }).addTo(this.realMap);
+
+    const hubs = DB.getHubs();
+    hubs.forEach(h => {
+      const icon = L.divIcon({
+        className: '',
+        html: '<span class="lh-hub-marker"></span><span class="lh-hub-label">' + esc(h.name) + '</span>',
+        iconSize: [18, 48],
+        iconAnchor: [9, 48]
+      });
+      L.marker([h.lat, h.lng], { icon }).addTo(this.realMap)
+        .bindPopup('<b>' + esc(h.name) + '</b><br>' + esc(h.address));
+    });
+
+    const drivers = [
+      { name: 'Carlos Silva', status: 'em_rota' },
+      { name: 'Amanda Oliveira', status: 'em_rota' },
+      { name: 'Rafael Santos', status: 'disponivel' },
+      { name: 'Juliana Costa', status: 'em_rota' }
+    ];
+
+    const hubPts = hubs.map(h => [h.lat, h.lng]);
+    const driverPts = [];
+
+    drivers.forEach((d, i) => {
+      const base = hubPts[i % hubPts.length];
+      const off = () => (Math.random() - 0.5) * 0.025;
+      const pos = [base[0] + off(), base[1] + off()];
+      driverPts.push(pos);
+
+      const cls = d.status === 'em_rota' ? 'lh-busy' : 'lh-idle';
+      const icon = L.divIcon({
+        className: '',
+        html: '<span class="lh-driver-marker ' + cls + '"></span>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+      L.marker(pos, { icon }).addTo(this.realMap);
+    });
+
+    const accent = this.cssVar('--accent');
+    hubPts.forEach(h => {
+      driverPts.forEach(d => {
+        const dx = h[0] - d[0], dy = h[1] - d[1];
+        if(Math.sqrt(dx*dx + dy*dy) < 0.02){
+          L.polyline([h, d], {
+            color: accent,
+            weight: 1.5,
+            opacity: 0.25,
+            dashArray: '5, 5'
+          }).addTo(this.realMap);
+        }
+      });
+    });
+  },
+
+  renderDrivers(){
+    const driversData = [
+      { name: 'Carlos Silva', status: 'em_rota', deliveries: 3, initials: 'CS' },
+      { name: 'Amanda Oliveira', status: 'em_rota', deliveries: 5, initials: 'AO' },
+      { name: 'Rafael Santos', status: 'disponivel', deliveries: 0, initials: 'RS' },
+      { name: 'Juliana Costa', status: 'em_rota', deliveries: 2, initials: 'JC' }
+    ];
+    const container = $('map-drivers');
+    let html = '<div class="driver-section-title">Motoristas Ativos</div>';
+
+    driversData.forEach(d => {
+      const dotClass = d.status === 'em_rota' ? 'busy' : d.status === 'disponivel' ? 'online' : 'offline';
+      const statusText = d.status === 'em_rota' ? 'Em Rota' : d.status === 'disponivel' ? 'Disponível' : 'Offline';
+      const badge = d.deliveries ? d.deliveries + ' entrega' + (d.deliveries > 1 ? 's' : '') : 'disponível';
+      html += '<div class="map-driver-card">' +
+        '<div class="driver-hdr">' +
+        '<div class="driver-avatar">' + d.initials + '</div>' +
+        '<div class="driver-name">' + d.name + '</div>' +
+        '</div>' +
+        '<div class="driver-status"><span class="pulse-dot ' + dotClass + '"></span> ' + statusText + '</div>' +
+        '<div class="driver-meta"><span>' + badge + '</span></div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+  },
+
+  /* ----- Hubs ----- */
+  renderHubs(){
+    const hubs = DB.getHubs();
+    const grid = $('hubs-grid');
+    let html = '';
+    hubs.forEach(h => {
+      html += '<div class="hub-card">' +
+        '<div class="hub-marker-icon">' + h.name.charAt(0) + '</div>' +
+        '<h3>' + esc(h.name) + '</h3>' +
+        '<div class="hub-addr">' + esc(h.address) + '</div>' +
+        '<div class="hub-stats">' +
+        '<div class="hub-stat"><div class="hs-val">' + h.drivers + '</div><div class="hs-label">Motoristas</div></div>' +
+        '<div class="hub-stat"><div class="hs-val">' + h.packagesToday + '</div><div class="hs-label">Pacotes Hoje</div></div>' +
+        '</div>' +
+        '</div>';
+    });
+    grid.innerHTML = html;
+  },
+
+  /* ----- Settings ----- */
+  bindSettings(){
+    $('settings-save').addEventListener('click', () => {
+      const name = $('settings-name').value.trim();
+      if(!name) return;
+      if(Auth.currentUser){
+        DB.updateUser(Auth.currentUser.email, { name });
+        Auth.currentUser.name = name;
+        sessionStorage.setItem('logihub_user', JSON.stringify(Auth.currentUser));
+      }
+    });
+    $('settings-password-save').addEventListener('click', () => {
+      const current = $('settings-password-current').value;
+      const newPass = $('settings-password-new').value;
+      if(!Auth.currentUser) return;
+      if(current !== Auth.currentUser.password){
+        return;
+      }
+      if(!newPass || newPass.length < 6) return;
+      DB.updateUser(Auth.currentUser.email, { password: newPass });
+      Auth.currentUser.password = newPass;
+      sessionStorage.setItem('logihub_user', JSON.stringify(Auth.currentUser));
+      $('settings-password-current').value = '';
+      $('settings-password-new').value = '';
+    });
+    this.bindThemeSwitcher();
+  },
+
+  bindThemeSwitcher(){
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'eco';
+    qsa('.theme-btn').forEach(btn => {
+      const theme = btn.dataset.themeVal;
+      if(theme === currentTheme) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        qsa('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('logihub_theme', theme);
+      });
+    });
+  },
+
+  renderSettings(){
+    if(Auth.currentUser){
+      $('settings-name').value = Auth.currentUser.name || '';
+      $('settings-email').value = Auth.currentUser.email || '';
+    }
+  }
+};
+
+/* ==================== INIT ==================== */
+document.addEventListener('DOMContentLoaded', () => {
+  UI.init();
+
+  /* Page Transitions */
+  document.addEventListener('click', function(e){
+    var el=e.target.closest('a[href]');
+    if(!el)return;
+    var h=el.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('#')||h.startsWith('javascript:'))return;
+    if(!h.includes('.html')&&!h.startsWith('http'))return;
+    e.preventDefault();
+    document.body.classList.add('page-exit');
+    setTimeout(function(){window.location.href=h},400);
+  });
+});
+
+})();
+</script>
+</body>
+</html>
