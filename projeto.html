@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="eco">
+<head>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('logihub_theme')||'eco')</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LogiHub — Documentacao do Projeto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg-primary: #fbfff4;
+  --text-primary: #203727;
+  --accent: #b8914a;
+  --text-primary-rgb: 32, 55, 39;
+  --accent-rgb: 184, 145, 74;
+  --bg-primary-rgb: 251, 255, 244;
+  --border: rgba(32,55,39,0.1);
+  --bg: var(--bg-primary);
+  --text: var(--text-primary);
+  --text-rgb: var(--text-primary-rgb);
+  --bg-rgb: var(--bg-primary-rgb);
+  --surface: var(--text-primary);
+  --on-surface: var(--bg-primary);
+  --on-surface-rgb: var(--bg-primary-rgb);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-ui: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+[data-theme="deep-ocean"]{
+  --bg-primary: #0a192f; --text-primary: #f4f7f0; --accent: #00ffff; --text-primary-rgb: 244,247,240; --accent-rgb: 0,255,255; --bg-primary-rgb: 10,25,47; --border: rgba(244,247,240,0.1); --bg: var(--bg-primary); --text: var(--text-primary); --text-rgb: var(--text-primary-rgb); --bg-rgb: var(--bg-primary-rgb); --surface: var(--text-primary); --on-surface: var(--bg-primary); --on-surface-rgb: var(--bg-primary-rgb);
+}
+[data-theme="desert-trust"]{
+  --bg-primary: #f4e1c1; --text-primary: #2b2d42; --accent: #e67e22; --text-primary-rgb: 43,45,66; --accent-rgb: 230,126,34; --bg-primary-rgb: 244,225,193; --border: rgba(43,45,66,0.1); --bg: var(--bg-primary); --text: var(--text-primary); --text-rgb: var(--text-primary-rgb); --bg-rgb: var(--bg-primary-rgb); --surface: var(--text-primary); --on-surface: var(--bg-primary); --on-surface-rgb: var(--bg-primary-rgb);
+}
+[data-theme="sunset"]{
+  --bg-primary:#fff5eb; --text-primary:#4a1c00; --accent:#ff5722; --text-primary-rgb:74,28,0; --accent-rgb:255,87,34; --bg-primary-rgb:255,245,235; --border:rgba(74,28,0,0.1); --bg:var(--bg-primary); --text:var(--text-primary); --text-rgb:var(--text-primary-rgb); --bg-rgb:var(--bg-primary-rgb); --surface:var(--text-primary); --on-surface:var(--bg-primary); --on-surface-rgb:var(--bg-primary-rgb);
+}
+[data-theme="neon"]{
+  --bg-primary:#0d1117; --text-primary:#c9d1d9; --accent:#39d353; --text-primary-rgb:201,209,217; --accent-rgb:57,211,83; --bg-primary-rgb:13,17,23; --border:rgba(201,209,217,0.1); --bg:var(--bg-primary); --text:var(--text-primary); --text-rgb:var(--text-primary-rgb); --bg-rgb:var(--bg-primary-rgb); --surface:var(--text-primary); --on-surface:var(--bg-primary); --on-surface-rgb:var(--bg-primary-rgb);
+}
+[data-theme="ruby"]{
+  --bg-primary:#fdf8f8; --text-primary:#2d0a0e; --accent:#e63946; --text-primary-rgb:45,10,14; --accent-rgb:230,57,70; --bg-primary-rgb:253,248,248; --border:rgba(45,10,14,0.1); --bg:var(--bg-primary); --text:var(--text-primary); --text-rgb:var(--text-primary-rgb); --bg-rgb:var(--bg-primary-rgb); --surface:var(--text-primary); --on-surface:var(--bg-primary); --on-surface-rgb:var(--bg-primary-rgb);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family: var(--font-ui);
+  background: var(--bg); color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  opacity:0; transform:translateY(6px);
+  transition:opacity .5s ease,transform .5s ease
+}
+body.loaded{opacity:1;transform:translateY(0)}
+::selection{background:var(--surface);color:var(--on-surface)}
+a{color:inherit;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:0 2rem}
+
+/* HEADER */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(var(--bg-rgb),0.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(var(--text-rgb),0.06);
+  padding:1rem 0;
+}
+.hdr-i{display:flex;align-items:center;justify-content:space-between}
+.hdr-brand{font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.hdr-brand span{font-style:italic;opacity:.4;font-weight:500}
+.hdr-actions{display:flex;align-items:center;gap:1rem}
+.btn{
+  font-family:var(--font-ui);font-size:.75rem;font-weight:600;
+  padding:.6rem 1.2rem;border-radius:9999px;border:none;cursor:pointer;
+  transition:all .4s cubic-bezier(.19,1,.22,1);
+  text-transform:uppercase;letter-spacing:.08em;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-p{background:var(--surface);color:var(--on-surface)}
+.btn-p:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(var(--text-rgb),0.1)}
+.btn-o{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px rgba(var(--text-rgb),0.12)}
+.btn-o:hover{box-shadow:inset 0 0 0 1px var(--text);transform:scale(1.03)}
+
+/* HERO */
+.hero{
+  padding:8rem 0 4rem;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  margin-bottom:3rem;
+}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.hero p{font-size:.9rem;color:rgba(var(--on-surface-rgb),0.55);margin-top:.5rem;max-width:32rem;line-height:1.7}
+
+/* SECTION */
+.s{margin-bottom:4rem}
+.s-hdr{margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid rgba(var(--text-rgb),0.06)}
+.s-hdr h2{font-family:var(--font-display);font-size:1.6rem;font-weight:700;letter-spacing:-.01em}
+.s-hdr .label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:rgba(var(--text-rgb),0.35);margin-bottom:.4rem;display:block}
+.s-hdr p{font-size:.8rem;color:rgba(var(--text-rgb),0.45);margin-top:.3rem}
+
+/* MIRO CARD */
+.miro-card{
+  background:rgba(var(--text-rgb),0.02);border:1px solid rgba(var(--text-rgb),0.06);
+  border-radius:1.5rem;padding:3rem;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:1rem;
+  transition:all .4s ease;
+}
+.miro-card:hover{border-color:rgba(var(--text-rgb),0.12);background:rgba(var(--text-rgb),0.035)}
+.miro-card .ic{width:3rem;height:3rem;border-radius:1rem;background:rgba(var(--accent-rgb),0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.miro-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600}
+.miro-card p{font-size:.82rem;color:rgba(var(--text-rgb),0.5);max-width:28rem}
+.miro-card .btn{font-size:.8rem;padding:.85rem 2rem}
+.miro-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
+.miro-grid>a{background:var(--bg);padding:2rem;text-align:center;transition:background .4s ease;display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.miro-grid>a:hover{background:rgba(var(--text-rgb),0.02)}
+.miro-grid .ic{width:2.5rem;height:2.5rem;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.miro-grid h4{font-size:.85rem;font-weight:600}
+.miro-grid p{font-size:.7rem;color:rgba(var(--text-rgb),0.4);max-width:18rem}
+
+/* PERSONA */
+.persona-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
+@media(max-width:768px){.persona-g{grid-template-columns:1fr}}
+.persona-c{background:var(--bg);padding:2.5rem}
+.persona-c .tag{display:inline-block;font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:rgba(var(--accent-rgb),0.8);background:rgba(var(--accent-rgb),0.06);padding:.25rem .7rem;border-radius:9999px;margin-bottom:1rem}
+.persona-c h3{font-size:1.15rem;font-weight:600;margin-bottom:.25rem}
+.persona-c .role{font-size:.75rem;color:rgba(var(--text-rgb),0.45);margin-bottom:1.5rem}
+.persona-c h4{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(var(--text-rgb),0.35);margin-bottom:.5rem;margin-top:1.25rem}
+.persona-c h4:first-of-type{margin-top:0}
+.persona-c p,.persona-c li{font-size:.82rem;color:rgba(var(--text-rgb),0.6);line-height:1.7}
+.persona-c ul{list-style:none;padding:0}
+.persona-c ul li{padding:.2rem 0;padding-left:1rem;position:relative}
+.persona-c ul li::before{content:'';position:absolute;left:0;top:.65rem;width:4px;height:4px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
+
+/* ARCHITECTURE */
+.arch{position:relative}
+.arch-layer{margin-bottom:2px}
+.arch-layer:last-child{margin-bottom:0}
+.arch-hdr{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.3);padding:.5rem 1rem;background:rgba(var(--text-rgb),0.04);border-radius:.5rem .5rem 0 0}
+.arch-b{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:rgba(var(--text-rgb),0.06);padding:1px;border-radius:0 0 .5rem .5rem}
+.arch-item{background:var(--bg);padding:1rem 1.25rem;transition:background .3s}
+.arch-item:hover{background:rgba(var(--text-rgb),0.015)}
+.arch-item h4{font-size:.82rem;font-weight:600;margin-bottom:.2rem}
+.arch-item p{font-size:.7rem;color:rgba(var(--text-rgb),0.45);line-height:1.6}
+.arch-item .badge{display:inline-block;font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.15rem .5rem;border-radius:4px;background:rgba(var(--text-rgb),0.04);color:rgba(var(--text-rgb),0.35);margin-top:.4rem}
+.flow-diagram{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;
+  padding:2.5rem 1rem;background:rgba(var(--text-rgb),0.015);border:1px solid rgba(var(--text-rgb),0.04);border-radius:1.5rem;margin-top:2rem;
+}
+.flow-diagram .node{
+  padding:.6rem 1.2rem;border-radius:.75rem;font-size:.75rem;font-weight:600;
+  background:var(--bg);border:1px solid rgba(var(--text-rgb),0.08);
+  text-align:center;min-width:80px;
+}
+.flow-diagram .node.accent{background:rgba(var(--accent-rgb),0.08);border-color:rgba(var(--accent-rgb),0.2);color:var(--accent)}
+.flow-diagram .node.surface{background:var(--surface);color:var(--on-surface);border-color:transparent}
+.flow-diagram .arrow{font-size:.7rem;color:rgba(var(--text-rgb),0.2);flex-shrink:0}
+.flow-diagram .label{width:100%;text-align:center;font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:rgba(var(--text-rgb),0.2);margin-top:.5rem}
+
+/* THEME SWITCHER */
+#ts{
+  position:fixed;bottom:2rem;right:2rem;z-index:9999;
+  display:flex;gap:.35rem;align-items:center;flex-wrap:wrap;
+  max-width:260px;padding:.5rem .75rem;
+  background:var(--bg);
+  border:1px solid rgba(var(--text-rgb),0.08);
+  transition:all .3s ease;
+}
+#ts .l{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(var(--text-rgb),0.2);margin-right:.15rem}
+#ts button{display:flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid transparent;background:transparent;cursor:pointer;padding:0;transition:all .3s ease}
+#ts button:hover{transform:scale(1.2)}
+#ts button.a{border-color:rgba(var(--text-rgb),0.4)}
+#ts button span{display:block;width:1rem;height:1rem;border-radius:50%}
+
+/* FOOTER */
+.ft{background:var(--surface);color:rgba(var(--on-surface-rgb),0.3);padding:3rem 0;margin-top:3rem;text-align:center;font-size:.7rem}
+.ft strong{color:rgba(var(--on-surface-rgb),0.5);font-weight:600}
+
+@media(max-width:768px){
+  .miro-card{padding:2rem 1.5rem}
+  .persona-c{padding:2rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="c">
+    <div class="hdr-i">
+      <div class="hdr-brand">LogiHub<span>.</span> <span style="font-family:var(--font-ui);font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;opacity:.3">documentacao</span></div>
+      <div class="hdr-actions">
+        <a href="dashboard.html" class="btn btn-o">Voltar ao Dashboard</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="c">
+    <h1>Documentacao do Projeto</h1>
+    <p>Especificacoes de produto, pesquisa com usuarios e arquitetura do sistema LogiHub.</p>
+  </div>
+</section>
+
+<main class="c">
+
+  <!-- === MIRO / FIGMA === -->
+  <section class="s">
+    <div class="s-hdr">
+      <span class="label">Design e Planejamento</span>
+      <h2>Prototipacao e Fluxos</h2>
+      <p>Artefatos de design utilizados durante o desenvolvimento do projeto.</p>
+    </div>
+    <div class="miro-grid">
+      <a href="https://miro.com/app/board/uXjVH_wviM8=/?share_link_id=471475593896" target="_blank" rel="noopener noreferrer">
+        <div class="ic" style="background:rgba(255,221,0,0.1)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+        <h4>Miro Board</h4>
+        <p>Wireframes, fluxos de usuario e diagramas de navegacao.</p>
+      </a>
+      <a href="https://miro.com/app/board/uXjVH_wviM8=/?share_link_id=471475593896" target="_blank" rel="noopener noreferrer">
+        <div class="ic" style="background:rgba(var(--accent-rgb),0.1)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h4>Prototipo Navegavel</h4>
+        <p>Prototipo funcional com interacoes e fluxos de tela.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- === MAPA DE PERSONAS === -->
+  <section class="s">
+    <div class="s-hdr">
+      <span class="label">Pesquisa com Usuarios</span>
+      <h2>Mapa de Personas</h2>
+      <p>Perfis de usuarios identificados na pesquisa para direcionar as decisoes de design e funcionalidades da plataforma.</p>
+    </div>
+    <div class="persona-g">
+
+      <div class="persona-c">
+        <span class="tag">Perfil 1</span>
+        <h3>Lojista de Pequeno Porte</h3>
+        <div class="role">Proprietario de loja fisica no centro expandido</div>
+        <h4>Contexto</h4>
+        <p>Administra uma loja propria com 2 a 5 funcionarios. Realiza entregas por conta propria ou por servicos terceirizados avulsos. Opera com margens apertadas e precisa de previsibilidade nos custos de entrega.</p>
+        <h4>Objetivos</h4>
+        <ul>
+          <li>Reduzir custo medio por entrega sem perder qualidade</li>
+          <li>Oferecer frete gratuito ou com valor conhecido para fechar vendas</li>
+          <li>Ter visibilidade do status da entrega sem precisar ligar para o entregador</li>
+          <li>Expandir area de entrega sem aumentar proporcionalmente o custo operacional</li>
+        </ul>
+        <h4>Dores</h4>
+        <ul>
+          <li>Custo de entrega varia muito conforme o bairro e o entregador disponivel</li>
+          <li>Nao consegue rastrear entregas em tempo real</li>
+          <li>Perde vendas por nao conseguir estimar prazo no momento da compra</li>
+          <li>Depende de planilhas e telefonemas para gerenciar as entregas do dia</li>
+        </ul>
+        <h4>Necessidades</h4>
+        <ul>
+          <li>Calculo de frete instantaneo e confiavel</li>
+          <li>Plataforma simples sem necessidade de integracao tecnica complexa</li>
+          <li>Acompanhamento da entrega pelo celular</li>
+          <li>Custo previsivel por entrega ou assinatura mensal</li>
+        </ul>
+      </div>
+
+      <div class="persona-c">
+        <span class="tag">Perfil 2</span>
+        <h3>Gestor de Logistica</h3>
+        <div class="role">Gerente de operacoes em marketplace ou rede de lojas</div>
+        <h4>Contexto</h4>
+        <p>Gerencia a operacao de entrega de uma rede com 20 a 200 lojas. Coordena motoristas proprios e terceirizados. Responde por KPIs de tempo, custo e satisfacao do cliente final.</p>
+        <h4>Objetivos</h4>
+        <ul>
+          <li>Centralizar o gerenciamento de todas as entregas em um unico painel</li>
+          <li>Otimizar rotas para reduzir quilometragem e tempo ocioso da frota</li>
+          <li>Escalar a operacao sem contratar mais pessoas para a central</li>
+          <li>Manter taxa de sucesso na primeira tentativa acima de 95%</li>
+        </ul>
+        <h4>Dores</h4>
+        <ul>
+          <li>Planilhas e WhatsApp nao escalam para o volume atual de entregas</li>
+          <li>Dificuldade para realocar entregas quando um motorista tem imprevisto</li>
+          <li>Sem dados historicos confiaveis para planejar expansao da frota</li>
+          <li>Motoristas perdem tempo em deslocamentos entre bairros distantes</li>
+        </ul>
+        <h4>Necessidades</h4>
+        <ul>
+          <li>Painel com KPIs em tempo real e historico de desempenho</li>
+          <li>Roteirizacao automatica com suporte a multiplos entregadores</li>
+          <li>API para integrar com sistemas legados de gestao de pedidos</li>
+          <li>Relatorios exportaveis para prestacao de contas</li>
+        </ul>
+      </div>
+
+      <div class="persona-c">
+        <span class="tag">Perfil 3</span>
+        <h3>Entregador Autonomo</h3>
+        <div class="role">Motorista parceiro com veiculo proprio (moto, bicicleta, carro)</div>
+        <h4>Contexto</h4>
+        <p>Trabalha como entregador autonomo vinculado a um ou mais hubs. Conhece bem a regiao onde opera. A renda depende diretamente da quantidade de entregas que consegue fazer por dia.</p>
+        <h4>Objetivos</h4>
+        <ul>
+          <li>Maximizar o numero de entregas realizadas por turno</li>
+          <li>Ter rotas inteligentes que evitem transito e regioes perigosas</li>
+          <li>Receber pagamento justo e com previsibilidade</li>
+          <li>Reduzir tempo perdido esperando novas atribuicoes</li>
+        </ul>
+        <h4>Dores</h4>
+        <ul>
+          <li>Recebe entregas sem considerar sua localizacao atual</li>
+          <li>Precisa parar para consultar mapa ou ligar para o destinatario</li>
+          <li>Nao consegue comunicar ao hub quando esta proximo do limite de capacidade</li>
+          <li>Perde tempo em enderecos mal cadastrados ou incompletos</li>
+        </ul>
+        <h4>Necessidades</h4>
+        <ul>
+          <li>Aplicativo simples com navegacao GPS integrada</li>
+          <li>Sugestoes de rota que aproveitem a posicao em tempo real</li>
+          <li>Canal de comunicacao direta com o hub e o destinatario</li>
+          <li>Historico de entregas e ganhos do dia</li>
+        </ul>
+      </div>
+
+      <div class="persona-c">
+        <span class="tag">Perfil 4</span>
+        <h3>Administrador do Hub</h3>
+        <div class="role">Responsavel por um micro-hub de distribuicao urbana</div>
+        <h4>Contexto</h4>
+        <p>Coordena um espaco fisico que recebe, separa e redistribui pacotes para a ultima milha. Supervisiona a entrada e saida de mercadorias e a alocacao dos entregadores disponiveis.</p>
+        <h4>Objetivos</h4>
+        <ul>
+          <li>Garantir que todo pacote recebido seja despachado no mesmo periodo</li>
+          <li>Alocar entregadores de forma eficiente conforme a demanda e a regiao</li>
+          <li>Manter o hub organizado sem acumulo de pacotes de periodos anteriores</li>
+          <li>Reduzir o tempo entre a chegada do pacote e a saida para entrega</li>
+        </ul>
+        <h4>Dores</h4>
+        <ul>
+          <li>Nao tem visibilidade antecipada do volume de pacotes que chegarao</li>
+          <li>Dificuldade para alocar motoristas quando a demanda ultrapassa a frota disponivel</li>
+          <li>Sem metricas claras de produtividade do hub e dos entregadores</li>
+          <li>Comunicacao fragmentada entre lojistas, motoristas e destinatarios</li>
+        </ul>
+        <h4>Necessidades</h4>
+        <ul>
+          <li>Painel com previsao de volume e alertas de capacidade</li>
+          <li>Interface para atribuir pacotes a entregadores de forma rapida</li>
+          <li>Relatorio de desempenho do hub com indicadores operacionais</li>
+          <li>Notificacoes automaticas sobre atrasos e devolucoes</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- === ARQUITETURA DO SISTEMA === -->
+  <section class="s">
+    <div class="s-hdr">
+      <span class="label">Arquitetura</span>
+      <h2>Arquitetura do Sistema</h2>
+      <p>Estrutura de componentes, camadas e fluxo de dados da plataforma LogiHub.</p>
+    </div>
+
+    <div class="arch">
+      <div class="arch-layer">
+        <div class="arch-hdr">Camada de Apresentacao (Frontend)</div>
+        <div class="arch-b">
+          <div class="arch-item">
+            <h4>Landing Page</h4>
+            <p>Pagina publica institucional com hero, servicos, fluxo, simulador de rotas e rodape. HTML, CSS e JavaScript puro.</p>
+            <span class="badge">index.html</span>
+          </div>
+          <div class="arch-item">
+            <h4>Dashboard Operacional</h4>
+            <p>Painel privado com autenticacao, mapa interativo Leaflet, KPIs, tabela de entregas, gerenciamento de hubs e configuracoes.</p>
+            <span class="badge">dashboard.html</span>
+          </div>
+          <div class="arch-item">
+            <h4>Documentacao do Projeto</h4>
+            <p>Pagina auxiliar com artefatos de design, personas e documentacao da arquitetura. Acessivel pelo dashboard.</p>
+            <span class="badge">projeto.html</span>
+          </div>
+          <div class="arch-item">
+            <h4>Temas e Personalizacao</h4>
+            <p>Sistema de 6 temas (Eco, Deep Ocean, Desert Trust, Sunset, Neon, Ruby) com persistencia em localStorage e variaveis CSS.</p>
+            <span class="badge">CSS custom properties</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer">
+        <div class="arch-hdr">Camada de Logica e Estado (Client-side)</div>
+        <div class="arch-b">
+          <div class="arch-item">
+            <h4>Estado da Aplicacao</h4>
+            <p>Objeto central S no landing page e ViewModel no dashboard. Gerenciam formularios, simulacao, autenticacao e navegacao entre abas.</p>
+            <span class="badge">JavaScript vanilla</span>
+          </div>
+          <div class="arch-item">
+            <h4>Simulador de Rotas</h4>
+            <p>Calcula estimativas de tempo e custo com base em hubs disponiveis. Inclui geocodificacao simulada, steps animados e cache de historico.</p>
+            <span class="badge">setInterval / localStorage</span>
+          </div>
+          <div class="arch-item">
+            <h4>Autenticacao Simulada</h4>
+            <p>Sistema de login e registro com validacao de campos, alternancia entre formularios, persistencia de sessao e logout.</p>
+            <span class="badge">localStorage</span>
+          </div>
+          <div class="arch-item">
+            <h4>Componentes Visuais</h4>
+            <p>Network canvas animado, road map com truck SVG e scroll progress, glow dinamico por luminancia de fundo, reveal on scroll e toasts.</p>
+            <span class="badge">IntersectionObserver / Canvas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer">
+        <div class="arch-hdr">Camada de Dados e Persistencia</div>
+        <div class="arch-b">
+          <div class="arch-item">
+            <h4>Dados de Exemplo (Seed)</h4>
+            <p>Entregas pre-definidas com IDs, motoristas, hubs, status e tempos. Hubs com nomes, regioes e coordenadas para o mapa Leaflet.</p>
+            <span class="badge">Arrays / objetos inline</span>
+          </div>
+          <div class="arch-item">
+            <h4>localStorage</h4>
+            <p>Tema selecionado pelo usuario, historico de rotas simuladas, sessao de autenticacao e preferencia de simulacao recente.</p>
+            <span class="badge">chave-valor</span>
+          </div>
+          <div class="arch-item">
+            <h4>Mapa Base (Tile Layer)</h4>
+            <p>Integracao com Leaflet.js e tiles CartoDB (voyager para claro, dark_all para escuro). Marcadores de coleta e entrega com polylines.</p>
+            <span class="badge">CDN / API publica</span>
+          </div>
+          <div class="arch-item">
+            <h4>Imagens e Assets</h4>
+            <p>Logo SVG, imagens do fluxo (hub logistico, mapa de roteirizacao, despacho) e screenshots da plataforma.</p>
+            <span class="badge">jpg / webp / png</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer">
+        <div class="arch-hdr">Infraestrutura e Deploy</div>
+        <div class="arch-b">
+          <div class="arch-item">
+            <h4>Hospedagem</h4>
+            <p>Deploy continuo integrado ao repositorio GitHub. Build estatico com servidor HTTP node (http-server) em desenvolvimento.</p>
+            <span class="badge">Vercel</span>
+          </div>
+          <div class="arch-item">
+            <h4>Versionamento</h4>
+            <p>Repositorio Git com historico de commits. Branches para features e deploy a partir da branch main.</p>
+            <span class="badge">Git / GitHub</span>
+          </div>
+          <div class="arch-item">
+            <h4>Fontes e CDNs</h4>
+            <p>Google Fonts (Playfair Display + Space Grotesk), Leaflet.js para mapas interativos e bibliotecas de mapa base.</p>
+            <span class="badge">CDN externo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-diagram">
+      <div class="node surface">Usuario</div>
+      <span class="arrow">--></span>
+      <div class="node accent">Landing Page index.html</div>
+      <span class="arrow">--></span>
+      <div class="node accent">Dashboard dashboard.html</div>
+      <span class="arrow">--></span>
+      <div class="node">Logica JS (Estado / API)</div>
+      <span class="arrow">--></span>
+      <div class="node">localStorage + Leaflet</div>
+      <div class="label">Fluxo de navegacao e dados do sistema</div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="ft">
+  <div class="c">
+    <strong>LogiHub</strong> &mdash; MVP Academico P2 2026
+  </div>
+</footer>
+
+<div id="ts">
+  <span class="l">Tema</span>
+  <button data-t="eco" title="Eco — Verde Escuro"><span style="background:#203727"></span></button>
+  <button data-t="deep-ocean" title="Deep Ocean — Azul Profundo"><span style="background:#0a192f"></span></button>
+  <button data-t="desert-trust" title="Desert Trust — Laranja Terroso"><span style="background:#e67e22"></span></button>
+  <button data-t="sunset" title="Sunset — Laranja Vibrante"><span style="background:#ff5722"></span></button>
+  <button data-t="neon" title="Neon — Verde Eletrico"><span style="background:#39d353"></span></button>
+  <button data-t="ruby" title="Ruby — Vermelho Rubi"><span style="background:#e63946"></span></button>
+</div>
+
+<script>
+(function(){
+  document.body.classList.add('loaded');
+  var html=document.documentElement;
+  var def=localStorage.getItem('logihub_theme')||'eco';
+  html.setAttribute('data-theme',def);
+  var btns=document.querySelectorAll('#ts button');
+  btns.forEach(function(b){
+    if(b.dataset.t===def)b.classList.add('a');
+    b.addEventListener('click',function(){
+      var t=this.dataset.t;
+      html.setAttribute('data-theme',t);
+      localStorage.setItem('logihub_theme',t);
+      btns.forEach(function(x){x.classList.remove('a')});
+      this.classList.add('a');
+    });
+  });
+})();
+</script>
+</body>
+</html>
