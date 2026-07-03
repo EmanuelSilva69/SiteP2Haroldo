@@ -394,6 +394,13 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 .rm-truck .s { stroke: var(--text); fill: none; stroke-linejoin: round; stroke-linecap: round; stroke-width: 2.5px; }
 .rm-truck .y { fill: var(--accent); }
 .rm-truck .h { fill: var(--bg); stroke: var(--accent); stroke-width: 1px; }
+[data-theme="eco"] .rm-truck .b, [data-theme="eco"] .rm-truck .y,
+[data-theme="deep-ocean"] .rm-truck .b, [data-theme="deep-ocean"] .rm-truck .y,
+[data-theme="neon"] .rm-truck .b, [data-theme="neon"] .rm-truck .y { fill: var(--text); }
+.rm-truck.glow .b,
+.rm-truck.glow .y { fill: #ffffff; }
+.rm-truck.glow .h { fill: #ffffff; stroke: rgba(255,255,255,0.6); }
+.rm-truck.glow { filter: drop-shadow(0 0 6px rgba(255,255,255,0.7)) drop-shadow(0 0 15px rgba(255,255,255,0.3)); }
 #rm-arrival-text { position: absolute; right: 28px; top: 74%; font-size: .55rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; opacity: 0; transform: translate(50%,-100%) scale(.85); transition: all .6s cubic-bezier(.34,1.56,.64,1); white-space: nowrap; pointer-events: none; z-index: 6; }
 #rm-arrival-text.visible { opacity: 1; transform: translate(50%,-100%) scale(1); }
 
@@ -724,7 +731,7 @@ function initRoadMap() {
     truck.style.right = '02px';
 
     if (markers.length) {
-      var th = [0.15, 0.45, 0.75];
+      var th = [0, 0.28, 0.58];
       markers.forEach(function(m, i) {
         if (p >= th[i]) m.classList.add('active');
         else m.classList.remove('active');
@@ -734,6 +741,25 @@ function initRoadMap() {
     if (pinDot) pinDot.classList.toggle('visible', p >= 0.98);
     var arrivalText = document.getElementById('rm-arrival-text');
     if (arrivalText) arrivalText.classList.toggle('visible', p >= 0.98);
+
+    var rect = truck.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    var el = document.elementFromPoint(cx, cy);
+    var dark = false;
+    if (el) {
+      for (var e = el; e && e !== document.body; e = e.parentElement) {
+        var bg = getComputedStyle(e).backgroundColor;
+        if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
+          var m = bg.match(/\d+/g);
+          if (m && m.length >= 3) {
+            var lum = (0.299 * +m[0] + 0.587 * +m[1] + 0.114 * +m[2]) / 255;
+            if (lum < 0.35) { dark = true; break; }
+          }
+        }
+      }
+    }
+    truck.classList.toggle('glow', dark);
 
     if (simSection) {
       var sb = simSection.offsetTop + simSection.offsetHeight;
