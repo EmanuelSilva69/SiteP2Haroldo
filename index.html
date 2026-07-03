@@ -90,7 +90,7 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 @media(max-width:768px){.s{padding:5rem 0}}
 
 /* HEADER */
-.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:2rem 0;transition:all .7s cubic-bezier(.19,1,.22,1);mix-blend-mode:difference;color:var(--on-surface);pointer-events:none}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:2rem 0;transition:all .7s cubic-bezier(.19,1,.22,1);background:rgba(var(--bg-rgb),0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(var(--text-rgb),0.06);color:var(--text);pointer-events:none}
 .hdr *{pointer-events:auto}
 .hdr.s{padding:.8rem 0}
 .hdr-i{display:flex;align-items:center;justify-content:space-between}
