@@ -172,9 +172,26 @@ a{color:inherit;text-decoration:none}
 .ft{background:var(--surface);color:rgba(var(--on-surface-rgb),0.3);padding:3rem 0;margin-top:3rem;text-align:center;font-size:.7rem}
 .ft strong{color:rgba(var(--on-surface-rgb),0.5);font-weight:600}
 
+/* EMPATHY MAP */
+.emp{display:grid;gap:1px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
+.emp-top,.emp-mid,.emp-bot,.emp-dg{display:grid;gap:1px}
+.emp-top{grid-template-columns:1fr}
+.emp-mid{grid-template-columns:1fr auto 1fr}
+.emp-bot{grid-template-columns:1fr}
+.emp-dg{grid-template-columns:1fr 1fr}
+.emp-c{background:var(--bg);padding:2rem}
+.emp-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:.6rem}
+.emp-c p{font-size:.82rem;color:rgba(var(--text-rgb),0.6);line-height:1.7}
+.emp-center{display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem}
+.emp-persona{width:5rem;height:5rem;border-radius:50%;background:var(--surface);color:var(--on-surface);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.85rem;font-weight:700;text-align:center;line-height:1.2}
+.emp-dor .emp-label{color:#c0392b}
+.emp-ganho .emp-label{color:#27ae60}
 @media(max-width:768px){
   .miro-card{padding:2rem 1.5rem}
   .persona-c{padding:2rem 1.5rem}
+  .emp-mid{grid-template-columns:1fr}
+  .emp-dg{grid-template-columns:1fr}
+  .emp-c,.emp-center{padding:1.5rem}
 }
 </style>
 </head>
@@ -346,6 +363,52 @@ a{color:inherit;text-decoration:none}
         </ul>
       </div>
 
+    </div>
+  </section>
+
+  <!-- === MAPA DE EMPATIA === -->
+  <section class="s">
+    <div class="s-hdr">
+      <span class="label">Pesquisa com Usuarios</span>
+      <h2>Mapa de Empatia</h2>
+      <p>Persona: lojista que usa o LogiHub para resolver a ultima milha.</p>
+    </div>
+    <div class="emp">
+      <div class="emp-top">
+        <div class="emp-c emp-pensa">
+          <div class="emp-label">PENSA E SENTE?</div>
+          <p>Medo de perder a venda por atraso na entrega, preocupacao com o quanto o frete come da margem, vontade de parecer uma loja profissional e confiavel.</p>
+        </div>
+      </div>
+      <div class="emp-mid">
+        <div class="emp-c emp-ve">
+          <div class="emp-label">VE?</div>
+          <p>Pedidos acumulados, prazos apertados dos marketplaces, apps de logistica caros e pouco transparentes, avaliacoes negativas por atraso.</p>
+        </div>
+        <div class="emp-center">
+          <div class="emp-persona">Lojista</div>
+        </div>
+        <div class="emp-c emp-escuta">
+          <div class="emp-label">ESCUTA?</div>
+          <p>Clientes reclamando do frete caro e demorado, concorrentes anunciando entrega no mesmo dia, grupos de lojistas trocando indicacao de transportadora.</p>
+        </div>
+      </div>
+      <div class="emp-bot">
+        <div class="emp-c emp-fala">
+          <div class="emp-label">FALA E FAZ?</div>
+          <p>Pesquisa preco de frete antes de fechar com um transportador, testa mais de uma opcao de entrega, usa "entrega rapida" como argumento de venda para o cliente.</p>
+        </div>
+      </div>
+      <div class="emp-dg">
+        <div class="emp-c emp-dor">
+          <div class="emp-label">DORES</div>
+          <p>Frete caro reduz a margem, atraso gera cancelamento e avaliacao ruim, falta de visibilidade da entrega, operacao logistica manual e demorada.</p>
+        </div>
+        <div class="emp-c emp-ganho">
+          <div class="emp-label">GANHOS</div>
+          <p>Entrega rapida com custo previsivel, mais conversao e clientes satisfeitos, rastreamento em tempo real, menos tempo gasto gerenciando a logistica.</p>
+        </div>
+      </div>
     </div>
   </section>
 
