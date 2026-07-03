@@ -77,7 +77,7 @@ body{
   opacity:0;transform:translateY(6px);
   transition:opacity .5s ease,transform .5s ease
 }
-body.loaded{opacity:1;transform:translateY(0)}
+body.loaded{opacity:1;transform:none}
 body.page-exit{opacity:0;transform:translateY(-10px);transition-duration:.4s}
 ::selection{background:var(--surface);color:var(--on-surface)}
 h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:700;letter-spacing:-.02em}
@@ -376,26 +376,26 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
 .ent-img .tag{position:absolute;bottom:.4rem;left:.5rem;font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(var(--text-rgb),0.3);background:rgba(var(--on-surface-rgb),0.85);padding:.15rem .5rem;border-radius:4px}
 
 /* ROAD MAP OVERLAY */
-#road-map{position:fixed;top:0;right:0;z-index:200;width:60px;height:100vh;pointer-events:none;--clr:var(--on-surface);--clr-inv:var(--surface);--truck-shadow:rgba(0,0,0,0.15);transition:opacity .6s ease,visibility .6s ease}
-@media(max-width:900px){#road-map{display:none}}
-.rm-road{position:absolute;right:28px;top:8%;bottom:17%;width:1.5px;background:var(--clr);opacity:.2}
-.rm-road-inner{position:absolute;right:28px;top:0;bottom:0;width:18px;margin-left:-9px;background:rgba(var(--on-surface-rgb),0.02);border-radius:9px}
-.rm-marker{position:absolute;right:28px;width:12px;height:12px;border-radius:50%;background:var(--clr);border:2px solid var(--clr);transform:translate(50%,-50%);transition:all .4s ease}
-.rm-marker.active{background:var(--accent);border-color:var(--accent);transform:translate(50%,-50%) scale(1.2);box-shadow:0 0 10px rgba(var(--accent-rgb),.5)}
-.rm-pin{position:absolute;right:28px;width:14px;height:14px;border-radius:50%;border:2px solid var(--clr);opacity:.2;transform:translate(50%,-50%);transition:opacity .6s}
-.rm-pin-dot{position:absolute;right:28px;width:20px;height:20px;background:var(--accent);border-radius:50%;opacity:0;transition:opacity .6s;transform:translate(50%,-50%)}
-.rm-pin-dot.visible{opacity:1}
-.rm-pin-stem{position:absolute;right:28px;width:1.5px;height:24px;background:var(--clr);opacity:.08;transform:translateX(50%)}
-.rm-truck{position:absolute;width:34px;height:24px;transform:translate(-50%,-50%);transition:top .6s cubic-bezier(.19,1,.22,1),right .2s linear;z-index:10;filter:drop-shadow(0 0 4px var(--truck-shadow))}
-.rm-truck-inner{animation:wobble 3s ease-in-out infinite;transform-origin:center center;width:100%;height:100%}
+#road-map { position: fixed; right: 0; top: 0; width: 60px; height: 100vh; z-index: 9999; pointer-events: none; overflow: visible; transition: opacity .6s ease, visibility .6s ease; }
+@media(max-width:900px){ #road-map{display:none} }
+.rm-road { position: absolute; right: 28px; top: 8%; bottom: 17%; width: 2px; background: var(--text); opacity: .2; }
+.rm-road-inner { position: absolute; right: 28px; top: 0; bottom: 0; width: 18px; margin-left: -9px; background: rgba(var(--text-rgb), 0.04); border-radius: 9px; }
+.rm-marker { position: absolute; right: 28px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--text); transform: translate(50%,-50%); transition: all .4s ease; }
+.rm-marker.active { background: var(--accent); border-color: var(--accent); transform: translate(50%,-50%) scale(1.2); box-shadow: 0 0 10px rgba(var(--accent-rgb),.5); }
+.rm-pin { position: absolute; right: 28px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--text); opacity: .2; transform: translate(50%,-50%); transition: opacity .6s; }
+.rm-pin-dot { position: absolute; right: 28px; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; opacity: 0; transition: opacity .6s; transform: translate(50%,-50%); }
+.rm-pin-dot.visible { opacity: 1; }
+.rm-pin-stem { position: absolute; right: 28px; width: 1.5px; height: 24px; background: var(--text); opacity: .15; transform: translateX(50%); }
+.rm-truck { position: absolute; top: 8%; width: 34px; height: 24px; transform: translate(-50%,-50%); transition: top 0.25s cubic-bezier(0.25,1,0.5,1); z-index: 10; }
+.rm-truck-inner { animation: wobble 3s ease-in-out infinite; transform-origin: center center; width: 100%; height: 100%; }
 @keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
-.rm-truck svg{width:100%;height:100%;display:block}
-.rm-truck .b{fill:var(--clr);stroke:var(--clr-inv);stroke-width:.5px;stroke-linejoin:round;stroke-linecap:round}
-.rm-truck .s{stroke:var(--clr);fill:none;stroke-linejoin:round;stroke-linecap:round}
-.rm-truck .y{fill:var(--accent)}
-.rm-truck .h{fill:var(--clr-inv);stroke:var(--clr);stroke-width:.5px}
-#rm-arrival-text{position:absolute;right:28px;top:74%;font-size:.55rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;opacity:0;transform:translate(50%,-100%) scale(.85);transition:all .6s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;z-index:6}
-#rm-arrival-text.visible{opacity:1;transform:translate(50%,-100%) scale(1)}
+.rm-truck svg { width: 100%; height: 100%; display: block; }
+.rm-truck .b { fill: var(--accent); stroke: var(--bg); stroke-width: 1px; stroke-linejoin: round; stroke-linecap: round; }
+.rm-truck .s { stroke: var(--text); fill: none; stroke-linejoin: round; stroke-linecap: round; stroke-width: 2.5px; }
+.rm-truck .y { fill: var(--accent); }
+.rm-truck .h { fill: var(--bg); stroke: var(--accent); stroke-width: 1px; }
+#rm-arrival-text { position: absolute; right: 28px; top: 74%; font-size: .55rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; opacity: 0; transform: translate(50%,-100%) scale(.85); transition: all .6s cubic-bezier(.34,1.56,.64,1); white-space: nowrap; pointer-events: none; z-index: 6; }
+#rm-arrival-text.visible { opacity: 1; transform: translate(50%,-100%) scale(1); }
 
 /* GOLDEN SHIMMER */
 @keyframes shimmer{0%{background-position:0% 0}100%{background-position:100% 0}}
@@ -437,7 +437,7 @@ h1 em,h2 em,h3 em{font-style:italic;font-weight:500;opacity:.55}
   <div class="rm-pin" id="rm-pin" style="top:83%"></div>
   <div class="rm-pin-stem" style="top:83%"></div>
   <div class="rm-pin-dot" id="rm-pin-dot" style="top:83%"></div>
-  <div class="rm-truck" id="rm-truck"><div class="rm-truck-inner"><svg viewBox="0 0 68 48"><rect class="s" x="1" y="8" width="32" height="28" rx="4" stroke-width="3"/><rect class="y" x="5" y="12" width="14" height="10" rx="2" opacity=".55"/><path class="s" d="M33 12 L47 12 C50 12 52 14 52 17 L52 36 L33 36 Z" stroke-width="3"/><path class="s" d="M36 16 L44 16 C45 16 46 17 46 18 L46 22 L36 22 Z" stroke-width="1.5" opacity=".3"/><circle class="b" cx="14" cy="40" r="6"/><circle class="h" cx="14" cy="40" r="2.5"/><circle class="b" cx="40" cy="40" r="6"/><circle class="h" cx="40" cy="40" r="2.5"/></svg></div></div>
+  <div class="rm-truck" id="rm-truck"><div class="rm-truck-inner"><svg viewBox="0 0 68 48"><rect class="s" x="1" y="8" width="32" height="28" rx="4" stroke-width="3"/><rect class="y" x="5" y="12" width="14" height="10" rx="2"/><path class="s" d="M33 12 L47 12 C50 12 52 14 52 17 L52 36 L33 36 Z" stroke-width="3"/><path class="s" d="M36 16 L44 16 C45 16 46 17 46 18 L46 22 L36 22 Z" stroke-width="1.5" opacity=".3"/><circle class="b" cx="14" cy="40" r="6"/><circle class="h" cx="14" cy="40" r="2.5"/><circle class="b" cx="40" cy="40" r="6"/><circle class="h" cx="40" cy="40" r="2.5"/></svg></div></div>
   <div id="rm-arrival-text">Cheguei!</div>
 </div>
 
@@ -476,7 +476,7 @@ function toast(msg,type){
   let c=$('tst');if(!c)return;
   let t=document.createElement('div');
   t.className='toast'+(type==='er'?' er':'');
-  t.innerHTML='<span style="opacity:.4;font-size:.6rem">o</span>'+msg;
+  t.textContent=msg;
   c.appendChild(t);
   setTimeout(function(){t.classList.add('out');setTimeout(function(){t.remove()},450)},3000);
 }
@@ -539,14 +539,14 @@ function flow(){
 
 function sim(){
   let s=S;
-  return '<section id="sim" class="sim s"><div class="c"><div class="sim-hdr"><div class="label rv">Simulador</div><h2 class="rv rv-d1">Teste a rota.</h2><p class="subtitle glow rv rv-d1">Veja o resultado.</p><p class="rv rv-d2">Insira os endereços de coleta e entrega para simular a rota.</p></div><div class="sim-g"><div class="sim-f rv rv-d3"><div class="sim-f-hdr">Dados da Entrega</div><div class="sim-gr"><label class="sim-lb" for="iP">Endereço de Coleta</label><input class="sim-in" id="iP" value="'+es(s.pickup)+'" placeholder="Ex: Av. Paulista, 1000" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iPC">CEP da Coleta</label><input class="sim-in" id="iPC" value="'+s.pickupCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div class="sim-div"><span class="sim-div-l"></span><span class="sim-div-t">Destino</span><span class="sim-div-l"></span></div><div class="sim-gr"><label class="sim-lb" for="iD">Endereço de Entrega</label><input class="sim-in" id="iD" value="'+es(s.delivery)+'" placeholder="Ex: Rua Augusta, 1500" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iDC">CEP da Entrega</label><input class="sim-in" id="iDC" value="'+s.deliveryCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div id="sim-err"></div><div class="sim-btns"><button class="btn-p" id="sim-calc" aria-label="Calcular rota">o Calcular</button><button class="btn-o" id="sim-demo" aria-label="Preencher dados de demonstração">o Demo</button><button class="btn-o" id="sim-clr" aria-label="Limpar campos">o Limpar</button></div><div id="sim-cancel-area"></div><div id="sim-steps"></div><div id="sim-hist"></div></div><div class="sim-map"><div class="sim-map-in"><div class="sim-map-bg"></div><div id="sim-map-c"><div class="sim-map-bl"><div class="geo-dots"><span></span><span></span><span></span><span></span></div><p>Preencha os dados e simule</p></div></div></div><div id="sim-res"></div></div></div></div></section>';
+  return '<section id="sim" class="sim s"><div class="c"><div class="sim-hdr"><div class="label rv">Simulador</div><h2 class="rv rv-d1">Teste a rota.</h2><p class="subtitle glow rv rv-d1">Veja o resultado.</p><p class="rv rv-d2">Insira os endereços de coleta e entrega para simular a rota.</p></div><div class="sim-g"><div class="sim-f rv rv-d3"><div class="sim-f-hdr">Dados da Entrega</div><div class="sim-gr"><label class="sim-lb" for="iP">Endereço de Coleta</label><input class="sim-in" id="iP" value="'+es(s.pickup)+'" placeholder="Ex: Av. Paulista, 1000" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iPC">CEP da Coleta</label><input class="sim-in" id="iPC" value="'+s.pickupCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div class="sim-div"><span class="sim-div-l"></span><span class="sim-div-t">Destino</span><span class="sim-div-l"></span></div><div class="sim-gr"><label class="sim-lb" for="iD">Endereço de Entrega</label><input class="sim-in" id="iD" value="'+es(s.delivery)+'" placeholder="Ex: Rua Augusta, 1500" autocomplete="off" /></div><div class="sim-gr"><label class="sim-lb" for="iDC">CEP da Entrega</label><input class="sim-in" id="iDC" value="'+s.deliveryCep+'" placeholder="00000-000" maxlength="9" autocomplete="off" /></div><div id="sim-err"></div><div class="sim-btns"><button class="btn-p" id="sim-calc" aria-label="Calcular rota">Calcular</button><button class="btn-o" id="sim-demo" aria-label="Preencher dados de demonstração">Demo</button><button class="btn-o" id="sim-clr" aria-label="Limpar campos">Limpar</button></div><div id="sim-cancel-area"></div><div id="sim-steps"></div><div id="sim-hist"></div></div><div class="sim-map"><div class="sim-map-in"><div class="sim-map-bg"></div><div id="sim-map-c"><div class="sim-map-bl"><div class="geo-dots"><span></span><span></span><span></span><span></span></div><p>Preencha os dados e simule</p></div></div></div><div id="sim-res"></div></div></div></div></section>';
 }
 
 function updateSim(){
   let loading=S.loading,step=S.step,res=S.res,err=S.err;
   let ok=S.pickup.trim().length>=5&&S.delivery.trim().length>=5&&vC(S.pickupCep)&&vC(S.deliveryCep);
   let calc=$('sim-calc');
-  if(calc){calc.innerHTML=loading?'o Calcular':'o Calcular';calc.disabled=!ok||loading}
+  if(calc){calc.innerHTML=loading?'Calcular':'Calcular';calc.disabled=!ok||loading}
   let demo=$('sim-demo');if(demo)demo.disabled=loading;
   let clr=$('sim-clr');if(clr)clr.disabled=loading;
   let ca=$('sim-cancel-area');if(ca)ca.innerHTML=loading?'<button class="sim-cancel" id="sim-cancel">Cancelar</button>':'';
@@ -700,73 +700,57 @@ function ft(){
   return '<footer class="ft"><div class="c"><div class="ft-in"><div><div class="ft-brand">LogiHub<span>.</span></div><p>Logística urbana inteligente conectando lojistas, hubs e entregadores na última milha.</p></div><div class="ft-nav"><div class="ft-nav-c"><h4>Navegação</h4><a href="#" data-n="hero">Início</a><a href="#" data-n="ent">Serviços</a><a href="#" data-n="dif">Operação</a><a href="#" data-n="sim">Simulador</a><a href="#" data-n="parc">Parcerias</a></div><div class="ft-nav-c"><h4>Contato</h4><a href="#">contato@logihub.com</a><a href="#">(11) 99999-0000</a></div></div></div><div class="ft-btm"><span>&copy; 2026 LogiHub</span><span>MVP Acadêmico P2 2026</span></div></div></footer>';
 }
 
-function initRoadMap(){
-  var rm=document.getElementById('road-map');
-  var truck=document.getElementById('rm-truck');
-  var pinDot=document.getElementById('rm-pin-dot');
-  var markers=document.querySelectorAll('.rm-marker');
-  if(!rm||!truck)return;
-  var hero=document.getElementById('hero'),sim=document.getElementById('sim');
-  if(!hero||!sim)return;
-  var sections=['hero','ent','dif','flow','transp','sim'];
-  var isDark={'hero':1,'dif':1};
-  function getActiveSection(){
-    var vh=window.innerHeight,mid=vh/2;
-    for(var i=0;i<sections.length;i++){
-      var el=document.getElementById(sections[i]);
-      if(!el)continue;
-      var r=el.getBoundingClientRect();
-      if(r.top<mid&&r.bottom>mid)return sections[i];
+function initRoadMap() {
+  var rm = document.getElementById('road-map');
+  var truck = document.getElementById('rm-truck');
+  var markers = document.querySelectorAll('.rm-marker');
+  var pinDot = document.getElementById('rm-pin-dot');
+  var simSection = document.getElementById('sim');
+  
+  if (!rm || !truck) return;
+
+  function update() {
+    var scrollY = window.scrollY;
+    var vh = window.innerHeight;
+
+    var endScroll = document.documentElement.scrollHeight - vh;
+    if (simSection) {
+      endScroll = simSection.offsetTop - (vh / 3);
     }
-    for(var i=0;i<sections.length;i++){
-      var el=document.getElementById(sections[i]);
-      if(!el)continue;
-      var r=el.getBoundingClientRect();
-      var vis=Math.min(r.bottom,vh)-Math.max(r.top,0);
-      if(vis>0)return sections[i];
+
+    var p = Math.max(0, Math.min(1, scrollY / endScroll));
+    
+    truck.style.top = (8 + (p * 75)) + '%';
+    truck.style.right = '02px';
+
+    if (markers.length) {
+      var th = [0.15, 0.45, 0.75];
+      markers.forEach(function(m, i) {
+        if (p >= th[i]) m.classList.add('active');
+        else m.classList.remove('active');
+      });
     }
-    return 'ent';
-  }
-  function update(){
-    var active=getActiveSection();
-    var cs=getComputedStyle(document.documentElement);
-    var c=cs.getPropertyValue('--text').trim();
-    var ci=cs.getPropertyValue('--bg').trim();
-    rm.style.setProperty('--clr',c);
-    rm.style.setProperty('--clr-inv',ci);
-    rm.style.setProperty('--truck-shadow',isDark[active]?'rgba(0,0,0,0.3)':'rgba(255,255,255,0.2)');
-    var wh=window.innerHeight;
-    var sTop=hero.offsetTop,sBot=sim.offsetTop+sim.offsetHeight-wh;
-    if(sBot<=sTop)sBot=sTop+1;
-    var p=Math.max(0,Math.min(1,(window.scrollY-sTop)/(sBot-sTop)));
-    truck.style.top=(8+(p*75))+'%';
-    truck.style.right='28px';
-    truck.style.transform='translate(50%,-50%) rotate(0deg)';
-    if(markers.length)markers.forEach(function(m,i){
-      var threshold=[0.08,0.32,0.55][i];
-      if(p>=threshold-0.02)m.classList.add('active');
-      else m.classList.remove('active');
-    });
-    if(pinDot)pinDot.classList.toggle('visible',p>=0.95);
-    var at=document.getElementById('rm-arrival-text'),now=Date.now();
-    if(at){
-      if(p>=0.95&&!at.classList.contains('visible')&&(!at._cd||now-at._cd>20000)){at.classList.add('visible');at._cd=Date.now();setTimeout(function(){at.classList.remove('visible')},1000)}
-      else if(p<0.95&&at.classList.contains('visible')){at.classList.remove('visible');at._cd=Date.now()}
-    }
-    if(p>=1){
-      rm.style.opacity='0';
-      rm.style.visibility='hidden';
-    }else{
-      rm.style.opacity='';
-      rm.style.visibility='';
+
+    if (pinDot) pinDot.classList.toggle('visible', p >= 0.98);
+    var arrivalText = document.getElementById('rm-arrival-text');
+    if (arrivalText) arrivalText.classList.toggle('visible', p >= 0.98);
+
+    if (simSection) {
+      var sb = simSection.offsetTop + simSection.offsetHeight;
+      if (scrollY > sb - (vh / 2)) {
+        rm.style.opacity = '0'; 
+        rm.style.visibility = 'hidden';
+      } else {
+        rm.style.opacity = '1'; 
+        rm.style.visibility = 'visible';
+      }
     }
   }
+
   update();
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(!ticking){requestAnimationFrame(function(){update();ticking=false});ticking=true}
-  },{passive:true});
-  window.addEventListener('resize',function(){update()},{passive:true});
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  window.__rmUpdate = update;
 }
 r();
 initRoadMap();
@@ -794,6 +778,7 @@ document.body.classList.add('loaded');
       this.classList.add('active');
       document.documentElement.setAttribute('data-theme',t);
       localStorage.setItem('logihub_theme',t);
+      if(window.__rmUpdate)window.__rmUpdate();
     });
   }
 })();
