@@ -220,8 +220,8 @@ a{color:inherit;text-decoration:none}
 .arch-layer:last-child{margin-bottom:0}
 .arch-hdr{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.3);padding:.5rem 1rem;background:rgba(var(--text-rgb),0.04);border-radius:.5rem .5rem 0 0}
 .arch-b{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:rgba(var(--text-rgb),0.06);padding:1px;border-radius:0 0 .5rem .5rem}
-.arch-item{background:var(--bg);padding:1rem 1.25rem;transition:background .3s}
-.arch-item:hover{background:rgba(var(--text-rgb),0.015)}
+.arch-item{background:var(--bg);padding:1rem 1.25rem;transition:background .3s;cursor:pointer}
+.arch-item:hover{background:rgba(var(--text-rgb),0.03);transform:translateY(-1px)}
 .arch-item h4{font-size:.82rem;font-weight:600;margin-bottom:.2rem}
 .arch-item p{font-size:.7rem;color:rgba(var(--text-rgb),0.45);line-height:1.6}
 .arch-item .badge{display:inline-block;font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.15rem .5rem;border-radius:4px;background:rgba(var(--text-rgb),0.04);color:rgba(var(--text-rgb),0.35);margin-top:.4rem}
@@ -847,22 +847,22 @@ a{color:inherit;text-decoration:none}
       <div class="arch-layer">
         <div class="arch-hdr">Camada de Apresentacao (Frontend)</div>
         <div class="arch-b">
-          <div class="arch-item">
+          <div class="arch-item" data-arch="landing">
             <h4>Landing Page</h4>
             <p>Pagina publica institucional com hero, servicos, fluxo, simulador de rotas e rodape. HTML, CSS e JavaScript puro.</p>
             <span class="badge">index.html</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="dashboard">
             <h4>Dashboard Operacional</h4>
             <p>Painel privado com autenticacao, mapa interativo Leaflet, KPIs, tabela de entregas, gerenciamento de hubs e configuracoes.</p>
             <span class="badge">dashboard.html</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="projeto">
             <h4>Documentacao do Projeto</h4>
             <p>Pagina auxiliar com artefatos de design, personas e documentacao da arquitetura. Acessivel pelo dashboard.</p>
             <span class="badge">projeto.html</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="temas">
             <h4>Temas e Personalizacao</h4>
             <p>Sistema de 6 temas (Eco, Deep Ocean, Desert Trust, Sunset, Neon, Ruby) com persistencia em localStorage e variaveis CSS.</p>
             <span class="badge">CSS custom properties</span>
@@ -873,22 +873,22 @@ a{color:inherit;text-decoration:none}
       <div class="arch-layer">
         <div class="arch-hdr">Camada de Logica e Estado (Client-side)</div>
         <div class="arch-b">
-          <div class="arch-item">
+          <div class="arch-item" data-arch="estado">
             <h4>Estado da Aplicacao</h4>
             <p>Objeto central S no landing page e ViewModel no dashboard. Gerenciam formularios, simulacao, autenticacao e navegacao entre abas.</p>
             <span class="badge">JavaScript vanilla</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="simulador">
             <h4>Simulador de Rotas</h4>
             <p>Calcula estimativas de tempo e custo com base em hubs disponiveis. Inclui geocodificacao simulada, steps animados e cache de historico.</p>
             <span class="badge">setInterval / localStorage</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="auth">
             <h4>Autenticacao Simulada</h4>
             <p>Sistema de login e registro com validacao de campos, alternancia entre formularios, persistencia de sessao e logout.</p>
             <span class="badge">localStorage</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="componentes">
             <h4>Componentes Visuais</h4>
             <p>Network canvas animado, road map com truck SVG e scroll progress, glow dinamico por luminancia de fundo, reveal on scroll e toasts.</p>
             <span class="badge">IntersectionObserver / Canvas</span>
@@ -899,22 +899,22 @@ a{color:inherit;text-decoration:none}
       <div class="arch-layer">
         <div class="arch-hdr">Camada de Dados e Persistencia</div>
         <div class="arch-b">
-          <div class="arch-item">
+          <div class="arch-item" data-arch="seed">
             <h4>Dados de Exemplo (Seed)</h4>
             <p>Entregas pre-definidas com IDs, motoristas, hubs, status e tempos. Hubs com nomes, regioes e coordenadas para o mapa Leaflet.</p>
             <span class="badge">Arrays / objetos inline</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="localstorage">
             <h4>localStorage</h4>
             <p>Tema selecionado pelo usuario, historico de rotas simuladas, sessao de autenticacao e preferencia de simulacao recente.</p>
             <span class="badge">chave-valor</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="mapa-base">
             <h4>Mapa Base (Tile Layer)</h4>
             <p>Integracao com Leaflet.js e tiles CartoDB (voyager para claro, dark_all para escuro). Marcadores de coleta e entrega com polylines.</p>
             <span class="badge">CDN / API publica</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="imagens">
             <h4>Imagens e Assets</h4>
             <p>Logo SVG, imagens do fluxo (hub logistico, mapa de roteirizacao, despacho) e screenshots da plataforma.</p>
             <span class="badge">jpg / webp / png</span>
@@ -925,17 +925,17 @@ a{color:inherit;text-decoration:none}
       <div class="arch-layer">
         <div class="arch-hdr">Infraestrutura e Deploy</div>
         <div class="arch-b">
-          <div class="arch-item">
+          <div class="arch-item" data-arch="hospedagem">
             <h4>Hospedagem</h4>
             <p>Deploy continuo integrado ao repositorio GitHub. Build estatico com servidor HTTP node (http-server) em desenvolvimento.</p>
             <span class="badge">Vercel</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="versionamento">
             <h4>Versionamento</h4>
             <p>Repositorio Git com historico de commits. Branches para features e deploy a partir da branch main.</p>
             <span class="badge">Git / GitHub</span>
           </div>
-          <div class="arch-item">
+          <div class="arch-item" data-arch="fontes">
             <h4>Fontes e CDNs</h4>
             <p>Google Fonts (Playfair Display + Space Grotesk), Leaflet.js para mapas interativos e bibliotecas de mapa base.</p>
             <span class="badge">CDN externo</span>
@@ -1089,29 +1089,64 @@ a{color:inherit;text-decoration:none}
     }
   };
 
+  var archData = {
+    landing: { name: 'Landing Page', badge: 'index.html', camada: 'Camada de Apresentacao (Frontend)', desc: 'Pagina publica institucional do LogiHub. Apresenta a marca, os servicos, o fluxo de operacao (como funciona), os modais de transporte, o simulador de rotas interativo e as parcerias. Totalmente responsiva, com navegacao suave entre secoes e efeitos visuais como canvas animado na hero e revelacao por scroll.', detalhes: ['Hero com titulo, subtitulo, estatisticas e canvas de particulas', 'Sessao Enterprise com 3 cards de servicos (Micro-hubs, Roteirizacao, Entregas no mesmo dia)', 'Sessao Diffusion com 4 diferenciais da operacao', 'Sessao Flow com 3 etapas ilustradas do fluxo logistico', 'Sessao Transport com 3 modais (frota eletrica, cicloviaria, pesada)', 'Simulador de rotas com formulario, mapa Leaflet e resultado de tempo/custo', 'Sessao Parcerias com CTAs para lojistas, marketplaces e hubs', 'Road map lateral com truck animado e marcadores de progresso', 'Temas: sistema de 6 temas com persistencia em localStorage'], tech: 'HTML semantico, CSS com custom properties, JavaScript vanilla' },
+    dashboard: { name: 'Dashboard Operacional', badge: 'dashboard.html', camada: 'Camada de Apresentacao (Frontend)', desc: 'Painel privado para gestao de entregas em tempo real. Requer autenticacao simulada para acesso. Oferece visao geral com KPIs, mapa interativo com marcadores de motoristas e hubs, tabela de entregas com filtros e gerenciamento de hubs.', detalhes: ['Tela de login/registro com validacao de campos e persistencia de sessao', 'Dashboard com 4 KPIs (taxa de sucesso, tempo medio, pacotes em transito, entregas hoje)', 'Mapa em tempo real com Leaflet, marcadores de motoristas e hubs com status', 'Painel de entregas com tabela de dados, status e tempo', 'Gerenciamento de micro-hubs com cards de informacao', 'Tema sincronizado com o landing page via localStorage', 'Navegacao por abas (Dashboard, Mapa, Hubs, Configuracoes)'], tech: 'HTML semantico, CSS com custom properties, JavaScript vanilla, Leaflet.js' },
+    projeto: { name: 'Documentacao do Projeto', badge: 'projeto.html', camada: 'Camada de Apresentacao (Frontend)', desc: 'Pagina auxiliar de documentacao com artefatos de design e especificacoes do sistema. Inclui mapa de personas com ecossistema, cards detalhados, jornada do usuario, mapa de empatia e arquitetura completa do sistema.', detalhes: ['Mapa do ecossistema com 6 personas e suas prioridades', 'Cards detalhados de cada persona com objetivos, dores e necessidades', 'Jornada do usuario em 6 etapas (Descobrir, Simular, Converter, Operar, Executar, Receber)', 'Mapa de empatia do lojista com 6 campos', 'Arquitetura do sistema em 4 camadas com 15 componentes', 'Modal de detalhes ao clicar em personas e componentes', 'Temas sincronizados com o restante da plataforma'], tech: 'HTML semantico, CSS com custom properties, JavaScript vanilla' },
+    temas: { name: 'Temas e Personalizacao', badge: 'CSS custom properties', camada: 'Camada de Apresentacao (Frontend)', desc: 'Sistema de 6 temas visuais que alteram completamente a aparencia da plataforma. Cada tema define paleta de cores (fundo, texto, destaque) e se adapta ao mapa Leaflet ( claro ou escuro). A escolha e persistida em localStorage.', detalhes: ['6 temas: Eco (verde escuro), Deep Ocean (azul profundo), Desert Trust (laranja terroso), Sunset (laranja vibrante), Neon (verde eletrico), Ruby (vermelho rubi)', 'Variaveis CSS para bg, text, accent, surface, on-surface e bordas', 'Persistencia em localStorage com chave logihub_theme', 'Seletor de temas flutuante no canto inferior direito', 'Filtro de mapa Leaflet para temas escuros (inversao de cores)', 'Temas sincronizados entre index.html, dashboard.html e projeto.html'], tech: 'CSS custom properties, localStorage, JavaScript' },
+    estado: { name: 'Estado da Aplicacao', badge: 'JavaScript vanilla', camada: 'Camada de Logica e Estado (Client-side)', desc: 'Gerenciamento de estado centralizado para controlar formularios, simulacao, autenticacao e navegacao. No landing page, o objeto S armazena dados do simulador e historico. No dashboard, um ViewModel gerencia as abas, autenticacao e dados operacionais.', detalhes: ['Objeto S no index.html: pickup, delivery, pickupCep, deliveryCep, loading, step, res, err, scrolled, cf, hist', 'ViewModel no dashboard: currentView, deliveries, drivers, hubs, user, realMap, initRealMap(), navigate(), bindSidebar()', 'Controle de fluxo: validacao de formulario, cancelamento de simulacao, alternancia entre abas', 'Event delegation para manipulacao de cliques em botoes e navegacao', 'Persistencia de sessao e historico de rotas simuladas'], tech: 'JavaScript vanilla com objetos literais e closures' },
+    simulador: { name: 'Simulador de Rotas', badge: 'setInterval / localStorage', camada: 'Camada de Logica e Estado (Client-side)', desc: 'Ferramenta interativa que calcula estimativas de tempo e custo de entrega com base nos CEPs informados. Inclui geocodificacao simulada, animacao de steps, cache de historico e demonstracao com dados pre-preenchidos.', detalhes: ['Formulario com campos de endereco e CEP com mascara automatica', 'Validacao de CEP (formato 00000-000 e digito inicial 0-7 para cobertura)', 'Animacao de progresso com 4 steps (Geocodificando, Consultando hubs, Otimizando rota, Calculando)', 'Selecao aleatoria de hub e calculo de tempo (18-63 min) e custo (R$ 8,50-20,50)', 'Mapa Leaflet com marcadores de coleta e entrega e polyline de rota', 'Cache de historico local com ate 6 rotas recentes', 'Botoes de Demo (preenche dados de exemplo), Limpar e Cancelar'], tech: 'JavaScript vanilla com setInterval para animacao, localStorage para historico' },
+    auth: { name: 'Autenticacao Simulada', badge: 'localStorage', camada: 'Camada de Logica e Estado (Client-side)', desc: 'Sistema de login e registro simulado para controle de acesso ao dashboard. Valida campos obrigatorios, alterna entre formularios de login e registro, persiste sessao em localStorage e permite logout.', detalhes: ['Formulario de login com campos de email e senha', 'Formulario de registro com nome, email, senha e confirmacao', 'Alternancia entre formularios de login e registro', 'Validacao de campos obrigatorios com mensagens de erro', 'Persistencia de sessao em localStorage (logihub_user)', 'Logout com confirmacao e limpeza de sessao', 'Redirecionamento automatico para dashboard ao logar'], tech: 'JavaScript vanilla com localStorage para sessao' },
+    componentes: { name: 'Componentes Visuais', badge: 'IntersectionObserver / Canvas', camada: 'Camada de Logica e Estado (Client-side)', desc: 'Conjunto de componentes visuais que enriquecem a experiencia do usuario: canvas animado com rede de particulas, road map lateral com truck SVG e progresso por scroll, glow dinamico que detecta luminosidade do fundo, revelacao de elementos ao scroll e sistema de toasts.', detalhes: ['Network canvas: rede de 18 particulas com conexoes por proximidade e cores dinamicas do tema', 'Road map: mapa lateral fixo com truck SVG que se move conforme o scroll, marcadores que acendem progressivamente', 'Glow dinamico: detecta cor de fundo atras do truck via elementFromPoint e ativa glow branco em secoes escuras', 'Reveal: IntersectionObserver que anima elementos ao entrar no viewport com delays e transicao suave', 'Toasts: notificacoes temporarias com animacao de entrada e saida', 'Truck SVG: corpo, cabine, rodas e carga com wobble animation'], tech: 'JavaScript vanilla, Canvas API, IntersectionObserver, SVG, CSS animations' },
+    seed: { name: 'Dados de Exemplo (Seed)', badge: 'Arrays / objetos inline', camada: 'Camada de Dados e Persistencia', desc: 'Conjunto de dados pre-definidos para demonstrar as funcionalidades da plataforma. Inclui entregas, hubs, motoristas e rotas de exemplo. Os dados sao definidos como arrays e objetos literais no codigo JavaScript.', detalhes: ['3 hubs: Hub Paulista (Centro/Paulista), Hub Faria Lima (Faria Lima/Itaim), Hub Jardins (Jardins/Oscar Freire)', '3 entregas de exemplo no historico do simulador com enderecos, hubs, tempo e custo', '12 entregas no dashboard com IDs, destinos, motoristas, hubs, status e tempos', '3 motoristas de exemplo: Ana Oliveira, Carlos Mendes, Fernanda Lima', 'Coordenadas geograficas dos hubs para o mapa Leaflet', 'Dados de demonstracao para o simulador (Av. Paulista, 1000 / Rua Augusta, 1500)'], tech: 'JavaScript com arrays e objetos literais' },
+    localstorage: { name: 'localStorage', badge: 'chave-valor', camada: 'Camada de Dados e Persistencia', desc: 'Armazenamento local do navegador utilizado para persistir preferencias do usuario e dados de sessao. Nao requer backend ou banco de dados, funcionando integralmente no cliente.', detalhes: ['logihub_theme: tema selecionado pelo usuario (eco, deep-ocean, desert-trust, sunset, neon, ruby)', 'logihub_sim_recent: indicador de simulacao recente (flag)', 'logihub_user: sessao de autenticacao com nome e email do usuario', 'logihub_sim_recent: flag de simulacao ja realizada'], tech: 'localStorage API com chaves padronizadas' },
+    'mapa-base': { name: 'Mapa Base (Tile Layer)', badge: 'CDN / API publica', camada: 'Camada de Dados e Persistencia', desc: 'Integracao com Leaflet.js para mapas interativos. Utiliza tiles do CartoDB, alternando entre tema claro (Voyager) e escuro (Dark Matter) conforme o tema da plataforma. Inclui marcadores, polylines e controle de zoom.', detalhes: ['Leaflet.js via CDN com CSS e JavaScript', 'Tiles CartoDB: voyager para temas claros, dark_all para temas escuros', 'Marcadores de coleta e entrega com popups de informacao', 'Polyline tracejada entre origem e destino', 'Controle de zoom e centralizacao automatica em Sao Paulo', 'Inicializacao sob demanda no dashboard (so quando a aba Mapa e aberta)', 'invalidateSize() para correcao de layout em abas'], tech: 'Leaflet.js, CartoDB tile service, CDN' },
+    imagens: { name: 'Imagens e Assets', badge: 'jpg / webp / png', camada: 'Camada de Dados e Persistencia', desc: 'Recursos visuais utilizados na plataforma: logo SVG, imagens do fluxo logistico (hub logistico, mapa de roteirizacao, despacho) e screenshots da plataforma para documentacao.', detalhes: ['logo.png: logotipo principal da marca', 'hub-logistico.jpg: foto de mercadorias em centro de distribuicao', '1686859217625.jpeg: mapa de roteirizacao logistica', 'Despacho-Intelipost-1.webp: prancheta de despacho de entregas', 'imagens/: 15 screenshots da plataforma (hero, servicos, simulador, etc.)', 'Logo SVG inline no header e dashboard (viewBox 0 0 1000 400)'], tech: 'SVG, JPEG, WebP, PNG' },
+    hospedagem: { name: 'Hospedagem', badge: 'Vercel', camada: 'Infraestrutura e Deploy', desc: 'Plataforma de deploy continuo integrada ao repositorio GitHub. Realiza build automatico a cada push na branch main. Servidor HTTP estatico com suporte a rotas e CDN global.', detalhes: ['Deploy continuo: cada push na main dispara build e deploy automatico', 'Build estatico: HTML, CSS e JS puros, sem framework ou backend', 'CDN global: distribuicao em servidores worldwide para baixa latencia', 'Dominio personalizado: logihub-ufma.vercel.app', 'Suporte a rotas: URL mapping para paginas HTML', 'Http-server em desenvolvimento: node para testes locais na porta 54370'], tech: 'Vercel, Node.js (http-server), Git' },
+    versionamento: { name: 'Versionamento', badge: 'Git / GitHub', camada: 'Infraestrutura e Deploy', desc: 'Repositorio Git no GitHub com historico de commits estruturado. Branches para desenvolvimento de features e deploy a partir da branch main com integracao continua para Vercel.', detalhes: ['Repositorio: github.com/EmanuelSilva69/SiteP2Haroldo', 'Commits semanticos: feat, fix, refactor com descricao em portugues', 'Branch main: branch de deploy com historico estavel', 'GitHub integrado a Vercel para deploy automatico', 'Todas as alteracoes versionadas com diff tracking'], tech: 'Git, GitHub' },
+    fontes: { name: 'Fontes e CDNs', badge: 'CDN externo', camada: 'Infraestrutura e Deploy', desc: 'Fontes e bibliotecas carregadas via CDN para reduzir tamanho do repositorio e garantir versoes atualizadas. Inclui Google Fonts para tipografia e Leaflet.js para mapas interativos.', detalhes: ['Google Fonts: Playfair Display (titulos) e Space Grotesk (textos e UI)', 'Leaflet.js: biblioteca de mapas interativos open-source', 'CartoDB: tiles de mapa base com tema claro e escuro', 'CDN via link rel=preconnect para otimizacao de carregamento', 'Fontes carregadas com subset latino para reduzir tamanho'], tech: 'Google Fonts API, Leaflet.js CDN, CartoDB tile service' }
+  };
+
   var modal = document.getElementById('pmodal');
   var overlay = document.getElementById('pmodal-overlay');
   var closeBtn = document.getElementById('pmodal-close');
 
-  function openModal(key) {
-    var d = personaData[key];
+  function openModal(type, key) {
+    var d = type === 'persona' ? personaData[key] : archData[key];
     if (!d) return;
-    document.getElementById('pmodal-inicial').textContent = d.inicial;
-    document.getElementById('pmodal-name').textContent = d.name;
-    document.getElementById('pmodal-role').textContent = d.role;
-    document.getElementById('pmodal-prio').textContent = d.prio;
-    document.getElementById('pmodal-frase').textContent = d.frase;
-    var hdr = document.getElementById('pmodal-hdr');
-    hdr.className = 'pmodal-hdr ' + d.cls;
 
-    var body = document.getElementById('pmodal-body');
-    body.innerHTML = ''
-      + '<div class="pmodal-sec"><h4>Contexto</h4><p>' + d.contexto + '</p></div>'
-      + '<div class="pmodal-sec"><h4>Objetivos</h4><ul>' + d.objetivos.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
-      + '<div class="pmodal-sec"><h4>Dores</h4><ul>' + d.dores.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
-      + '<div class="pmodal-sec"><h4>Necessidades</h4><ul>' + d.necessidades.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
-      + '<div class="pmodal-sec"><h4>Cenario de uso</h4><p>' + d.cenario + '</p></div>'
-      + '<div class="pmodal-sec"><h4>Interface principal</h4><span class="pmodal-badge">' + d.interface + ' / ' + d.foco + '</span></div>';
+    if (type === 'persona') {
+      document.getElementById('pmodal-inicial').textContent = d.inicial;
+      document.getElementById('pmodal-name').textContent = d.name;
+      document.getElementById('pmodal-role').textContent = d.role;
+      document.getElementById('pmodal-prio').textContent = d.prio;
+      document.getElementById('pmodal-frase').textContent = d.frase;
+      var hdr = document.getElementById('pmodal-hdr');
+      hdr.className = 'pmodal-hdr ' + d.cls;
+
+      var body = document.getElementById('pmodal-body');
+      body.innerHTML = ''
+        + '<div class="pmodal-sec"><h4>Contexto</h4><p>' + d.contexto + '</p></div>'
+        + '<div class="pmodal-sec"><h4>Objetivos</h4><ul>' + d.objetivos.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+        + '<div class="pmodal-sec"><h4>Dores</h4><ul>' + d.dores.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+        + '<div class="pmodal-sec"><h4>Necessidades</h4><ul>' + d.necessidades.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+        + '<div class="pmodal-sec"><h4>Cenario de uso</h4><p>' + d.cenario + '</p></div>'
+        + '<div class="pmodal-sec"><h4>Interface principal</h4><span class="pmodal-badge">' + d.interface + ' / ' + d.foco + '</span></div>';
+    } else {
+      document.getElementById('pmodal-inicial').textContent = '';
+      document.getElementById('pmodal-name').textContent = d.name;
+      document.getElementById('pmodal-role').textContent = d.camada;
+      document.getElementById('pmodal-prio').textContent = d.badge;
+      document.getElementById('pmodal-frase').textContent = '';
+      var hdr = document.getElementById('pmodal-hdr');
+      hdr.className = 'pmodal-hdr media';
+
+      var body = document.getElementById('pmodal-body');
+      body.innerHTML = ''
+        + '<div class="pmodal-sec"><h4>Descricao</h4><p>' + d.desc + '</p></div>'
+        + '<div class="pmodal-sec"><h4>Detalhes</h4><ul>' + d.detalhes.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+        + '<div class="pmodal-sec"><h4>Tecnologias</h4><span class="pmodal-badge">' + d.tech + '</span></div>';
+    }
 
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1125,7 +1160,14 @@ a{color:inherit;text-decoration:none}
   document.querySelectorAll('.pcard').forEach(function(card) {
     card.addEventListener('click', function() {
       var key = this.getAttribute('data-persona');
-      if (key) openModal(key);
+      if (key) openModal('persona', key);
+    });
+  });
+
+  document.querySelectorAll('[data-arch]').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var key = this.getAttribute('data-arch');
+      if (key) openModal('arch', key);
     });
   });
 
