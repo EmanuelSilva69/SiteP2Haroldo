@@ -1138,14 +1138,15 @@ a{color:inherit;text-decoration:none}
       document.getElementById('pmodal-role').textContent = d.camada;
       document.getElementById('pmodal-prio').textContent = d.badge;
       document.getElementById('pmodal-frase').textContent = '';
-      var hdr = document.getElementById('pmodal-hdr');
-      hdr.className = 'pmodal-hdr media';
+      var hdr2 = document.getElementById('pmodal-hdr');
+      hdr2.className = 'pmodal-hdr media';
 
-      var body = document.getElementById('pmodal-body');
-      body.innerHTML = ''
-        + '<div class="pmodal-sec"><h4>Descricao</h4><p>' + d.desc + '</p></div>'
-        + '<div class="pmodal-sec"><h4>Detalhes</h4><ul>' + d.detalhes.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
-        + '<div class="pmodal-sec"><h4>Tecnologias</h4><span class="pmodal-badge">' + d.tech + '</span></div>';
+      var items = '';
+      for (var i = 0; i < d.detalhes.length; i++) {
+        items += '<li>' + d.detalhes[i] + '</li>';
+      }
+      var body2 = document.getElementById('pmodal-body');
+      body2.innerHTML = '<div class="pmodal-sec"><h4>Descricao</h4><p>' + d.desc + '</p></div><div class="pmodal-sec"><h4>Detalhes</h4><ul>' + items + '</ul></div><div class="pmodal-sec"><h4>Tecnologias</h4><span class="pmodal-badge">' + d.tech + '</span></div>';
     }
 
     modal.classList.add('open');
@@ -1164,12 +1165,16 @@ a{color:inherit;text-decoration:none}
     });
   });
 
-  document.querySelectorAll('[data-arch]').forEach(function(item) {
-    item.addEventListener('click', function() {
-      var key = this.getAttribute('data-arch');
-      if (key) openModal('arch', key);
+  var archContainer = document.querySelector('.arch');
+  if (archContainer) {
+    archContainer.addEventListener('click', function(e) {
+      var item = e.target.closest('[data-arch]');
+      if (item) {
+        var key = item.getAttribute('data-arch');
+        if (key) openModal('arch', key);
+      }
     });
-  });
+  }
 
   overlay.addEventListener('click', closeModal);
   closeBtn.addEventListener('click', closeModal);
