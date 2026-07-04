@@ -154,7 +154,10 @@ a{color:inherit;text-decoration:none}
 /* PERSONA CARDS */
 .pcards-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
 @media(max-width:768px){.pcards-g{grid-template-columns:1fr}}
-.pcard{background:var(--bg)}
+.pcard{background:var(--bg);cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(var(--text-rgb),0.04)}
+.pcard .pcard-click-hint{text-align:right;margin-top:.75rem;font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.15);opacity:0;transition:opacity .3s}
+.pcard:hover .pcard-click-hint{opacity:1}
 .pcard-hdr{padding:1.5rem 2rem;border-bottom:1px solid rgba(var(--text-rgb),0.04)}
 .pcard-hdr-in{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
 .pcard-inicial{width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.85rem;font-weight:700;flex-shrink:0}
@@ -177,6 +180,39 @@ a{color:inherit;text-decoration:none}
 .pcard-c li::before{content:'';position:absolute;left:0;top:.55rem;width:3px;height:3px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
 .pcard-interface{font-size:.72rem;font-weight:600;color:var(--accent);margin-bottom:.1rem}
 .pcard-foco{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.3)}
+
+/* MODAL */
+.pmodal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:all .4s ease;padding:2rem}
+.pmodal.open{visibility:visible;opacity:1}
+.pmodal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px)}
+.pmodal-box{position:relative;background:var(--bg);border-radius:2rem;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.15);transform:translateY(1rem) scale(.97);transition:transform .4s cubic-bezier(.19,1,.22,1)}
+.pmodal.open .pmodal-box{transform:translateY(0) scale(1)}
+.pmodal-close{position:absolute;top:1rem;right:1rem;width:2rem;height:2rem;border-radius:50%;border:none;background:rgba(var(--text-rgb),0.06);color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s;z-index:2}
+.pmodal-close:hover{background:rgba(var(--text-rgb),0.12)}
+.pmodal-hdr{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid rgba(var(--text-rgb),0.04)}
+.pmodal-hdr-in{display:flex;align-items:center;gap:1rem}
+.pmodal-inicial{width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.2rem;font-weight:700;flex-shrink:0}
+.pmodal-hdr.alta .pmodal-inicial{background:var(--accent);color:var(--bg)}
+.pmodal-hdr.media .pmodal-inicial{background:rgba(var(--text-rgb),0.06);color:rgba(var(--text-rgb),0.5)}
+.pmodal-hdr.baixa .pmodal-inicial{background:rgba(var(--text-rgb),0.03);color:rgba(var(--text-rgb),0.25)}
+.pmodal-name{font-size:1.2rem;font-weight:700}
+.pmodal-role{font-size:.8rem;color:rgba(var(--text-rgb),0.45)}
+.pmodal-prio{font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:4px;margin-left:auto}
+.pmodal-hdr.alta .pmodal-prio{background:rgba(var(--accent-rgb),0.1);color:var(--accent)}
+.pmodal-hdr.media .pmodal-prio{background:rgba(var(--text-rgb),0.04);color:rgba(var(--text-rgb),0.4)}
+.pmodal-hdr.baixa .pmodal-prio{background:rgba(var(--text-rgb),0.03);color:rgba(var(--text-rgb),0.25)}
+.pmodal-frase{font-size:.85rem;color:rgba(var(--text-rgb),0.45);font-style:italic;padding:.75rem 0 0 4rem}
+.pmodal-body{padding:1.5rem 2.5rem 2.5rem}
+.pmodal-sec{margin-bottom:1.5rem}
+.pmodal-sec:last-child{margin-bottom:0}
+.pmodal-sec h4{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(var(--text-rgb),0.35);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.pmodal-sec h4::before{content:'';width:3px;height:3px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
+.pmodal-sec p{font-size:.85rem;color:rgba(var(--text-rgb),0.6);line-height:1.7}
+.pmodal-sec ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
+@media(max-width:500px){.pmodal-sec ul{grid-template-columns:1fr}}
+.pmodal-sec li{font-size:.82rem;color:rgba(var(--text-rgb),0.55);padding:.2rem 0;padding-left:1rem;position:relative;line-height:1.6}
+.pmodal-sec li::before{content:'';position:absolute;left:0;top:.6rem;width:3px;height:3px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
+.pmodal-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;font-weight:600;padding:.25rem .7rem;border-radius:9999px;background:rgba(var(--accent-rgb),0.08);color:var(--accent);margin-top:.25rem}
 
 /* ARCHITECTURE */
 .arch{position:relative}
@@ -462,7 +498,7 @@ a{color:inherit;text-decoration:none}
 
     <div class="pcards-g">
 
-      <div class="pcard">
+      <div class="pcard" data-persona="mariana">
         <div class="pcard-hdr alta">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">M</span>
@@ -506,10 +542,11 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">frete vravel</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
-      <div class="pcard">
+      <div class="pcard" data-persona="andre">
         <div class="pcard-hdr alta">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">A</span>
@@ -553,10 +590,11 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">controle</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
-      <div class="pcard">
+      <div class="pcard" data-persona="camila">
         <div class="pcard-hdr media">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">C</span>
@@ -600,10 +638,11 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">integracao</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
-      <div class="pcard">
+      <div class="pcard" data-persona="joao">
         <div class="pcard-hdr media">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">J</span>
@@ -647,10 +686,11 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">renda</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
-      <div class="pcard">
+      <div class="pcard" data-persona="rafael">
         <div class="pcard-hdr media">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">R</span>
@@ -694,10 +734,11 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">rota clara</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
-      <div class="pcard">
+      <div class="pcard" data-persona="beatriz">
         <div class="pcard-hdr baixa">
           <div class="pcard-hdr-in">
             <span class="pcard-inicial">B</span>
@@ -741,6 +782,7 @@ a{color:inherit;text-decoration:none}
               <div class="pcard-foco">confianca</div>
             </div>
           </div>
+          <div class="pcard-click-hint">clique para detalhes</div>
         </div>
       </div>
 
@@ -935,6 +977,25 @@ a{color:inherit;text-decoration:none}
   <button data-t="ruby" title="Ruby — Vermelho Rubi"><span style="background:#e63946"></span></button>
 </div>
 
+<div class="pmodal" id="pmodal">
+  <div class="pmodal-overlay" id="pmodal-overlay"></div>
+  <div class="pmodal-box" id="pmodal-box">
+    <button class="pmodal-close" id="pmodal-close">&times;</button>
+    <div class="pmodal-hdr" id="pmodal-hdr">
+      <div class="pmodal-hdr-in">
+        <span class="pmodal-inicial" id="pmodal-inicial"></span>
+        <div>
+          <div class="pmodal-name" id="pmodal-name"></div>
+          <div class="pmodal-role" id="pmodal-role"></div>
+        </div>
+        <span class="pmodal-prio" id="pmodal-prio"></span>
+      </div>
+      <div class="pmodal-frase" id="pmodal-frase"></div>
+    </div>
+    <div class="pmodal-body" id="pmodal-body"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   document.body.classList.add('loaded');
@@ -951,6 +1012,127 @@ a{color:inherit;text-decoration:none}
       btns.forEach(function(x){x.classList.remove('a')});
       this.classList.add('a');
     });
+  });
+
+  var personaData = {
+    mariana: {
+      inicial: 'M', name: 'Mariana Alves', role: 'Lojista', prio: 'Alta',
+      cls: 'alta',
+      frase: '"Preciso entregar mais rapido sem tornar o frete uma barreira."',
+      contexto: 'Mariana e proprietaria de uma loja de decoracao no bairro de Pinheiros, em Sao Paulo. Ela vende online pelo Instagram e WhatsApp, alem do atendimento presencial. Faz cerca de 15 entregas por semana e hoje depende de motoboys avulsos e aplicativos de entrega. A margem dos produtos e apertada, e o frete muitas vezes inviabiliza a venda para bairros mais distantes.',
+      objetivos: ['Reduzir custo do frete', 'Oferecer prazo claro', 'Converter mais pedidos', 'Expandir area de entrega'],
+      dores: ['Frete alto no checkout', 'Atrasos e reclamacoes', 'Pouca previsibilidade', 'Sem rastreamento para o cliente'],
+      necessidades: ['Simulacao objetiva', 'Tempo, custo e hub sugerido', 'CTA de parceria claro', 'Custo previsivel por entrega'],
+      interface: 'Simulador',
+      foco: 'frete vravel',
+      cenario: 'Mariana recebe um pedido de um cliente da Zona Sul. Ela abre o LogiHub, informa os CEPs de coleta e entrega, e em segundos ve o tempo estimado, o custo e qual hub atendera a regiao. Com o resultado, ela repassa o valor do frete ao cliente e fecha a venda com prazo de entrega confirmado.'
+    },
+    andre: {
+      inicial: 'A', name: 'Andre Nogueira', role: 'Operacoes', prio: 'Alta',
+      cls: 'alta',
+      frase: '"Quero ver riscos de atraso em tempo real para agir rapido."',
+      contexto: 'Andre e gerente de operacoes de um marketplace regional que conecta 80 lojas independentes. Sua equipe acompanha cerca de 200 entregas por dia. Ele e responsavel por garantir que a taxa de sucesso na primeira tentativa se mantenha acima de 95% e que os atrasos sejam resolvidos em menos de 30 minutos.',
+      objetivos: ['Acompanhar desempenho da operacao', 'Identificar entregas com risco', 'Resolver atrasos rapidamente', 'Gerar relatorios de desempenho'],
+      dores: ['Status em lugares diferentes', 'Mapa sem destaque para urgencia', 'Tabela dificil de filtrar', 'Sem alertas proativos de atraso'],
+      necessidades: ['KPIs principais em destaque', 'Busca e filtros por entrega', 'Mapa com legenda e alertas', 'Historico exportavel'],
+      interface: 'Dashboard',
+      foco: 'controle',
+      cenario: 'Andre abre o dashboard pela manha e ve no topo os KPIs do dia: 187 entregas, 97% de sucesso, 23 min de tempo medio. Ele nota que uma entrega na regiao da Lapa esta amarela no mapa. Clica no marcador, ve que o motorista esta ha 15 min no local sem atualizar status, e envia uma notificacao diretamente pelo sistema.'
+    },
+    camila: {
+      inicial: 'C', name: 'Camila Torres', role: 'Marketplace', prio: 'Media',
+      cls: 'media',
+      frase: '"Meu checkout precisa mostrar frete e prazo confiaveis."',
+      contexto: 'Camila e gerente de produtos digitais em um marketplace de moda que opera em 12 cidades. Sua principal dor e a taxa de abandono de carrinho, que sobe quando o frete aparece como "a calcular". Ela precisa de uma integracao via API que retorne valores de frete em tempo real no checkout.',
+      objetivos: ['Integrar frete ao checkout', 'Reduzir abandono', 'Escalar cobertura', 'Oferecer frete viavel'],
+      dores: ['Documentacao ausente', 'SLA pouco claro', 'Integracao demorada', 'Cobertura restrita'],
+      necessidades: ['Dados de cobertura', 'API e sandbox', 'Contato tecnico/comercial', 'Documentacao clara'],
+      interface: 'Parcerias/API',
+      foco: 'integracao',
+      cenario: 'Camila acessa a pagina de parcerias do LogiHub e encontra a documentacao da API. Em algumas horas, sua equipe de desenvolvimento integra o endpoint de simulacao ao checkout. Agora, ao digitar o CEP, o cliente ja ve o valor do frete e o prazo estimado antes de finalizar a compra.'
+    },
+    joao: {
+      inicial: 'J', name: 'Joao Batista', role: 'Parceiro hub', prio: 'Media',
+      cls: 'media',
+      frase: '"Quero gerar renda, mas entender rotina e responsabilidade."',
+      contexto: 'Joao e proprietario de um pequeno espaco comercial na Vila Mariana que atualmente funciona como deposito de uma transportadora. Ele ouviu falar do modelo de micro-hubs e quer entender se pode transformar seu espaco ocioso em um ponto de distribuicao sem precisar investir muito ou contratar mais pessoas.',
+      objetivos: ['Usar espaco ocioso', 'Entender volume esperado', 'Operar com rotina simples', 'Gerar renda extra'],
+      dores: ['Medo de complexidade', 'Investimento incerto', 'Regras pouco claras', 'Sem previsao de demanda'],
+      necessidades: ['Checklist para virar hub', 'Estimativa de demanda', 'Onboarding simples', 'Suporte inicial'],
+      interface: 'Seja um Hub',
+      foco: 'renda',
+      cenario: 'Joao acessa a pagina "Seja um Hub" e preenche um formulario com a localizacao e metragem do espaco. O sistema retorna uma estimativa de volume de pacotes que a regiao poderia gerar, os requisitos minimos de operacao e um contato para iniciar o onboarding.'
+    },
+    rafael: {
+      inicial: 'R', name: 'Rafael Santos', role: 'Entregador', prio: 'Media',
+      cls: 'media',
+      frase: '"Uma rota ruim me faz perder tempo e produtividade."',
+      contexto: 'Rafael trabalha como entregador autonomo ha 3 anos, usando uma moto propria. Ele e vinculado a dois hubs na regiao central e recebe em media 12 entregas por dia. Sua renda depende diretamente de quantas entregas consegue completar, e cada minuto perdido com rotas mal planejadas impacta seu ganho no fim do dia.',
+      objetivos: ['Seguir sequencia clara', 'Evitar deslocamentos extras', 'Atualizar status rapido', 'Maximizar entregas por turno'],
+      dores: ['Endereco incompleto', 'Mudanca sem contexto', 'Contato manual com operacao', 'Rotas sem ordenacao inteligente'],
+      necessidades: ['Proxima parada visivel', 'Status com poucos toques', 'Suporte em excecoes', 'Navegacao integrada'],
+      interface: 'Mapa/App',
+      foco: 'rota clara',
+      cenario: 'Rafael estaciona a moto e consulta o app do LogiHub. As 6 entregas do periodo ja estao ordenadas em uma sequencia que evita voltas desnecessarias. Ele ve o endereco, um telefone de contato e um campo para marcar "Entregue" com um toque. Ao finalizar, a proxima parada ja aparece no mapa.'
+    },
+    beatriz: {
+      inicial: 'B', name: 'Beatriz Lima', role: 'Cliente final', prio: 'Baixa',
+      cls: 'baixa',
+      frase: '"Nao preciso ver a operacao, so confiar no horario prometido."',
+      contexto: 'Beatriz e consumidora frequente de e-commerce e mora em um predio na Zona Oeste do Rio de Janeiro. Ela valoriza pontualidade e previsibilidade: quer saber exatamente quando a entrega vai chegar para nao precisar ficar esperando ou depender de porteiro. Nao tem interesse nos detalhes da operacao, mas exige que o prazo prometido seja cumprido.',
+      objetivos: ['Receber no prazo', 'Saber quando chega', 'Resolver imprevistos', 'Comunicacao clara'],
+      dores: ['Status generico', 'Janela ampla demais', 'Pouca comunicacao', 'Reagendamento dificil'],
+      necessidades: ['ETA simples', 'Notificacoes objetivas', 'Contato ou reagendamento', 'Previsao confiavel'],
+      interface: 'Rastreio',
+      foco: 'confianca',
+      cenario: 'Beatriz recebe um SMS do LogiHub: "Seu pedido #2847 sera entregue hoje entre 14h e 15h. Acompanhe: link". Ela clica e ve um mapa com a posicao do entregador e uma barra de progresso. Quando o entregador esta a 3 minutos, ela recebe outra notificacao e desce para receber.'
+    }
+  };
+
+  var modal = document.getElementById('pmodal');
+  var overlay = document.getElementById('pmodal-overlay');
+  var closeBtn = document.getElementById('pmodal-close');
+
+  function openModal(key) {
+    var d = personaData[key];
+    if (!d) return;
+    document.getElementById('pmodal-inicial').textContent = d.inicial;
+    document.getElementById('pmodal-name').textContent = d.name;
+    document.getElementById('pmodal-role').textContent = d.role;
+    document.getElementById('pmodal-prio').textContent = d.prio;
+    document.getElementById('pmodal-frase').textContent = d.frase;
+    var hdr = document.getElementById('pmodal-hdr');
+    hdr.className = 'pmodal-hdr ' + d.cls;
+
+    var body = document.getElementById('pmodal-body');
+    body.innerHTML = ''
+      + '<div class="pmodal-sec"><h4>Contexto</h4><p>' + d.contexto + '</p></div>'
+      + '<div class="pmodal-sec"><h4>Objetivos</h4><ul>' + d.objetivos.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+      + '<div class="pmodal-sec"><h4>Dores</h4><ul>' + d.dores.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+      + '<div class="pmodal-sec"><h4>Necessidades</h4><ul>' + d.necessidades.map(function(x){return '<li>'+x+'</li>'}).join('') + '</ul></div>'
+      + '<div class="pmodal-sec"><h4>Cenario de uso</h4><p>' + d.cenario + '</p></div>'
+      + '<div class="pmodal-sec"><h4>Interface principal</h4><span class="pmodal-badge">' + d.interface + ' / ' + d.foco + '</span></div>';
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.pcard').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var key = this.getAttribute('data-persona');
+      if (key) openModal(key);
+    });
+  });
+
+  overlay.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
   });
 })();
 </script>
