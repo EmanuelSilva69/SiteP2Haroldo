@@ -115,18 +115,68 @@ a{color:inherit;text-decoration:none}
 .miro-grid p{font-size:.7rem;color:rgba(var(--text-rgb),0.4);max-width:18rem}
 
 /* PERSONA */
-.persona-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
-@media(max-width:768px){.persona-g{grid-template-columns:1fr}}
-.persona-c{background:var(--bg);padding:2.5rem}
-.persona-c .tag{display:inline-block;font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:rgba(var(--accent-rgb),0.8);background:rgba(var(--accent-rgb),0.06);padding:.25rem .7rem;border-radius:9999px;margin-bottom:1rem}
-.persona-c h3{font-size:1.15rem;font-weight:600;margin-bottom:.25rem}
-.persona-c .role{font-size:.75rem;color:rgba(var(--text-rgb),0.45);margin-bottom:1.5rem}
-.persona-c h4{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(var(--text-rgb),0.35);margin-bottom:.5rem;margin-top:1.25rem}
-.persona-c h4:first-of-type{margin-top:0}
-.persona-c p,.persona-c li{font-size:.82rem;color:rgba(var(--text-rgb),0.6);line-height:1.7}
-.persona-c ul{list-style:none;padding:0}
-.persona-c ul li{padding:.2rem 0;padding-left:1rem;position:relative}
-.persona-c ul li::before{content:'';position:absolute;left:0;top:.65rem;width:4px;height:4px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
+/* PERSONA OVERVIEW */
+.poverview{border:1px solid rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden;margin-bottom:2rem}
+.po-hdr{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(var(--text-rgb),0.3);padding:.6rem 1.25rem;background:rgba(var(--text-rgb),0.03);border-bottom:1px solid rgba(var(--text-rgb),0.04)}
+.po-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(var(--text-rgb),0.06)}
+@media(max-width:768px){.po-g{grid-template-columns:repeat(2,1fr)}}
+.po-c{background:var(--bg);padding:1.5rem;text-align:center;transition:background .3s}
+.po-c:hover{background:rgba(var(--text-rgb),0.015)}
+.po-inicial{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--surface);color:var(--on-surface);font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:.5rem}
+.po-c.alta .po-inicial{background:var(--accent);color:var(--bg)}
+.po-c h3{font-size:.95rem;font-weight:600}
+.po-role{font-size:.7rem;color:rgba(var(--text-rgb),0.45);margin-bottom:.15rem}
+.po-tag{font-size:.65rem;font-weight:600;color:var(--accent);margin-bottom:.5rem}
+.po-prio{font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.15rem .5rem;border-radius:4px;display:inline-block;margin-bottom:.4rem}
+.po-c.alta .po-prio{background:rgba(var(--accent-rgb),0.1);color:var(--accent)}
+.po-c.media .po-prio{background:rgba(var(--text-rgb),0.04);color:rgba(var(--text-rgb),0.4)}
+.po-c.baixa .po-prio{background:rgba(var(--text-rgb),0.03);color:rgba(var(--text-rgb),0.25)}
+.po-interface{font-size:.65rem;font-weight:600;color:rgba(var(--text-rgb),0.3);margin-bottom:.1rem}
+.po-foco{font-size:.55rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.2)}
+
+/* PERSONA JORNADA */
+.pjornada{border:1px solid rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
+.pj-hdr{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(var(--text-rgb),0.3);padding:.6rem 1.25rem;background:rgba(var(--text-rgb),0.03);border-bottom:1px solid rgba(var(--text-rgb),0.04)}
+.pj-steps{display:flex;align-items:center;gap:.5rem;padding:2rem 1.5rem;flex-wrap:wrap;justify-content:center;background:rgba(var(--text-rgb),0.015)}
+.pj-step{display:flex;align-items:center;gap:.6rem;min-width:100px}
+.pj-n{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--surface);color:var(--on-surface);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.pj-body{display:flex;flex-direction:column;gap:1px}
+.pj-title{font-size:.75rem;font-weight:600}
+.pj-who{font-size:.6rem;color:rgba(var(--text-rgb),0.35)}
+.pj-goal{font-size:.6rem;color:var(--accent);font-style:italic}
+.pj-arrow{font-size:.6rem;color:rgba(var(--text-rgb),0.15);flex-shrink:0}
+.pj-opps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(var(--text-rgb),0.06)}
+@media(max-width:768px){.pj-opps{grid-template-columns:1fr}}
+.pj-opp{background:var(--bg);padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.2rem}
+.pj-opp-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.25rem}
+.pj-opp span:not(.pj-opp-label){font-size:.7rem;color:rgba(var(--text-rgb),0.5)}
+
+/* PERSONA CARDS */
+.pcards-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(var(--text-rgb),0.06);border-radius:1.5rem;overflow:hidden}
+@media(max-width:768px){.pcards-g{grid-template-columns:1fr}}
+.pcard{background:var(--bg)}
+.pcard-hdr{padding:1.5rem 2rem;border-bottom:1px solid rgba(var(--text-rgb),0.04)}
+.pcard-hdr-in{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
+.pcard-inicial{width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.85rem;font-weight:700;flex-shrink:0}
+.pcard-hdr.alta .pcard-inicial{background:var(--accent);color:var(--bg)}
+.pcard-hdr.media .pcard-inicial{background:rgba(var(--text-rgb),0.06);color:rgba(var(--text-rgb),0.5)}
+.pcard-hdr.baixa .pcard-inicial{background:rgba(var(--text-rgb),0.03);color:rgba(var(--text-rgb),0.25)}
+.pcard-name{font-size:.95rem;font-weight:600}
+.pcard-role{font-size:.7rem;color:rgba(var(--text-rgb),0.45)}
+.pcard-prio{font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.15rem .5rem;border-radius:4px;margin-left:auto}
+.pcard-hdr.alta .pcard-prio{background:rgba(var(--accent-rgb),0.1);color:var(--accent)}
+.pcard-hdr.media .pcard-prio{background:rgba(var(--text-rgb),0.04);color:rgba(var(--text-rgb),0.4)}
+.pcard-hdr.baixa .pcard-prio{background:rgba(var(--text-rgb),0.03);color:rgba(var(--text-rgb),0.25)}
+.pcard-frase{font-size:.78rem;color:rgba(var(--text-rgb),0.45);font-style:italic;padding-left:3rem}
+.pcard-body{padding:1.5rem 2rem}
+.pcard-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+@media(max-width:500px){.pcard-g{grid-template-columns:1fr}}
+.pcard-c h4{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(var(--text-rgb),0.35);margin-bottom:.4rem}
+.pcard-c ul{list-style:none;padding:0}
+.pcard-c li{font-size:.78rem;color:rgba(var(--text-rgb),0.55);padding:.15rem 0;padding-left:.8rem;position:relative;line-height:1.6}
+.pcard-c li::before{content:'';position:absolute;left:0;top:.55rem;width:3px;height:3px;border-radius:50%;background:rgba(var(--text-rgb),0.15)}
+.pcard-interface{font-size:.72rem;font-weight:600;color:var(--accent);margin-bottom:.1rem}
+.pcard-foco{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(var(--text-rgb),0.3)}
 
 /* ARCHITECTURE */
 .arch{position:relative}
@@ -188,10 +238,14 @@ a{color:inherit;text-decoration:none}
 .emp-ganho .emp-label{color:#27ae60}
 @media(max-width:768px){
   .miro-card{padding:2rem 1.5rem}
-  .persona-c{padding:2rem 1.5rem}
   .emp-mid{grid-template-columns:1fr}
   .emp-dg{grid-template-columns:1fr}
   .emp-c,.emp-center{padding:1.5rem}
+  .po-g{grid-template-columns:repeat(2,1fr)}
+  .pcards-g{grid-template-columns:1fr}
+  .pj-opps{grid-template-columns:1fr}
+  .pcard-hdr,.pcard-body{padding:1.25rem 1.5rem}
+  .pcard-g{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -243,124 +297,451 @@ a{color:inherit;text-decoration:none}
     <div class="s-hdr">
       <span class="label">Pesquisa com Usuarios</span>
       <h2>Mapa de Personas</h2>
-      <p>Perfis de usuarios identificados na pesquisa para direcionar as decisoes de design e funcionalidades da plataforma.</p>
+      <p>Documento objetivo para visualizar quem decide, quem opera, quem integra, quem executa e quem recebe valor na experiencia LogiHub. Ecossistema de usuarios da ultima milha.</p>
     </div>
-    <div class="persona-g">
 
-      <div class="persona-c">
-        <span class="tag">Perfil 1</span>
-        <h3>Lojista de Pequeno Porte</h3>
-        <div class="role">Proprietario de loja fisica no centro expandido</div>
-        <h4>Contexto</h4>
-        <p>Administra uma loja propria com 2 a 5 funcionarios. Realiza entregas por conta propria ou por servicos terceirizados avulsos. Opera com margens apertadas e precisa de previsibilidade nos custos de entrega.</p>
-        <h4>Objetivos</h4>
-        <ul>
-          <li>Reduzir custo medio por entrega sem perder qualidade</li>
-          <li>Oferecer frete gratuito ou com valor conhecido para fechar vendas</li>
-          <li>Ter visibilidade do status da entrega sem precisar ligar para o entregador</li>
-          <li>Expandir area de entrega sem aumentar proporcionalmente o custo operacional</li>
-        </ul>
-        <h4>Dores</h4>
-        <ul>
-          <li>Custo de entrega varia muito conforme o bairro e o entregador disponivel</li>
-          <li>Nao consegue rastrear entregas em tempo real</li>
-          <li>Perde vendas por nao conseguir estimar prazo no momento da compra</li>
-          <li>Depende de planilhas e telefonemas para gerenciar as entregas do dia</li>
-        </ul>
-        <h4>Necessidades</h4>
-        <ul>
-          <li>Calculo de frete instantaneo e confiavel</li>
-          <li>Plataforma simples sem necessidade de integracao tecnica complexa</li>
-          <li>Acompanhamento da entrega pelo celular</li>
-          <li>Custo previsivel por entrega ou assinatura mensal</li>
-        </ul>
+    <div class="poverview">
+      <div class="po-hdr">Ecossistema</div>
+      <div class="po-g">
+        <div class="po-c alta">
+          <div class="po-in">
+            <span class="po-inicial">M</span>
+            <h3>Mariana</h3>
+            <div class="po-role">Lojista</div>
+            <div class="po-tag">Simula e decide</div>
+            <div class="po-prio">Prioridade: Alta</div>
+            <div class="po-interface">Simulador</div>
+            <div class="po-foco">frete vravel</div>
+          </div>
+        </div>
+        <div class="po-c alta">
+          <div class="po-in">
+            <span class="po-inicial">A</span>
+            <h3>Andre</h3>
+            <div class="po-role">Operacoes</div>
+            <div class="po-tag">Monitora e corrige</div>
+            <div class="po-prio">Prioridade: Alta</div>
+            <div class="po-interface">Dashboard</div>
+            <div class="po-foco">controle</div>
+          </div>
+        </div>
+        <div class="po-c media">
+          <div class="po-in">
+            <span class="po-inicial">C</span>
+            <h3>Camila</h3>
+            <div class="po-role">Marketplace</div>
+            <div class="po-tag">Integra e escala</div>
+            <div class="po-prio">Prioridade: Media</div>
+            <div class="po-interface">Parcerias/API</div>
+            <div class="po-foco">integracao</div>
+          </div>
+        </div>
+        <div class="po-c media">
+          <div class="po-in">
+            <span class="po-inicial">J</span>
+            <h3>Joao</h3>
+            <div class="po-role">Parceiro hub</div>
+            <div class="po-tag">Expande a rede</div>
+            <div class="po-prio">Prioridade: Media</div>
+            <div class="po-interface">Seja um Hub</div>
+            <div class="po-foco">renda</div>
+          </div>
+        </div>
+        <div class="po-c media">
+          <div class="po-in">
+            <span class="po-inicial">R</span>
+            <h3>Rafael</h3>
+            <div class="po-role">Entregador</div>
+            <div class="po-tag">Executa rotas</div>
+            <div class="po-prio">Prioridade: Media</div>
+            <div class="po-interface">Mapa/App</div>
+            <div class="po-foco">rota clara</div>
+          </div>
+        </div>
+        <div class="po-c baixa">
+          <div class="po-in">
+            <span class="po-inicial">B</span>
+            <h3>Beatriz</h3>
+            <div class="po-role">Cliente final</div>
+            <div class="po-tag">Recebe valor</div>
+            <div class="po-prio">Prioridade: Baixa</div>
+            <div class="po-interface">Rastreio</div>
+            <div class="po-foco">confianca</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pjornada">
+      <div class="pj-hdr">Jornada e Prioridades</div>
+      <div class="pj-steps">
+        <div class="pj-step">
+          <div class="pj-n">1</div>
+          <div class="pj-body">
+            <div class="pj-title">Descobrir</div>
+            <div class="pj-who">Mariana, Camila, Joao</div>
+            <div class="pj-goal">entender valor</div>
+          </div>
+        </div>
+        <div class="pj-arrow">--></div>
+        <div class="pj-step">
+          <div class="pj-n">2</div>
+          <div class="pj-body">
+            <div class="pj-title">Simular</div>
+            <div class="pj-who">Mariana</div>
+            <div class="pj-goal">comparar frete</div>
+          </div>
+        </div>
+        <div class="pj-arrow">--></div>
+        <div class="pj-step">
+          <div class="pj-n">3</div>
+          <div class="pj-body">
+            <div class="pj-title">Converter</div>
+            <div class="pj-who">Mariana, Camila, Joao</div>
+            <div class="pj-goal">iniciar contato</div>
+          </div>
+        </div>
+        <div class="pj-arrow">--></div>
+        <div class="pj-step">
+          <div class="pj-n">4</div>
+          <div class="pj-body">
+            <div class="pj-title">Operar</div>
+            <div class="pj-who">Andre</div>
+            <div class="pj-goal">resolver atrasos</div>
+          </div>
+        </div>
+        <div class="pj-arrow">--></div>
+        <div class="pj-step">
+          <div class="pj-n">5</div>
+          <div class="pj-body">
+            <div class="pj-title">Executar</div>
+            <div class="pj-who">Rafael</div>
+            <div class="pj-goal">entregar melhor</div>
+          </div>
+        </div>
+        <div class="pj-arrow">--></div>
+        <div class="pj-step">
+          <div class="pj-n">6</div>
+          <div class="pj-body">
+            <div class="pj-title">Receber</div>
+            <div class="pj-who">Beatriz</div>
+            <div class="pj-goal">confiar no prazo</div>
+          </div>
+        </div>
+      </div>
+      <div class="pj-opps">
+        <div class="pj-opp">
+          <span class="pj-opp-label">SIMULADOR</span>
+          <span>validacao de CEP</span>
+          <span>tempo, custo e hub</span>
+          <span>historico de rotas</span>
+        </div>
+        <div class="pj-opp">
+          <span class="pj-opp-label">DASHBOARD</span>
+          <span>busca e filtros</span>
+          <span>status por criticidade</span>
+          <span>mapa com legenda</span>
+        </div>
+        <div class="pj-opp">
+          <span class="pj-opp-label">PARCERIAS</span>
+          <span>CTA por perfil</span>
+          <span>API e cobertura</span>
+          <span>checklist para hub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CARDS DE PERSONA === -->
+  <section class="s">
+    <div class="s-hdr">
+      <span class="label">Pesquisa com Usuarios</span>
+      <h2>Cards de Persona</h2>
+      <p>Detalhamento de objetivos, dores, necessidades e foco de interface para cada perfil do ecossistema LogiHub.</p>
+    </div>
+
+    <div class="pcards-g">
+
+      <div class="pcard">
+        <div class="pcard-hdr alta">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">M</span>
+            <div>
+              <div class="pcard-name">Mariana Alves</div>
+              <div class="pcard-role">Lojista</div>
+            </div>
+            <span class="pcard-prio">Alta</span>
+          </div>
+          <div class="pcard-frase">"Preciso entregar mais rapido sem tornar o frete uma barreira."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Reduzir custo do frete</li>
+                <li>Oferecer prazo claro</li>
+                <li>Converter mais pedidos</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Frete alto no checkout</li>
+                <li>Atrasos e reclamacoes</li>
+                <li>Pouca previsibilidade</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>Simulacao objetiva</li>
+                <li>Tempo, custo e hub sugerido</li>
+                <li>CTA de parceria claro</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Simulador</div>
+              <div class="pcard-foco">frete vravel</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="persona-c">
-        <span class="tag">Perfil 2</span>
-        <h3>Gestor de Logistica</h3>
-        <div class="role">Gerente de operacoes em marketplace ou rede de lojas</div>
-        <h4>Contexto</h4>
-        <p>Gerencia a operacao de entrega de uma rede com 20 a 200 lojas. Coordena motoristas proprios e terceirizados. Responde por KPIs de tempo, custo e satisfacao do cliente final.</p>
-        <h4>Objetivos</h4>
-        <ul>
-          <li>Centralizar o gerenciamento de todas as entregas em um unico painel</li>
-          <li>Otimizar rotas para reduzir quilometragem e tempo ocioso da frota</li>
-          <li>Escalar a operacao sem contratar mais pessoas para a central</li>
-          <li>Manter taxa de sucesso na primeira tentativa acima de 95%</li>
-        </ul>
-        <h4>Dores</h4>
-        <ul>
-          <li>Planilhas e WhatsApp nao escalam para o volume atual de entregas</li>
-          <li>Dificuldade para realocar entregas quando um motorista tem imprevisto</li>
-          <li>Sem dados historicos confiaveis para planejar expansao da frota</li>
-          <li>Motoristas perdem tempo em deslocamentos entre bairros distantes</li>
-        </ul>
-        <h4>Necessidades</h4>
-        <ul>
-          <li>Painel com KPIs em tempo real e historico de desempenho</li>
-          <li>Roteirizacao automatica com suporte a multiplos entregadores</li>
-          <li>API para integrar com sistemas legados de gestao de pedidos</li>
-          <li>Relatorios exportaveis para prestacao de contas</li>
-        </ul>
+      <div class="pcard">
+        <div class="pcard-hdr alta">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">A</span>
+            <div>
+              <div class="pcard-name">Andre Nogueira</div>
+              <div class="pcard-role">Operacoes</div>
+            </div>
+            <span class="pcard-prio">Alta</span>
+          </div>
+          <div class="pcard-frase">"Quero ver riscos de atraso em tempo real para agir rapido."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Acompanhar desempenho da operacao</li>
+                <li>Identificar entregas com risco</li>
+                <li>Resolver atrasos rapidamente</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Status em lugares diferentes</li>
+                <li>Mapa sem destaque para urgencia</li>
+                <li>Tabela dificil de filtrar</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>KPIs principais em destaque</li>
+                <li>Busca e filtros por entrega</li>
+                <li>Mapa com legenda e alertas</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Dashboard</div>
+              <div class="pcard-foco">controle</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="persona-c">
-        <span class="tag">Perfil 3</span>
-        <h3>Entregador Autonomo</h3>
-        <div class="role">Motorista parceiro com veiculo proprio (moto, bicicleta, carro)</div>
-        <h4>Contexto</h4>
-        <p>Trabalha como entregador autonomo vinculado a um ou mais hubs. Conhece bem a regiao onde opera. A renda depende diretamente da quantidade de entregas que consegue fazer por dia.</p>
-        <h4>Objetivos</h4>
-        <ul>
-          <li>Maximizar o numero de entregas realizadas por turno</li>
-          <li>Ter rotas inteligentes que evitem transito e regioes perigosas</li>
-          <li>Receber pagamento justo e com previsibilidade</li>
-          <li>Reduzir tempo perdido esperando novas atribuicoes</li>
-        </ul>
-        <h4>Dores</h4>
-        <ul>
-          <li>Recebe entregas sem considerar sua localizacao atual</li>
-          <li>Precisa parar para consultar mapa ou ligar para o destinatario</li>
-          <li>Nao consegue comunicar ao hub quando esta proximo do limite de capacidade</li>
-          <li>Perde tempo em enderecos mal cadastrados ou incompletos</li>
-        </ul>
-        <h4>Necessidades</h4>
-        <ul>
-          <li>Aplicativo simples com navegacao GPS integrada</li>
-          <li>Sugestoes de rota que aproveitem a posicao em tempo real</li>
-          <li>Canal de comunicacao direta com o hub e o destinatario</li>
-          <li>Historico de entregas e ganhos do dia</li>
-        </ul>
+      <div class="pcard">
+        <div class="pcard-hdr media">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">C</span>
+            <div>
+              <div class="pcard-name">Camila Torres</div>
+              <div class="pcard-role">Marketplace</div>
+            </div>
+            <span class="pcard-prio">Media</span>
+          </div>
+          <div class="pcard-frase">"Meu checkout precisa mostrar frete e prazo confiaveis."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Integrar frete ao checkout</li>
+                <li>Reduzir abandono</li>
+                <li>Escalar cobertura</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Documentacao ausente</li>
+                <li>SLA pouco claro</li>
+                <li>Integracao demorada</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>Dados de cobertura</li>
+                <li>API e sandbox</li>
+                <li>Contato tecnico/comercial</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Parcerias/API</div>
+              <div class="pcard-foco">integracao</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="persona-c">
-        <span class="tag">Perfil 4</span>
-        <h3>Administrador do Hub</h3>
-        <div class="role">Responsavel por um micro-hub de distribuicao urbana</div>
-        <h4>Contexto</h4>
-        <p>Coordena um espaco fisico que recebe, separa e redistribui pacotes para a ultima milha. Supervisiona a entrada e saida de mercadorias e a alocacao dos entregadores disponiveis.</p>
-        <h4>Objetivos</h4>
-        <ul>
-          <li>Garantir que todo pacote recebido seja despachado no mesmo periodo</li>
-          <li>Alocar entregadores de forma eficiente conforme a demanda e a regiao</li>
-          <li>Manter o hub organizado sem acumulo de pacotes de periodos anteriores</li>
-          <li>Reduzir o tempo entre a chegada do pacote e a saida para entrega</li>
-        </ul>
-        <h4>Dores</h4>
-        <ul>
-          <li>Nao tem visibilidade antecipada do volume de pacotes que chegarao</li>
-          <li>Dificuldade para alocar motoristas quando a demanda ultrapassa a frota disponivel</li>
-          <li>Sem metricas claras de produtividade do hub e dos entregadores</li>
-          <li>Comunicacao fragmentada entre lojistas, motoristas e destinatarios</li>
-        </ul>
-        <h4>Necessidades</h4>
-        <ul>
-          <li>Painel com previsao de volume e alertas de capacidade</li>
-          <li>Interface para atribuir pacotes a entregadores de forma rapida</li>
-          <li>Relatorio de desempenho do hub com indicadores operacionais</li>
-          <li>Notificacoes automaticas sobre atrasos e devolucoes</li>
-        </ul>
+      <div class="pcard">
+        <div class="pcard-hdr media">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">J</span>
+            <div>
+              <div class="pcard-name">Joao Batista</div>
+              <div class="pcard-role">Parceiro hub</div>
+            </div>
+            <span class="pcard-prio">Media</span>
+          </div>
+          <div class="pcard-frase">"Quero gerar renda, mas entender rotina e responsabilidade."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Usar espaco ocioso</li>
+                <li>Entender volume esperado</li>
+                <li>Operar com rotina simples</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Medo de complexidade</li>
+                <li>Investimento incerto</li>
+                <li>Regras pouco claras</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>Checklist para virar hub</li>
+                <li>Estimativa de demanda</li>
+                <li>Onboarding simples</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Seja um Hub</div>
+              <div class="pcard-foco">renda</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-hdr media">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">R</span>
+            <div>
+              <div class="pcard-name">Rafael Santos</div>
+              <div class="pcard-role">Entregador</div>
+            </div>
+            <span class="pcard-prio">Media</span>
+          </div>
+          <div class="pcard-frase">"Uma rota ruim me faz perder tempo e produtividade."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Seguir sequencia clara</li>
+                <li>Evitar deslocamentos extras</li>
+                <li>Atualizar status rapido</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Endereco incompleto</li>
+                <li>Mudanca sem contexto</li>
+                <li>Contato manual com operacao</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>Proxima parada visivel</li>
+                <li>Status com poucos toques</li>
+                <li>Suporte em excecoes</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Mapa/App</div>
+              <div class="pcard-foco">rota clara</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-hdr baixa">
+          <div class="pcard-hdr-in">
+            <span class="pcard-inicial">B</span>
+            <div>
+              <div class="pcard-name">Beatriz Lima</div>
+              <div class="pcard-role">Cliente final</div>
+            </div>
+            <span class="pcard-prio">Baixa</span>
+          </div>
+          <div class="pcard-frase">"Nao preciso ver a operacao, so confiar no horario prometido."</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-g">
+            <div class="pcard-c">
+              <h4>Objetivos</h4>
+              <ul>
+                <li>Receber no prazo</li>
+                <li>Saber quando chega</li>
+                <li>Resolver imprevistos</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Dores</h4>
+              <ul>
+                <li>Status generico</li>
+                <li>Janela ampla demais</li>
+                <li>Pouca comunicacao</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Necessidades</h4>
+              <ul>
+                <li>ETA simples</li>
+                <li>Notificacoes objetivas</li>
+                <li>Contato ou reagendamento</li>
+              </ul>
+            </div>
+            <div class="pcard-c">
+              <h4>Interface</h4>
+              <div class="pcard-interface">Rastreio</div>
+              <div class="pcard-foco">confianca</div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
